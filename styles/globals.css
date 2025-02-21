@@ -1,0 +1,6 @@
+.sticky-filter {
+  position: sticky;
+  top: 60px; /* Ajusta esto según la altura del navbar */
+  z-index: 1020; /* Asegura que se mantenga sobre otros elementos si es necesario */
+  background-color: white; /* Para evitar transparencias */
+}

@@ -1,16 +1,5 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
-import "./globals.css";
-
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
+import "bootstrap/dist/css/bootstrap.min.css";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -23,11 +12,60 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
-        {children}
+    <html lang="es">
+      <head>
+        <title>TecnoVacantesRD</title>
+      </head>
+      <body>
+        {/* Barra de navegación */}
+        <nav className="navbar navbar-expand-lg navbar-dark bg-primary fixed-top">
+          <div className="container-fluid">
+            <a className="navbar-brand" href="/vacancies">
+              TecnoVacantesRD
+            </a>
+            <button
+              className="navbar-toggler"
+              type="button"
+              data-bs-toggle="collapse"
+              data-bs-target="#navbarNav"
+              aria-controls="navbarNav"
+              aria-expanded="false"
+              aria-label="Toggle navigation"
+            >
+              <span className="navbar-toggler-icon"></span>
+            </button>
+            <div className="collapse navbar-collapse" id="navbarNav">
+              <ul className="navbar-nav ms-auto">
+                <li className="nav-item">
+                  <a className="nav-link active" href="/vacancies">
+                    Inicio
+                  </a>
+                </li>
+                <li className="nav-item">
+                  <a className="nav-link" href="/about">
+                    Sobre Nosotros
+                  </a>
+                </li>
+                <li className="nav-item">
+                  <a className="nav-link" href="/post-job">
+                    Publicar Vacante
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </nav>
+
+        {/* Contenido principal */}
+        <div className="container mt-5 pt-5">{children}</div>
+
+        {/* Pie de página */}
+        <footer className="bg-dark text-white text-center py-3 mt-5">
+          <p>&copy; 2025 TecnoVacantesRD. Todos los derechos reservados.</p>
+        </footer>
+
+        {/* Scripts de Bootstrap */}
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
       </body>
     </html>
   );
