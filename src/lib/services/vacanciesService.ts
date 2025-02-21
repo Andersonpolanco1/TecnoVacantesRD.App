@@ -1,11 +1,10 @@
 import { VacancyFilter } from "@/types/VacancyFilters";
+const BASE_URL = `https://localhost:7290`;
+//process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
 
 export const fetchVacancies = async (filters: VacancyFilter) => {
-  const BASE_URL = `https://localhost:7290`; //`${process.env.VACANCIES_API_URL}/api/vacancies`
   try {
-    //process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
     const queryString = convertFiltersToQueryParams(filters);
-    console.log(`${BASE_URL}/api/vacancies?${queryString}`);
     const response = await fetch(`${BASE_URL}/api/vacancies?${queryString}`, {
       method: "GET",
       headers: {
@@ -27,10 +26,15 @@ export const fetchVacancies = async (filters: VacancyFilter) => {
 };
 
 export const fetchVacancyById = async (publicId: string) => {
-  ///process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
-  const response = await fetch(
-    `${process.env.VACANCIES_API_URL}/api/vacancies/${publicId}`
-  );
+  process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
+  const response = await fetch(`${BASE_URL}/api/vacancies/${publicId}`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+  console.log(publicId);
+  console.log(response);
   if (!response.ok) return null;
   return response.json();
 };

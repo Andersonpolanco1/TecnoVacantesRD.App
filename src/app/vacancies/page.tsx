@@ -51,10 +51,7 @@ export default function Page() {
 
   return (
     <>
-      <div
-        className="accordion mb-5 sticky-filter sticky-top"
-        id="filterAccordion"
-      >
+      <div className="accordion mb-5" id="filterAccordion">
         <div className="accordion-item">
           <h2 className="accordion-header" id="filterHeading">
             <button

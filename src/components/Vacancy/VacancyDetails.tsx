@@ -6,44 +6,53 @@ interface VacancyDetailsProps {
 
 const VacancyDetails = ({ vacancy }: VacancyDetailsProps) => {
   return (
-    <div className="p-4 border rounded-lg shadow-lg bg-white">
-      <h1 className="text-3xl font-bold text-primary mb-2 border-bottom pb-2">
-        {vacancy.title}
-      </h1>
+    <div className="card shadow-sm border-0">
+      <div className="card-body">
+        <h5 className="text-primary fw-bold">{vacancy.title}</h5>
+        <p className="text-muted">
+          <i className="bi bi-calendar-check"></i> Publicado:{" "}
+          <span className="fw-semibold">
+            {new Date(vacancy.publishDate).toLocaleDateString()}
+          </span>
+        </p>
+        <hr />
 
-      <p className="text-muted">
-        📅 <strong>Publicado:</strong>{" "}
-        <span className="text-primary">
-          {new Date(vacancy.publishDate).toLocaleDateString()}
-        </span>
-      </p>
+        <div className="d-flex flex-wrap gap-3">
+          <span className="badge bg-info text-dark">
+            <i className="bi bi-tags"></i> {vacancy.categoryName}
+          </span>
 
-      <p className="mt-3">
-        🎯 <strong>Categoría:</strong>{" "}
-        <span className="badge bg-info text-dark">{vacancy.categoryName}</span>
-      </p>
+          <span className="text-success fw-bold">
+            <i className="bi bi-cash-stack"></i>{" "}
+            {vacancy.salary ? `$${vacancy.salary}` : "No especificado"}
+          </span>
 
-      <p className="fw-bold">
-        💰 Salario:{" "}
-        <span className="text-success">
-          ${vacancy.salary ?? "No especificado"}
-        </span>
-      </p>
+          <span className="text-secondary">
+            <i className="bi bi-geo-alt"></i> {vacancy.location}
+          </span>
+        </div>
 
-      <p className="text-muted">
-        📍 <span className="fw-bold">{vacancy.location}</span>
-      </p>
+        <hr />
 
-      <p className="mt-2">
-        ⏳ <strong>Cierre:</strong>{" "}
-        <span className="text-danger">
-          {new Date(vacancy.closeDate).toLocaleDateString()}
-        </span>
-      </p>
+        <p>
+          <i className="bi bi-hourglass-bottom text-danger"></i>{" "}
+          <strong>Fecha de cierre:</strong>{" "}
+          <span className="fw-semibold text-danger">
+            {new Date(vacancy.closeDate).toLocaleDateString()}
+          </span>
+        </p>
 
-      <p>
-        📝 <strong>Descripción:</strong> {vacancy.vacancyDescription}
-      </p>
+        <div className="card p-3 bg-light border-0">
+          <h5 className="fw-bold">Descripción</h5>
+          <p className="text-muted">{vacancy.vacancyDescription}</p>
+        </div>
+
+        <div className="mt-4 text-end">
+          <a href="#" className="btn btn-primary">
+            <i className="bi bi-send"></i> Postularme
+          </a>
+        </div>
+      </div>
     </div>
   );
 };
