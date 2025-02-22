@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import "bootstrap/dist/css/bootstrap.min.css";
+import GoogleAuthButton from "@/components/Auth/GoogleAuthButton";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -50,6 +51,9 @@ export default function RootLayout({
                   <a className="nav-link" href="/post-job">
                     Publicar Vacante
                   </a>
+                </li>
+                <li>
+                  <GoogleAuthButton />
                 </li>
               </ul>
             </div>
