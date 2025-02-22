@@ -1,5 +1,6 @@
 import { VacancyFilter } from "@/types/VacancyFilters";
-const BASE_URL = `https://localhost:7290`;
+import config from "@/config/config_dev";
+
 //process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
 
 export const fetchVacancies = async (filters: VacancyFilter) => {
@@ -12,10 +13,13 @@ export const fetchVacancies = async (filters: VacancyFilter) => {
       ...(accessToken && { Authorization: `Bearer ${accessToken}` }),
     };
 
-    const response = await fetch(`${BASE_URL}/api/vacancies?${queryString}`, {
-      method: "GET",
-      headers: headers,
-    });
+    const response = await fetch(
+      `${config.VACANCIES_API_URL}/api/vacancies?${queryString}`,
+      {
+        method: "GET",
+        headers: headers,
+      }
+    );
 
     if (!response.ok) {
       throw new Error(`Error fetching vacancies: ${response.statusText}`);
@@ -31,13 +35,16 @@ export const fetchVacancies = async (filters: VacancyFilter) => {
 export const fetchVacancyById = async (publicId: string) => {
   process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
   const accessToken = localStorage.getItem("access_token");
-  const response = await fetch(`${BASE_URL}/api/vacancies/${publicId}`, {
-    method: "GET",
-    headers: {
-      "Content-Type": "application/json",
-      ...(accessToken && { Authorization: `Bearer ${accessToken}` }),
-    },
-  });
+  const response = await fetch(
+    `${config.VACANCIES_API_URL}/api/vacancies/${publicId}`,
+    {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        ...(accessToken && { Authorization: `Bearer ${accessToken}` }),
+      },
+    }
+  );
   if (!response.ok) return null;
   return response.json();
 };

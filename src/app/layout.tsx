@@ -52,8 +52,10 @@ export default function RootLayout({
                     Publicar Vacante
                   </a>
                 </li>
-                <li>
-                  <GoogleAuthButton />
+                <li className="nav-item">
+                  <a className="nav-link" href="/auth/login">
+                    Iniciar sesion/Registrarse
+                  </a>
                 </li>
               </ul>
             </div>

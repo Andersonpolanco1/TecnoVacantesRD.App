@@ -1,13 +1,15 @@
-"use client"; // Indica que este componente se renderiza en el cliente
+"use client";
 
 import { useRouter } from "next/navigation";
+import config from "@/config/config_dev";
+import Image from "next/image";
 
 export default function GoogleAuthButton() {
   const router = useRouter();
 
   const redirectToGoogleAuth = async () => {
     const response = await fetch(
-      "https://localhost:7263/api/auth/redirecttogoogleauth"
+      `${config.VACANCIES_AUTH_API_URL}/api/auth/redirecttogoogleauth`
     );
 
     if (response.ok) {
@@ -19,6 +21,12 @@ export default function GoogleAuthButton() {
   };
 
   return (
-    <button onClick={redirectToGoogleAuth}>Iniciar sesión con Google</button>
+    <button
+      onClick={redirectToGoogleAuth}
+      className="btn btn-outline-danger w-100 mb-2 d-flex align-items-center justify-content-center"
+    >
+      <Image src="/google-logo.png" alt="Google" width={20} height={20} />
+      <span className="ms-2">Iniciar con Google</span>
+    </button>
   );
 }

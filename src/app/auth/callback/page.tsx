@@ -2,6 +2,7 @@
 
 import { useEffect } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
+import config from "@/config/config_dev";
 
 export default function GoogleAuth() {
   const router = useRouter();
@@ -10,12 +11,10 @@ export default function GoogleAuth() {
 
   useEffect(() => {
     if (authCode) {
+      var googleAuthCode = `${encodeURIComponent(authCode)}`;
       fetch(
-        "https://localhost:7263/api/auth/google?code=" +
-          encodeURIComponent(authCode),
-        {
-          method: "GET",
-        }
+        `${config.VACANCIES_AUTH_API_URL}/api/auth/google?code=${googleAuthCode}`,
+        { method: "GET" }
       )
         .then(async (res) => {
           if (!res.ok) {
