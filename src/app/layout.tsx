@@ -62,13 +62,12 @@ export default function RootLayout({
           </div>
         </nav>
 
-        {/* Contenido principal */}
-        <div className="container mt-5 pt-5">{children}</div>
-
-        {/* Pie de página */}
-        <footer className="bg-dark text-white text-center py-3 mt-5">
-          <p>&copy; 2025 TecnoVacantesRD. Todos los derechos reservados.</p>
-        </footer>
+        <div className="d-flex flex-column min-vh-100">
+          <main className="flex-grow-1">{children}</main>
+          <footer className="bg-dark text-white text-center py-3">
+            <p>&copy; 2025 TecnoVacantesRD. Todos los derechos reservados.</p>
+          </footer>
+        </div>
 
         {/* Scripts de Bootstrap */}
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>

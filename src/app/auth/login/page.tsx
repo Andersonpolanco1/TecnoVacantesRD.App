@@ -21,7 +21,7 @@ export default function LoginCard() {
   };
 
   return (
-    <div className="d-flex justify-content-center align-items-center">
+    <div className="d-flex justify-content-center align-items-center vh-100">
       <div className="card p-4 shadow" style={{ width: "22rem" }}>
         <p className="fs-3 text-center fw-bold">TecnoVacantesRD</p>
         <h4 className="text-center mb-4">Iniciar Sesión</h4>
