@@ -11,28 +11,36 @@ export default function GoogleAuth() {
 
   useEffect(() => {
     if (authCode) {
-      var googleAuthCode = `${encodeURIComponent(authCode)}`;
+      const googleAuthCode = encodeURIComponent(authCode);
+
+      process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
+
       fetch(
         `${config.VACANCIES_AUTH_API_URL}/api/auth/google?code=${googleAuthCode}`,
-        { method: "GET" }
+        {
+          method: "GET",
+          credentials: "include",
+          headers: { "Content-Type": "application/json" },
+        }
       )
-        .then(async (res) => {
+        .then((res) => {
           if (!res.ok) {
             throw new Error(`Error ${res.status}: ${res.statusText}`);
           }
-          // Verifica si hay contenido antes de intentar parsear como JSON
-          const text = await res.text();
-          return text ? JSON.parse(text) : {};
         })
-        .then((data) => {
-          if (data.access_token) {
-            localStorage.setItem("access_token", data.access_token);
-            router.push("/vacancies"); // Redirige al usuario
+        .then(() => {
+          const cookies = document.cookie.split("; ");
+          const tokenCookie = cookies.find((row) =>
+            row.startsWith("access_token=")
+          );
+
+          if (tokenCookie) {
+            router.push("/vacancies");
           } else {
-            console.error("No se recibió un token de acceso válido.");
+            console.error("No se encontró el token en las cookies.");
           }
         })
-        .catch((err) => console.error("Error autenticando"));
+        .catch((err) => console.error("Error autenticando", err));
     }
   }, [authCode, router]);
 

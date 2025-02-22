@@ -14,7 +14,7 @@ export default function GoogleAuthButton() {
 
     if (response.ok) {
       const googleAuthUrl = await response.text();
-      router.push(googleAuthUrl); // Redirige sin recargar la página
+      router.push(googleAuthUrl);
     } else {
       console.error("Error al redirigir a Google");
     }
