@@ -62,8 +62,8 @@ export default function RootLayout({
           </div>
         </nav>
 
-        <div className="d-flex flex-column min-vh-100">
-          <main className="flex-grow-1">{children}</main>
+        <div className="d-flex flex-column min-vh-100 pt-5 mt-3">
+          <main className="flex-grow-1 container">{children}</main>
           <footer className="bg-dark text-white text-center py-3">
             <p>&copy; 2025 TecnoVacantesRD. Todos los derechos reservados.</p>
           </footer>
