@@ -14,9 +14,9 @@ export default function GoogleAuth() {
       const googleAuthCode = encodeURIComponent(authCode);
 
       process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
-
+      console.log(googleAuthCode);
       fetch(
-        `${config.VACANCIES_AUTH_API_URL}/api/auth/google?code=${googleAuthCode}`,
+        `${config.VACANCIES_AUTH_API_URL}/api/auth/google?providerAccessCode=${googleAuthCode}`,
         {
           method: "GET",
           credentials: "include",
@@ -27,6 +27,7 @@ export default function GoogleAuth() {
           if (!res.ok) {
             throw new Error(`Error ${res.status}: ${res.statusText}`);
           }
+          console.log(res);
         })
         .then(() => {
           const cookies = document.cookie.split("; ");

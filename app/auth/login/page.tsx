@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
-import GoogleAuthButton from "@/components/Auth/GoogleAuthButton";
+import GoogleAuthButton from "@/components/controls/GoogleAuthButton";
 
 export default function LoginCard() {
   const router = useRouter();

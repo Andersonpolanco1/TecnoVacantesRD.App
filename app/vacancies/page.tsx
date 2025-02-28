@@ -22,6 +22,7 @@ export default function Page() {
     mode: null,
     categoryId: null,
   });
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
   const loadVacancies = async () => {
     try {
@@ -34,8 +35,16 @@ export default function Page() {
       setTotalPages(data.totalPagesCount);
     } catch (error) {
       console.error("Error al obtener los datos:", error);
+      setErrorMessage("Error al obtener las vacantes. Intente nuevamente.");
     }
   };
+
+  useEffect(() => {
+    if (shouldFetch) {
+      loadVacancies();
+      setShouldFetch(false);
+    }
+  }, [filters, shouldFetch]);
 
   const handleFilterChange = (newFilters: VacancyFilter) => {
     setFilters(newFilters);
@@ -45,23 +54,19 @@ export default function Page() {
     setShouldFetch(true);
   };
 
-  if (shouldFetch) {
-    loadVacancies();
-    setShouldFetch(false);
-  }
-
   const handleFilterToggle = () => {
     setFilterExpanded(!filterExpanded);
   };
 
   const handlePageChange = (pageNumber: number) => {
-    const updatedFilters = { ...filters, ["currentPage"]: pageNumber };
+    const updatedFilters = { ...filters, currentPage: pageNumber };
     setFilters(updatedFilters);
     setShouldFetch(true);
   };
 
   return (
     <>
+      {errorMessage && <div className="alert alert-danger">{errorMessage}</div>}
       <div className="accordion mb-4" id="filterAccordion">
         <div className="accordion-item">
           <h2 className="accordion-header" id="filterHeading">
@@ -101,7 +106,7 @@ export default function Page() {
         <VacancyList vacancies={vacancies} />
       </div>
       <div className="my-3">
-        {totalPages != 0 && (
+        {totalPages > 0 && (
           <Pagination
             currentPage={currentPage}
             totalPagesCount={totalPages}

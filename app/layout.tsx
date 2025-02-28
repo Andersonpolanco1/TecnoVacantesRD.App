@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import "bootstrap/dist/css/bootstrap.min.css";
-import GoogleAuthButton from "@/components/Auth/GoogleAuthButton";
+import Image from "next/image";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -53,8 +53,18 @@ export default function RootLayout({
                   </a>
                 </li>
                 <li className="nav-item">
-                  <a className="nav-link" href="/auth/login">
-                    Iniciar sesion/Registrarse
+                  <a
+                    className="nav-link d-flex align-items-center"
+                    href="/auth/login"
+                  >
+                    <Image
+                      src="/user.png"
+                      alt="Usuario"
+                      width={30}
+                      height={30}
+                      className="rounded-circle me-2"
+                    />
+                    Iniciar sesión
                   </a>
                 </li>
               </ul>
