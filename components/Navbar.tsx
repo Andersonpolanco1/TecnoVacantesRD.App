@@ -1,8 +1,16 @@
 "use client";
 
-import { signIn } from "next-auth/react";
+import { signIn, signOut, useSession } from "next-auth/react";
 
 const Navbar = () => {
+  // Obtén la sesión actual
+  const { data: session, status } = useSession();
+
+  // Si la sesión está cargando
+  if (status === "loading") {
+    return <nav>Loading...</nav>;
+  }
+
   return (
     <nav className="navbar navbar-expand-lg navbar-dark bg-primary fixed-top">
       <div className="container-fluid">
@@ -37,9 +45,28 @@ const Navbar = () => {
                 Publicar Vacante
               </a>
             </li>
-            <li className="nav-item">
-              <button onClick={() => signIn()}>Sign in</button>
-            </li>
+
+            {/* Mostrar información del usuario si la sesión está activa */}
+            {session ? (
+              <li className="nav-item">
+                <span className="nav-link">Hola, {session.user?.name}</span>
+              </li>
+            ) : (
+              <li className="nav-item">
+                <button onClick={() => signIn()} className="btn btn-primary">
+                  Iniciar sesión
+                </button>
+              </li>
+            )}
+
+            {/* Botón de cerrar sesión si la sesión está activa */}
+            {session && (
+              <li className="nav-item">
+                <button onClick={() => signOut()} className="btn btn-danger">
+                  Cerrar sesión
+                </button>
+              </li>
+            )}
           </ul>
         </div>
       </div>

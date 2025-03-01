@@ -24,8 +24,24 @@ export default function Page() {
   });
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
+  const loadVacancies = async () => {
+    try {
+      const data = await fetchVacancies(filters);
+      if (data === null || !data.items || !Array.isArray(data.items)) {
+        throw new Error("No se pudo obtener las vacantes");
+      }
+      setVacancies(data.items);
+      setCurrentPage(data.currentPage);
+      setTotalPages(data.totalPagesCount);
+    } catch (error) {
+      console.error("Error al obtener los datos:", error);
+      setErrorMessage("Error al obtener las vacantes. Intente nuevamente.");
+    }
+  };
+
   useEffect(() => {
     if (shouldFetch) {
+      loadVacancies();
       setShouldFetch(false);
     }
   }, [filters, shouldFetch]);
