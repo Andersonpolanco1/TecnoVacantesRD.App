@@ -1,5 +1,6 @@
 import Image from "next/image";
 import { signIn } from "next-auth/react";
+import { useLoading } from "@/app/providers/loadingProvider";
 
 const authProviders = [
   {
@@ -23,12 +24,23 @@ const authProviders = [
 ];
 
 const AuthButtons = () => {
+  const { showLoading, hideLoading } = useLoading();
+
+  const handleAuth = async (providerName: string) => {
+    showLoading();
+    try {
+      await signIn(providerName);
+    } finally {
+      hideLoading();
+    }
+  };
+
   return (
     <>
       {authProviders.map((provider) => (
         <button
           key={provider.name}
-          onClick={() => signIn(provider.name)}
+          onClick={() => handleAuth(provider.name)}
           className={`btn ${provider.css} w-100 mb-2 d-flex align-items-center justify-content-center`}
         >
           <Image

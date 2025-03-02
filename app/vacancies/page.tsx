@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import VacancyList from "@/components/Vacancy/VacancyList";
 import VacancyMainFilter from "@/components/Vacancy/VacancyMainFilter";
 import { fetchVacancies } from "@/lib/services/vacanciesService";
@@ -48,11 +48,6 @@ export default function Page() {
     setShouldFetch(true);
   };
 
-  if (shouldFetch) {
-    loadVacancies();
-    setShouldFetch(false);
-  }
-
   const handleFilterToggle = () => {
     setFilterExpanded(!filterExpanded);
   };
@@ -62,6 +57,13 @@ export default function Page() {
     setFilters(updatedFilters);
     setShouldFetch(true);
   };
+
+  useEffect(() => {
+    if (shouldFetch) {
+      loadVacancies();
+      setShouldFetch(false);
+    }
+  }, [shouldFetch, filters, session]);
 
   return (
     <>
