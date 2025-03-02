@@ -52,7 +52,7 @@ const authOptions: AuthOptions = {
     },
   },
   pages: {
-    signIn: "/signin", // Define tu página personalizada de inicio de sesión
+    signIn: "/signin",
   },
 };
 

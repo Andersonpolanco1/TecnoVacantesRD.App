@@ -1,4 +1,10 @@
 import React from "react";
+import {
+  FaAngleDoubleLeft,
+  FaAngleLeft,
+  FaAngleRight,
+  FaAngleDoubleRight,
+} from "react-icons/fa";
 
 interface PaginationProps {
   currentPage: number;
@@ -22,13 +28,14 @@ const Pagination: React.FC<PaginationProps> = ({
 
   return (
     <div className="d-flex justify-content-center align-items-center gap-2">
+      {/* Botón "Primera Página" */}
       <button
         className="btn btn-outline-primary btn-sm"
         onClick={() => handlePageChange(1)}
         disabled={isFirstPage}
         aria-label="First Page"
       >
-        Primera
+        <FaAngleDoubleLeft />
       </button>
 
       {/* Botón "Anterior" */}
@@ -38,7 +45,7 @@ const Pagination: React.FC<PaginationProps> = ({
         disabled={isFirstPage}
         aria-label="Previous Page"
       >
-        Anterior
+        <FaAngleLeft />
       </button>
 
       {/* Mostrar la página actual */}
@@ -53,17 +60,17 @@ const Pagination: React.FC<PaginationProps> = ({
         disabled={isLastPage}
         aria-label="Next Page"
       >
-        Siguiente
+        <FaAngleRight />
       </button>
 
-      {/* Botón "Último" */}
+      {/* Botón "Última Página" */}
       <button
         className="btn btn-outline-primary btn-sm"
         onClick={() => handlePageChange(totalPagesCount)}
         disabled={isLastPage}
         aria-label="Last Page"
       >
-        Ultima
+        <FaAngleDoubleRight />
       </button>
     </div>
   );

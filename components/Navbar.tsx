@@ -1,23 +1,17 @@
 "use client";
 
-import { signIn, signOut, useSession } from "next-auth/react";
+import { signOut, useSession } from "next-auth/react";
 import Link from "next/link";
+import Navigation from "./Navigation ";
+import { FaSignOutAlt } from "react-icons/fa";
 
 const Navbar = () => {
-  // Obtén la sesión actual
   const { data: session, status } = useSession();
 
   // Si la sesión está cargando
   if (status === "loading") {
     return <nav>Loading...</nav>;
   }
-
-  const signInWithGoogle = async () => {
-    const res = await signIn("google", { callbackUrl: "/vacancies" });
-    if (res?.error) {
-      console.error("Error al autenticar con Google:", res.error);
-    }
-  };
 
   return (
     <nav className="navbar navbar-expand-lg navbar-dark bg-primary fixed-top">
@@ -38,21 +32,7 @@ const Navbar = () => {
         </button>
         <div className="collapse navbar-collapse" id="navbarNav">
           <ul className="navbar-nav ms-auto">
-            <li className="nav-item">
-              <a className="nav-link active" href="/vacancies">
-                Inicio
-              </a>
-            </li>
-            <li className="nav-item">
-              <a className="nav-link" href="/about">
-                Sobre Nosotros
-              </a>
-            </li>
-            <li className="nav-item">
-              <a className="nav-link" href="/post-job">
-                Publicar Vacante
-              </a>
-            </li>
+            <Navigation />
 
             {/* Mostrar información del usuario si la sesión está activa */}
             {session ? (
@@ -72,7 +52,7 @@ const Navbar = () => {
             {session && (
               <li className="nav-item">
                 <button onClick={() => signOut()} className="btn btn-danger">
-                  Cerrar sesión
+                  <FaSignOutAlt className="me-2" /> Cerrar sesión
                 </button>
               </li>
             )}

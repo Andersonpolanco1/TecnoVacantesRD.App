@@ -98,7 +98,7 @@ export default function Page() {
         </div>
       </div>
       <div
-        className="vacancy-container border border-1"
+        className="vacancy-container border border-1 p-4"
         style={{ maxHeight: "550px", overflowY: "auto" }}
       >
         <VacancyList vacancies={vacancies} />

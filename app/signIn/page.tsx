@@ -1,12 +1,9 @@
 "use client";
 
 import { useState } from "react";
-import { useRouter } from "next/navigation";
-import Image from "next/image";
-import { signIn } from "next-auth/react";
+import AuthButtons from "@/components/AuthButtons";
 
 export default function SignIn() {
-  const router = useRouter();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -57,34 +54,7 @@ export default function SignIn() {
         <div className="text-center my-3">o</div>
 
         {/* Botones de OAuth */}
-        <button
-          onClick={() => signIn("google")}
-          className="btn btn-outline-danger w-100 mb-2 d-flex align-items-center justify-content-center"
-        >
-          <Image src="/google-logo.png" alt="Google" width={20} height={20} />
-          <span className="ms-2">Iniciar con Google</span>
-        </button>
-
-        <button
-          className="btn btn-outline-primary w-100 mb-2 d-flex align-items-center justify-content-center"
-          onClick={() => signIn("linkedin")}
-        >
-          <Image
-            src="/linkedin-logo.png"
-            alt="LinkedIn"
-            width={20}
-            height={20}
-          />
-          <span className="ms-2">Iniciar con LinkedIn</span>
-        </button>
-
-        <button
-          className="btn btn-outline-dark w-100 d-flex align-items-center justify-content-center"
-          onClick={() => signIn("github")}
-        >
-          <Image src="/github-logo.png" alt="GitHub" width={20} height={20} />
-          <span className="ms-2">Iniciar con GitHub</span>
-        </button>
+        <AuthButtons />
       </div>
     </div>
   );

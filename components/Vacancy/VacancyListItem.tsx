@@ -1,6 +1,13 @@
-// components/VacancyListItem.tsx
 import { Vacancy } from "@/types/vacancy";
 import { VacancyMode, VacancyModeLabels } from "@/types/VacancyMode";
+import {
+  FaCalendarAlt,
+  FaClock,
+  FaBullseye,
+  FaDollarSign,
+  FaMapMarkerAlt,
+  FaPen,
+} from "react-icons/fa";
 
 interface VacancyListItemProps {
   vacancy: Vacancy;
@@ -29,35 +36,36 @@ const VacancyListItem = ({ vacancy }: VacancyListItemProps) => {
       {/* Contenedor principal que asegura que todo esté apilado verticalmente */}
       <div className="d-flex flex-column">
         <p className="text-muted text-xs mb-1">
-          📅 <strong>Publicado:</strong>{" "}
+          <FaCalendarAlt className="me-2" /> <strong>Publicado:</strong>{" "}
           <span className="text-primary">
             {formatDate(vacancy.publishDate)}
           </span>
         </p>
         <p className="text-muted text-xs mb-1">
-          ⏳ <strong>Cierre:</strong>{" "}
+          <FaClock className="me-2" /> <strong>Cierre:</strong>{" "}
           <span className="text-danger">{formatDate(vacancy.closeDate)}</span>
         </p>
 
         <p className="text-xs mb-1">
-          🎯 <strong>Modalidad:</strong>{" "}
+          <FaBullseye className="me-2" /> <strong>Modalidad:</strong>{" "}
           <span className="text-dark">
             {VacancyModeLabels[vacancy.mode as VacancyMode]}
           </span>
         </p>
         <p className="text-xs mb-1">
-          💰 <strong>Salario:</strong>{" "}
+          <FaDollarSign className="me-2" /> <strong>Salario:</strong>{" "}
           <span className="text-success">
             ${vacancy.salary ?? "No especificado"}
           </span>
         </p>
 
         <p className="text-muted text-xs mb-1">
-          📍 <span className="fw-bold">{vacancy.location}</span>
+          <FaMapMarkerAlt className="me-2" />{" "}
+          <span className="fw-bold">{vacancy.location}</span>
         </p>
 
         <p className="text-xs text-muted mb-0">
-          📝 <strong>Descripción:</strong>{" "}
+          <FaPen className="me-2" /> <strong>Descripción:</strong>{" "}
           <span className="text-muted">{vacancy.vacancyDescription}</span>
         </p>
       </div>
