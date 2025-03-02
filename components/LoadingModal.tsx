@@ -11,9 +11,10 @@ const LoadingModal = () => {
         <div className="modal-content">
           <div className="modal-body text-center">
             <div className="d-flex justify-content-center align-items-center">
-              <div className="spinner-border text-primary me-2" role="status">
-                <span className="visually-hidden">Loading...</span>
-              </div>
+              <div
+                className="spinner-border spinner-border-sm text-primary me-2"
+                role="status"
+              ></div>
               <div>Espere...</div>
             </div>
           </div>
