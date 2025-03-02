@@ -7,6 +7,7 @@ import { fetchVacancies } from "@/lib/services/vacanciesService";
 import { Vacancy } from "@/types/vacancy";
 import { VacancyFilter } from "@/types/VacancyFilters";
 import Pagination from "@/components/controls/pagination";
+import { useSession } from "next-auth/react";
 
 export default function Page() {
   const [vacancies, setVacancies] = useState<Vacancy[]>([]);
@@ -14,6 +15,8 @@ export default function Page() {
   const [filterExpanded, setFilterExpanded] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(0);
+  const { data: session } = useSession();
+
   const [filters, setFilters] = useState<VacancyFilter>({
     description: null,
     salaryFrom: null,
@@ -22,11 +25,10 @@ export default function Page() {
     mode: null,
     categoryId: null,
   });
-  const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
   const loadVacancies = async () => {
     try {
-      const data = await fetchVacancies(filters);
+      const data = await fetchVacancies(filters, session);
       if (data === null || !data.items || !Array.isArray(data.items)) {
         throw new Error("No se pudo obtener las vacantes");
       }
@@ -35,16 +37,8 @@ export default function Page() {
       setTotalPages(data.totalPagesCount);
     } catch (error) {
       console.error("Error al obtener los datos:", error);
-      setErrorMessage("Error al obtener las vacantes. Intente nuevamente.");
     }
   };
-
-  useEffect(() => {
-    if (shouldFetch) {
-      loadVacancies();
-      setShouldFetch(false);
-    }
-  }, [filters, shouldFetch]);
 
   const handleFilterChange = (newFilters: VacancyFilter) => {
     setFilters(newFilters);
@@ -54,19 +48,23 @@ export default function Page() {
     setShouldFetch(true);
   };
 
+  if (shouldFetch) {
+    loadVacancies();
+    setShouldFetch(false);
+  }
+
   const handleFilterToggle = () => {
     setFilterExpanded(!filterExpanded);
   };
 
   const handlePageChange = (pageNumber: number) => {
-    const updatedFilters = { ...filters, currentPage: pageNumber };
+    const updatedFilters = { ...filters, ["currentPage"]: pageNumber };
     setFilters(updatedFilters);
     setShouldFetch(true);
   };
 
   return (
     <>
-      {errorMessage && <div className="alert alert-danger">{errorMessage}</div>}
       <div className="accordion mb-4" id="filterAccordion">
         <div className="accordion-item">
           <h2 className="accordion-header" id="filterHeading">
@@ -106,7 +104,7 @@ export default function Page() {
         <VacancyList vacancies={vacancies} />
       </div>
       <div className="my-3">
-        {totalPages > 0 && (
+        {totalPages != 0 && (
           <Pagination
             currentPage={currentPage}
             totalPagesCount={totalPages}

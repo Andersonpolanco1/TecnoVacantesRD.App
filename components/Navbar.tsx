@@ -11,6 +11,13 @@ const Navbar = () => {
     return <nav>Loading...</nav>;
   }
 
+  const signInWithGoogle = async () => {
+    const res = await signIn("google", { callbackUrl: "/vacancies" });
+    if (res?.error) {
+      console.error("Error al autenticar con Google:", res.error);
+    }
+  };
+
   return (
     <nav className="navbar navbar-expand-lg navbar-dark bg-primary fixed-top">
       <div className="container-fluid">
@@ -53,7 +60,10 @@ const Navbar = () => {
               </li>
             ) : (
               <li className="nav-item">
-                <button onClick={() => signIn()} className="btn btn-primary">
+                <button
+                  onClick={() => signInWithGoogle()}
+                  className="btn btn-primary"
+                >
                   Iniciar sesión
                 </button>
               </li>
