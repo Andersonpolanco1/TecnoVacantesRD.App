@@ -1,10 +1,10 @@
 import type { Metadata } from "next";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { getSession } from "@/app/api/auth/authOptions";
-import Providers from "../providers/appSessionProvider";
 import Navbar from "@/components/Navbar";
 import { LoadingProvider } from "../providers/loadingProvider";
 import AppSessionProvider from "../providers/appSessionProvider";
+import { NotificationProvider } from "@/providers/notificationContext";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -27,14 +27,16 @@ export default async function RootLayout({
         <AppSessionProvider session={session}>
           <LoadingProvider>
             <Navbar></Navbar>
-            <div className="d-flex flex-column min-vh-100 pt-5 mt-3">
-              <main className="flex-grow-1 container">{children}</main>
-              <footer className="bg-dark text-white text-center py-3">
-                <p>
-                  &copy; 2025 TecnoVacantesRD. Todos los derechos reservados.
-                </p>
-              </footer>
-            </div>
+            <NotificationProvider>
+              <div className="d-flex flex-column min-vh-100 pt-5 mt-3 relative">
+                <main className="flex-grow-1 container">{children}</main>
+                <footer className="bg-dark text-white text-center py-3">
+                  <p>
+                    &copy; 2025 TecnoVacantesRD. Todos los derechos reservados.
+                  </p>
+                </footer>
+              </div>
+            </NotificationProvider>
           </LoadingProvider>
         </AppSessionProvider>
 
