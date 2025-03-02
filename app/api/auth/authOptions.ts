@@ -31,7 +31,8 @@ const authOptions: AuthOptions = {
 
           if (response.ok) {
             const data = await response.json();
-            token.accessToken = data.access_token;
+            token.accessToken = data.accessToken;
+            token.expiresAt = new Date(data.expiresAt).toISOString();
           } else {
             console.error("Error:", await response.text());
           }
@@ -45,6 +46,7 @@ const authOptions: AuthOptions = {
     async session({ session, token }) {
       session.provider = token.provider;
       session.accessToken = token.accessToken;
+      session.expires = String(token.expiresAt);
       return session;
     },
     async redirect({ url, baseUrl }) {

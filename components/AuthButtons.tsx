@@ -1,6 +1,6 @@
 import Image from "next/image";
 import { signIn } from "next-auth/react";
-import { useLoading } from "@/app/providers/loadingProvider";
+import { useLoading } from "@/providers/loadingProvider";
 
 const authProviders = [
   {
