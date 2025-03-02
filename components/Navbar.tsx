@@ -1,6 +1,7 @@
 "use client";
 
 import { signIn, signOut, useSession } from "next-auth/react";
+import Link from "next/link";
 
 const Navbar = () => {
   // Obtén la sesión actual
@@ -60,12 +61,10 @@ const Navbar = () => {
               </li>
             ) : (
               <li className="nav-item">
-                <button
-                  onClick={() => signInWithGoogle()}
-                  className="btn btn-primary"
-                >
+                {/* Redirigir al formulario de inicio de sesión */}
+                <Link className="nav-link" href="/signIn">
                   Iniciar sesión
-                </button>
+                </Link>
               </li>
             )}
 

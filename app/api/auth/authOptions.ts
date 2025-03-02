@@ -47,6 +47,12 @@ const authOptions: AuthOptions = {
       session.accessToken = token.accessToken;
       return session;
     },
+    async redirect({ url, baseUrl }) {
+      return baseUrl;
+    },
+  },
+  pages: {
+    signIn: "/signin", // Define tu página personalizada de inicio de sesión
   },
 };
 

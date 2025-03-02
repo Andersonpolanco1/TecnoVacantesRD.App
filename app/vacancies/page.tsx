@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import VacancyList from "@/components/Vacancy/VacancyList";
 import VacancyMainFilter from "@/components/Vacancy/VacancyMainFilter";
 import { fetchVacancies } from "@/lib/services/vacanciesService";
