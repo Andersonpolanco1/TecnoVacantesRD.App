@@ -1,3 +1,4 @@
+import GoBackButton from "@/components/GoBackButton";
 import VacancyDetails from "@/components/Vacancy/VacancyDetails";
 import { fetchVacancyById } from "@/lib/services/vacanciesService";
 import { Suspense } from "react";
@@ -15,6 +16,7 @@ const VacancyDetailPage = async ({ params }: Params) => {
 
   return (
     <Suspense fallback={<div>Loading...</div>}>
+      <GoBackButton />
       <VacancyDetails vacancy={vacancy} />
     </Suspense>
   );
