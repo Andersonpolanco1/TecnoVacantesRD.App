@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Vacancy } from "@/types/vacancy";
 import { VacancyMode, VacancyModeLabels } from "@/types/VacancyMode";
 import Link from "next/link";
@@ -8,17 +9,28 @@ import {
   FaDollarSign,
   FaMapMarkerAlt,
   FaPen,
+  FaInfoCircle,
 } from "react-icons/fa";
+import VacancyDescriptionModal from "./VacancyDescriptionModal";
 
 interface VacancyListItemProps {
   vacancy: Vacancy;
 }
 
 const VacancyListItem = ({ vacancy }: VacancyListItemProps) => {
+  const [showModal, setShowModal] = useState(false);
+
   const formatDate = (date: string) => {
     if (!date) return "No disponible";
     return new Date(date).toLocaleDateString();
   };
+
+  const handleShowModal = () => setShowModal(true);
+
+  const shortDescription =
+    vacancy.vacancyDescription.length > 100
+      ? `${vacancy.vacancyDescription.substring(0, 100)}...`
+      : vacancy.vacancyDescription;
 
   return (
     <div className="p-3 mb-3 border rounded-lg shadow-sm bg-white">
@@ -34,7 +46,6 @@ const VacancyListItem = ({ vacancy }: VacancyListItemProps) => {
         <small>{vacancy.categoryName}</small>
       </p>
 
-      {/* Contenedor principal que asegura que todo esté apilado verticalmente */}
       <div className="d-flex flex-column">
         <p className="text-muted text-xs mb-1">
           <FaCalendarAlt className="me-2" /> <strong>Publicado:</strong>{" "}
@@ -67,9 +78,25 @@ const VacancyListItem = ({ vacancy }: VacancyListItemProps) => {
 
         <p className="text-xs text-muted mb-0">
           <FaPen className="me-2" /> <strong>Descripción:</strong>{" "}
-          <span className="text-muted">{vacancy.vacancyDescription}</span>
+          <span className="text-muted">{shortDescription}</span>
+          <button
+            className="btn btn-link p-0 ms-2 text-decoration-none"
+            onClick={handleShowModal}
+          >
+            <FaInfoCircle /> Ver más
+          </button>
         </p>
       </div>
+
+      {/* Modal de descripción */}
+      {showModal && (
+        <VacancyDescriptionModal
+          title={vacancy.title}
+          description={vacancy.vacancyDescription}
+          show={showModal}
+          onClose={() => setShowModal(false)}
+        />
+      )}
     </div>
   );
 };
