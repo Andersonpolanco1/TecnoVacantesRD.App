@@ -28,7 +28,7 @@ const VacancyDetails = ({ vacancy }: VacancyDetailsProps) => {
           </span>
 
           <span className="text-secondary">
-            <i className="bi bi-geo-alt"></i> {vacancy.location}
+            <i className="bi bi-geo-alt"></i> {vacancy.provinceName}
           </span>
         </div>
 

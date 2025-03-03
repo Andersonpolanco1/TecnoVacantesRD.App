@@ -1,5 +1,6 @@
 import { Vacancy } from "@/types/vacancy";
 import { VacancyMode, VacancyModeLabels } from "@/types/VacancyMode";
+import Link from "next/link";
 import {
   FaCalendarAlt,
   FaClock,
@@ -22,12 +23,12 @@ const VacancyListItem = ({ vacancy }: VacancyListItemProps) => {
   return (
     <div className="p-3 mb-3 border rounded-lg shadow-sm bg-white">
       <h5 className="font-weight-bold text-primary mb-1">
-        <a
+        <Link
           href={`/vacancies/${vacancy.publicId}`}
           className="text-primary text-decoration-none"
         >
           {vacancy.title}
-        </a>
+        </Link>
       </h5>
       <p className="text-muted mb-2">
         <small>{vacancy.categoryName}</small>

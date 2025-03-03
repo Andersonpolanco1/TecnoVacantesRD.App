@@ -7,7 +7,6 @@ import { fetchVacancies } from "@/lib/services/vacanciesService";
 import { Vacancy } from "@/types/vacancy";
 import { VacancyFilter } from "@/types/VacancyFilters";
 import Pagination from "@/components/pagination";
-import ScrollToUpButton from "@/components/ScrollToUpButton";
 
 export default function Page() {
   const [vacancies, setVacancies] = useState<Vacancy[]>([]);
