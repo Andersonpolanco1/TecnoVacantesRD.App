@@ -5,6 +5,7 @@ import Navbar from "@/components/Navbar";
 import { LoadingProvider } from "../providers/loadingProvider";
 import AppSessionProvider from "../providers/appSessionProvider";
 import { NotificationProvider } from "@/providers/notificationContext";
+import ScrollToUpButton from "@/components/ScrollToUpButton";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -36,6 +37,7 @@ export default async function RootLayout({
                   </p>
                 </footer>
               </div>
+              <ScrollToUpButton />
             </NotificationProvider>
           </LoadingProvider>
         </AppSessionProvider>

@@ -8,16 +8,18 @@ interface VacancyListProps {
 
 export default function VacancyList({ vacancies }: VacancyListProps) {
   return (
-    <ul className="vacancy-list list-unstyled">
-      {vacancies.length > 0 ? (
-        vacancies.map((vacancy) => (
-          <li key={vacancy.publicId} className="mb-4">
-            <VacancyListItem vacancy={vacancy} />
-          </li>
-        ))
-      ) : (
-        <p className="text-muted text-center">No hay vacantes disponibles.</p>
-      )}
-    </ul>
+    <>
+      <ul className="vacancy-list list-unstyled">
+        {vacancies.length > 0 ? (
+          vacancies.map((vacancy) => (
+            <li key={vacancy.publicId} className="mb-4">
+              <VacancyListItem vacancy={vacancy} />
+            </li>
+          ))
+        ) : (
+          <p className="text-muted text-center">No hay vacantes disponibles.</p>
+        )}
+      </ul>
+    </>
   );
 }

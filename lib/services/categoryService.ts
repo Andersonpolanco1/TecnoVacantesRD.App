@@ -1,14 +1,14 @@
-import config from "@/config/config_dev";
-import { arrayBuffer } from "stream/consumers";
-
 export const fetchCategories = async () => {
   try {
-    const response = await fetch(`${config.VACANCIES_API_URL}/api/categories`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_VACANCIES_API_URL}/api/categories`,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
 
     if (!response.ok) {
       console.log(response);

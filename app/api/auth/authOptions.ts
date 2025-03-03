@@ -16,7 +16,7 @@ const authOptions: AuthOptions = {
       if (account) {
         try {
           const response = await fetch(
-            "https://localhost:7263/api/auth/providers",
+            `${process.env.NEXT_PUBLIC_VACANCIES_AUTH_API_URL}/api/auth/providers`,
             {
               method: "POST",
               headers: {

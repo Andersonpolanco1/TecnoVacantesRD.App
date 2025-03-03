@@ -6,7 +6,8 @@ import VacancyMainFilter from "@/components/Vacancy/VacancyMainFilter";
 import { fetchVacancies } from "@/lib/services/vacanciesService";
 import { Vacancy } from "@/types/vacancy";
 import { VacancyFilter } from "@/types/VacancyFilters";
-import Pagination from "@/components/controls/pagination";
+import Pagination from "@/components/pagination";
+import ScrollToUpButton from "@/components/ScrollToUpButton";
 
 export default function Page() {
   const [vacancies, setVacancies] = useState<Vacancy[]>([]);
@@ -97,12 +98,7 @@ export default function Page() {
           </div>
         </div>
       </div>
-      <div
-        className="vacancy-container border border-1 p-4"
-        style={{ maxHeight: "550px", overflowY: "auto" }}
-      >
-        <VacancyList vacancies={vacancies} />
-      </div>
+      <VacancyList vacancies={vacancies} />
       <div className="my-3">
         {totalPages != 0 && (
           <Pagination
