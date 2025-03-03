@@ -1,9 +1,8 @@
 import config from "@/config/config_dev";
-import { arrayBuffer } from "stream/consumers";
 
-export const fetchCategories = async () => {
+export const fetchProvinces = async () => {
   try {
-    const response = await fetch(`${config.VACANCIES_API_URL}/api/categories`, {
+    const response = await fetch(`${config.VACANCIES_API_URL}/api/provinces`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -12,13 +11,13 @@ export const fetchCategories = async () => {
 
     if (!response.ok) {
       console.log(response);
-      throw new Error(`Error fetching categories: ${response.statusText}`);
+      throw new Error(`Error fetching provinces: ${response.statusText}`);
     }
 
     const data = await response.json();
     return data;
   } catch (error) {
     console.error(error);
-    return new Array<Category>();
+    return new Array<Province>();
   }
 };

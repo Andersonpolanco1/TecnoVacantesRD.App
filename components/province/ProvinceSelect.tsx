@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { fetchCategories } from "@/lib/services/categoryService";
+import { fetchProvinces } from "@/lib/services/provinceService";
 
 interface Props {
   value?: number | null;
@@ -7,13 +7,13 @@ interface Props {
 }
 
 export default function CategorySelect({ value, onChange }: Props) {
-  const [categories, setCategories] = useState<Category[]>([]);
+  const [provinces, setProvinces] = useState<Province[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const loadCategories = async () => {
-      const data = await fetchCategories();
-      setCategories(data);
+      const data = await fetchProvinces();
+      setProvinces(data);
       setLoading(false);
     };
     loadCategories();
@@ -21,11 +21,11 @@ export default function CategorySelect({ value, onChange }: Props) {
 
   return (
     <>
-      <label htmlFor="category" className="form-label">
-        Categoría
+      <label htmlFor="province" className="form-label">
+        Provincia / Municipio
       </label>
       <select
-        id="category"
+        id="province"
         className="form-select"
         value={value ?? ""}
         onChange={(e) =>
@@ -34,9 +34,9 @@ export default function CategorySelect({ value, onChange }: Props) {
         disabled={loading}
       >
         <option value="">Seleccionar</option>
-        {categories.map((category) => (
-          <option key={category.id} value={category.id}>
-            {category.name}
+        {provinces.map((province) => (
+          <option key={province.id} value={province.id}>
+            {province.name}
           </option>
         ))}
       </select>

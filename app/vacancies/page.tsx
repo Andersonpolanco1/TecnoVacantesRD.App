@@ -19,7 +19,7 @@ export default function Page() {
     description: null,
     salaryFrom: null,
     salaryTo: null,
-    location: null,
+    provinceId: null,
     mode: null,
     categoryId: null,
   });

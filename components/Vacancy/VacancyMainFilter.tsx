@@ -2,6 +2,7 @@ import { VacancyFilter } from "@/types/VacancyFilters";
 import React, { useState } from "react";
 import CategorySelect from "../category/CategorySelect";
 import VacancyModeSelect from "../Mode/vacancyMode";
+import ProvinceSelect from "../province/ProvinceSelect";
 
 interface FiltroVacantesProps {
   onFilterChange: (filters: VacancyFilter) => void;
@@ -16,7 +17,7 @@ const VacancyMainFilter = ({
     description: null,
     salaryFrom: null,
     salaryTo: null,
-    location: null,
+    provinceId: null,
     mode: null,
     categoryId: null,
   });
@@ -84,16 +85,9 @@ const VacancyMainFilter = ({
       <div className="row">
         {/* Filtro por Ubicación */}
         <div className="col-md-4 mb-3">
-          <label htmlFor="location" className="form-label">
-            Ubicación
-          </label>
-          <input
-            type="text"
-            id="location"
-            className="form-control"
-            value={filters.location ?? ""}
-            onChange={(e) => handleFilterChange("location", e.target.value)}
-            placeholder="Ubicación de la vacante"
+          <ProvinceSelect
+            onChange={(value) => handleFilterChange("provinceId", value)}
+            value={filters.provinceId}
           />
         </div>
 
