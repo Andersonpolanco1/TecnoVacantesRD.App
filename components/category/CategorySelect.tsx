@@ -4,9 +4,14 @@ import { fetchCategories } from "@/lib/services/categoryService";
 interface Props {
   value?: number | null;
   onChange: (value: number | null) => void;
+  flagRequired: boolean;
 }
 
-export default function CategorySelect({ value, onChange }: Props) {
+export default function CategorySelect({
+  value,
+  onChange,
+  flagRequired,
+}: Props) {
   const [categories, setCategories] = useState<Category[]>([]);
   const [loading, setLoading] = useState(true);
 
@@ -22,7 +27,7 @@ export default function CategorySelect({ value, onChange }: Props) {
   return (
     <>
       <label htmlFor="category" className="form-label">
-        Categoría
+        {flagRequired && <span className="text-danger">* </span>}Categoría
       </label>
       <select
         id="category"

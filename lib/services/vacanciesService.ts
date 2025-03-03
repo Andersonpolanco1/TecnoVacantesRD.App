@@ -42,6 +42,33 @@ export const fetchVacancyById = async (publicId: string) => {
   return response.json();
 };
 
+export const publish = async (formData: PublishVacancy) => {
+  try {
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_VACANCIES_API_URL}/api/vacancies`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      }
+    );
+
+    if (response.ok) {
+      return { success: true };
+    } else {
+      const errorData = await response.json();
+      return {
+        success: false,
+        message: errorData.message || "Error al registrar la vacante",
+      };
+    }
+  } catch (error) {
+    return { success: false, message: "Error de conexión con la API" };
+  }
+};
+
 const convertFiltersToQueryParams = (filters: VacancyFilter): string => {
   const queryParams = new URLSearchParams();
 

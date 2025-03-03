@@ -86,6 +86,7 @@ const VacancyMainFilter = ({
         {/* Filtro por Ubicación */}
         <div className="col-md-4 mb-3">
           <ProvinceSelect
+            flagRequired={false}
             onChange={(value) => handleFilterChange("provinceId", value)}
             value={filters.provinceId}
           />
@@ -94,6 +95,7 @@ const VacancyMainFilter = ({
         {/* Filtro por Modo y Categoría en la misma fila */}
         <div className="col-md-4 mb-3">
           <VacancyModeSelect
+            flagRequired={false}
             onChange={(value) => handleFilterChange("mode", value)}
             value={filters.mode}
           />
@@ -102,6 +104,7 @@ const VacancyMainFilter = ({
         <div className="col-md-4 mb-3">
           {/* Filtro por Modo y Categoría en la misma fila */}
           <CategorySelect
+            flagRequired={false}
             value={filters.categoryId}
             onChange={(value) => handleFilterChange("categoryId", value)}
           />

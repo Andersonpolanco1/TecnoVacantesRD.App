@@ -4,16 +4,19 @@ import { VacancyMode, VacancyModeLabels } from "@/types/VacancyMode";
 interface VacancyModeSelectProps {
   value?: VacancyMode | null;
   onChange: (mode: VacancyMode) => void;
+  flagRequired: boolean;
 }
 
 const VacancyModeSelect: React.FC<VacancyModeSelectProps> = ({
   value,
   onChange,
+  flagRequired,
 }) => {
   return (
     <div className="mb-3">
       <label htmlFor="vacancyMode" className="form-label">
-        Modalidad de Trabajo
+        {flagRequired && <span className="text-danger">* </span>}Modalidad de
+        Trabajo
       </label>
       <select
         id="vacancyMode"

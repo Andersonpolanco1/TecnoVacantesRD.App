@@ -4,9 +4,14 @@ import { fetchProvinces } from "@/lib/services/provinceService";
 interface Props {
   value?: number | null;
   onChange: (value: number | null) => void;
+  flagRequired: boolean;
 }
 
-export default function CategorySelect({ value, onChange }: Props) {
+export default function CategorySelect({
+  value,
+  onChange,
+  flagRequired,
+}: Props) {
   const [provinces, setProvinces] = useState<Province[]>([]);
   const [loading, setLoading] = useState(true);
 
@@ -21,11 +26,13 @@ export default function CategorySelect({ value, onChange }: Props) {
 
   return (
     <>
-      <label htmlFor="province" className="form-label">
-        Provincia / Municipio
+      <label htmlFor="provinceId" className="form-label">
+        {flagRequired && <span className="text-danger">* </span>}Provincia /
+        Municipio
       </label>
       <select
-        id="province"
+        name="provinceId"
+        id="provinceId"
         className="form-select"
         value={value ?? ""}
         onChange={(e) =>
