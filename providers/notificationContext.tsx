@@ -36,14 +36,13 @@ export const NotificationProvider = ({
     title: string,
     message: string
   ) => {
-    const id = new Date().getTime();
+    const id = crypto.randomUUID();
     const icon = getIconByType(type);
 
-    console.log("Notificación enviada", { type, title, message });
     setNotifications((prev) => [...prev, { id, type, title, message, icon }]);
   };
 
-  const removeNotification = (id: number) => {
+  const removeNotification = (id: string) => {
     setNotifications((prev) =>
       prev.filter((notification) => notification.id !== id)
     );

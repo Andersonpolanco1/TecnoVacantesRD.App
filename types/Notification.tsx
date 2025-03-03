@@ -16,7 +16,7 @@ export const NOTIFICATION_COLORS = {
 export type NotificationType = keyof typeof NOTIFICATION_COLORS;
 
 export interface Notification {
-  id: number;
+  id: string;
   type: NotificationType;
   title: string;
   message: string;

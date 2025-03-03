@@ -3,7 +3,7 @@ import { Notification } from "../types/Notification";
 
 interface NotificationListProps {
   notifications: Notification[];
-  removeNotification: (id: number) => void;
+  removeNotification: (id: string) => void;
 }
 
 export const NotificationList = ({
