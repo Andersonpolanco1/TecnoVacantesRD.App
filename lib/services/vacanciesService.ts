@@ -1,20 +1,12 @@
 import { VacancyFilter } from "@/types/VacancyFilters";
 import config from "@/config/config_dev";
-import { Session } from "next-auth";
 
-export const fetchVacancies = async (
-  filters: VacancyFilter,
-  session: Session | null
-) => {
+export const fetchVacancies = async (filters: VacancyFilter) => {
   try {
     const queryString = convertFiltersToQueryParams(filters);
-    const accessToken = session?.accessToken;
-    if (!accessToken) {
-      throw new Error("Access token not found in session");
-    }
+
     const headers = {
       "Content-Type": "application/json",
-      Authorization: `Bearer ${accessToken}`,
     };
 
     const response = await fetch(

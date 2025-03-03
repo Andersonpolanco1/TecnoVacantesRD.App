@@ -61,7 +61,7 @@ const VacancyListItem = ({ vacancy }: VacancyListItemProps) => {
 
         <p className="text-muted text-xs mb-1">
           <FaMapMarkerAlt className="me-2" />{" "}
-          <span className="fw-bold">{vacancy.location}</span>
+          <span className="fw-bold">{vacancy.provinceName}</span>
         </p>
 
         <p className="text-xs text-muted mb-0">

@@ -7,7 +7,6 @@ import { fetchVacancies } from "@/lib/services/vacanciesService";
 import { Vacancy } from "@/types/vacancy";
 import { VacancyFilter } from "@/types/VacancyFilters";
 import Pagination from "@/components/controls/pagination";
-import { useSession } from "next-auth/react";
 
 export default function Page() {
   const [vacancies, setVacancies] = useState<Vacancy[]>([]);
@@ -15,7 +14,6 @@ export default function Page() {
   const [filterExpanded, setFilterExpanded] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(0);
-  const { data: session } = useSession();
 
   const [filters, setFilters] = useState<VacancyFilter>({
     description: null,
@@ -28,7 +26,7 @@ export default function Page() {
 
   const loadVacancies = async () => {
     try {
-      const data = await fetchVacancies(filters, session);
+      const data = await fetchVacancies(filters);
       if (data === null || !data.items || !Array.isArray(data.items)) {
         throw new Error("No se pudo obtener las vacantes");
       }
@@ -63,7 +61,7 @@ export default function Page() {
       loadVacancies();
       setShouldFetch(false);
     }
-  }, [shouldFetch, filters, session]);
+  }, [shouldFetch, filters]);
 
   return (
     <>

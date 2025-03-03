@@ -2,6 +2,7 @@
 
 import { useNotification } from "@/providers/notificationContext";
 import { NOTIFICATION_COLORS } from "@/types/Notification";
+import Link from "next/link";
 import { useEffect } from "react";
 
 export default function WelcomePage() {
@@ -32,12 +33,12 @@ export default function WelcomePage() {
       </div>
 
       <div className="mt-5">
-        <a href="/vacancies" className="btn btn-primary btn-lg">
+        <Link href="/vacancies" className="btn btn-primary btn-lg">
           Explorar Vacantes
-        </a>
-        <a href="auth/login" className="btn btn-outline-primary btn-lg ms-3">
+        </Link>
+        <Link href="/signIn" className="btn btn-outline-primary btn-lg ms-3">
           Registrarse
-        </a>
+        </Link>
       </div>
     </div>
   );
