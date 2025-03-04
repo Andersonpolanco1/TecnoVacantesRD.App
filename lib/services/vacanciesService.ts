@@ -42,7 +42,14 @@ export const fetchVacancyById = async (publicId: string) => {
   return response.json();
 };
 
-export const publish = async (formData: PublishVacancy) => {
+export const publish = async (formData: PublishVacancy, token: string) => {
+  if (!token) {
+    return {
+      success: false,
+      message: "Autenticación no disponible",
+    };
+  }
+
   try {
     const response = await fetch(
       `${process.env.NEXT_PUBLIC_VACANCIES_API_URL}/api/vacancies`,
@@ -50,6 +57,7 @@ export const publish = async (formData: PublishVacancy) => {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify(formData),
       }

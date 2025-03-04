@@ -7,6 +7,8 @@ import { fetchVacancies } from "@/lib/services/vacanciesService";
 import { Vacancy } from "@/types/vacancy";
 import { VacancyFilter } from "@/types/VacancyFilters";
 import Pagination from "@/components/pagination";
+import { useNotification } from "@/providers/notificationContext";
+import { NOTIFICATION_COLORS } from "@/types/Notification";
 
 export default function Page() {
   const [vacancies, setVacancies] = useState<Vacancy[]>([]);
@@ -14,6 +16,7 @@ export default function Page() {
   const [filterExpanded, setFilterExpanded] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(0);
+  const { showNotification } = useNotification();
 
   const [filters, setFilters] = useState<VacancyFilter>({
     description: null,
@@ -28,11 +31,16 @@ export default function Page() {
     try {
       const data = await fetchVacancies(filters);
       if (data === null || !data.items || !Array.isArray(data.items)) {
-        throw new Error("No se pudo obtener las vacantes");
+        showNotification(
+          NOTIFICATION_COLORS.danger,
+          "Error de comunicación",
+          "No se pudieron obtener las vacantes."
+        );
+      } else {
+        setVacancies(data.items);
+        setCurrentPage(data.currentPage);
+        setTotalPages(data.totalPagesCount);
       }
-      setVacancies(data.items);
-      setCurrentPage(data.currentPage);
-      setTotalPages(data.totalPagesCount);
     } catch (error) {
       console.error("Error al obtener los datos:", error);
     }

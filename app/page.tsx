@@ -1,21 +1,8 @@
 "use client";
 
-import { useNotification } from "@/providers/notificationContext";
-import { NOTIFICATION_COLORS } from "@/types/Notification";
 import Link from "next/link";
-import { useEffect } from "react";
 
 export default function WelcomePage() {
-  const { showNotification } = useNotification();
-
-  useEffect(() => {
-    showNotification(
-      NOTIFICATION_COLORS.success,
-      "Bienvenido",
-      "¡Bienvenido a TecnoVacantesRD!"
-    );
-  }, []);
-
   return (
     <div className="container mt-5 text-center">
       <h1 className="display-4 fw-bold text-primary">TecnoVacantesRD</h1>

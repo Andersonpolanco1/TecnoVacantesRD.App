@@ -9,9 +9,11 @@ import { publish } from "@/lib/services/vacanciesService";
 import { useNotification } from "@/providers/notificationContext";
 import { NOTIFICATION_COLORS } from "@/types/Notification";
 import { VacancyMode } from "@/types/VacancyMode";
+import { useSession } from "next-auth/react";
 
 const JobPostingForm = () => {
   const { showNotification } = useNotification();
+  const { data: session } = useSession();
 
   const [formData, setFormData] = useState<PublishVacancy>({
     title: "",
@@ -85,7 +87,7 @@ const JobPostingForm = () => {
       return;
     }
 
-    const result = await publish(formData);
+    const result = await publish(formData, session?.accessToken as string);
     if (result.success)
       showNotification(
         NOTIFICATION_COLORS.success,
