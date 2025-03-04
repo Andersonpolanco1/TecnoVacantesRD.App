@@ -1,31 +1,50 @@
 import { VacancyFilter } from "@/types/VacancyFilters";
 
-export const fetchVacancies = async (filters: VacancyFilter) => {
+const fetchPaginated = async (
+  url: string,
+  filters: VacancyFilter,
+  token: string
+) => {
   try {
     const queryString = convertFiltersToQueryParams(filters);
 
     const headers = {
       "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
     };
 
-    const response = await fetch(
-      `${process.env.NEXT_PUBLIC_VACANCIES_API_URL}/api/vacancies?${queryString}`,
-      {
-        method: "GET",
-        credentials: "include",
-        headers: headers,
-      }
-    );
+    const response = await fetch(`${url}?${queryString}`, {
+      method: "GET",
+      headers: headers,
+    });
 
     if (!response.ok) {
       throw new Error(`Error fetching vacancies: ${response.statusText}`);
     }
-
     const data = await response.json();
     return data;
   } catch (error) {
     return null;
   }
+};
+
+export const fetchVacancies = async (filters: VacancyFilter) => {
+  return await fetchPaginated(
+    `${process.env.NEXT_PUBLIC_VACANCIES_API_URL}/api/vacancies`,
+    filters,
+    ""
+  );
+};
+
+export const fetchUserVacancies = async (
+  filters: VacancyFilter,
+  token: string
+) => {
+  return await fetchPaginated(
+    `${process.env.NEXT_PUBLIC_VACANCIES_API_URL}/api/users/me/vacancies`,
+    filters,
+    token
+  );
 };
 
 export const fetchVacancyById = async (publicId: string) => {

@@ -36,9 +36,14 @@ const Navbar = () => {
 
             {/* Mostrar información del usuario si la sesión está activa */}
             {session ? (
-              <li className="nav-item">
-                <span className="nav-link">Hola, {session.user?.name}</span>
-              </li>
+              <>
+                <Link className="nav-link" href="/vacancies/me">
+                  Mis vacantes
+                </Link>
+                <li className="nav-item">
+                  <span className="nav-link">Hola, {session.user?.name}</span>
+                </li>
+              </>
             ) : (
               <li className="nav-item">
                 {/* Redirigir al formulario de inicio de sesión */}

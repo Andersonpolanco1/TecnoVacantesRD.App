@@ -4,7 +4,6 @@ import { useState } from "react";
 import NavItem from "./NavItem";
 
 const navLinks = [
-  { href: "/", label: "Welcome" },
   { href: "/vacancies", label: "Vacantes" },
   { href: "/about", label: "Sobre Nosotros" },
   { href: "/vacancies/publish", label: "Publicar Vacante" },
