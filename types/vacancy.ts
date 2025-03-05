@@ -1,16 +1,20 @@
-// types/vacancy.ts
-export interface Vacancy {
+export interface VacancyPublicDto {
   publicId: string;
   title: string;
   vacancyDescription: string;
-  publishDate: string;
-  closeDate: string;
+  publishedAt: string;
+  expiresAt: string;
   salary: number;
   provinceName: string;
   mode: number;
   categoryName: string;
 }
 
+export interface VacancyUserDto extends VacancyPublicDto {
+  status: number;
+  createdAt: string;
+}
+
 export interface VacancyListProps {
-  vacancies: Vacancy[]; // Lista de vacantes
+  vacancies: VacancyPublicDto[];
 }

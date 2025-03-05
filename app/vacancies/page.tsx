@@ -1,24 +1,24 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import VacancyList from "@/components/Vacancy/VacancyList";
 import VacancyMainFilter from "@/components/Vacancy/VacancyMainFilter";
 import { fetchVacancies } from "@/lib/services/vacanciesService";
-import { Vacancy } from "@/types/vacancy";
-import { VacancyFilter } from "@/types/VacancyFilters";
+import { VacancyPublicDto } from "@/types/vacancy";
+import { VacancyPublicFilter } from "@/types/VacancyFilters";
 import Pagination from "@/components/pagination";
 import { useNotification } from "@/providers/notificationContext";
 import { NOTIFICATION_COLORS } from "@/types/Notification";
+import VacancyListItem from "@/components/Vacancy/VacancyListItem";
 
 export default function Page() {
-  const [vacancies, setVacancies] = useState<Vacancy[]>([]);
+  const [vacancies, setVacancies] = useState<VacancyPublicDto[]>([]);
   const [shouldFetch, setShouldFetch] = useState(true);
   const [filterExpanded, setFilterExpanded] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(0);
   const { showNotification } = useNotification();
 
-  const [filters, setFilters] = useState<VacancyFilter>({
+  const [filters, setFilters] = useState<VacancyPublicFilter>({
     description: null,
     salaryFrom: null,
     salaryTo: null,
@@ -46,7 +46,7 @@ export default function Page() {
     }
   };
 
-  const handleFilterChange = (newFilters: VacancyFilter) => {
+  const handleFilterChange = (newFilters: VacancyPublicFilter) => {
     setFilters(newFilters);
   };
 
@@ -105,7 +105,19 @@ export default function Page() {
           </div>
         </div>
       </div>
-      <VacancyList vacancies={vacancies} />
+      <ul className="vacancy-list list-unstyled">
+        {vacancies.length > 0 ? (
+          vacancies.map((vacancy) => (
+            <li key={vacancy.publicId} className="mb-4">
+              <VacancyListItem vacancy={vacancy} />
+            </li>
+          ))
+        ) : (
+          <p className="text-muted text-center">
+            No has publicado ninguna vacante.
+          </p>
+        )}
+      </ul>
       <div className="my-3">
         {totalPages != 0 && (
           <Pagination

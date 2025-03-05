@@ -1,8 +1,8 @@
-import { VacancyFilter } from "@/types/VacancyFilters";
+import { VacancyPublicFilter } from "@/types/VacancyFilters";
 
 const fetchPaginated = async (
   url: string,
-  filters: VacancyFilter,
+  filters: VacancyPublicFilter,
   token: string
 ) => {
   try {
@@ -28,7 +28,7 @@ const fetchPaginated = async (
   }
 };
 
-export const fetchVacancies = async (filters: VacancyFilter) => {
+export const fetchVacancies = async (filters: VacancyPublicFilter) => {
   return await fetchPaginated(
     `${process.env.NEXT_PUBLIC_VACANCIES_API_URL}/api/vacancies`,
     filters,
@@ -37,11 +37,11 @@ export const fetchVacancies = async (filters: VacancyFilter) => {
 };
 
 export const fetchUserVacancies = async (
-  filters: VacancyFilter,
+  filters: VacancyPublicFilter,
   token: string
 ) => {
   return await fetchPaginated(
-    `${process.env.NEXT_PUBLIC_VACANCIES_API_URL}/api/users/me/vacancies`,
+    `${process.env.NEXT_PUBLIC_VACANCIES_API_URL}/api/usersvacancies`,
     filters,
     token
   );
@@ -71,7 +71,7 @@ export const publish = async (formData: PublishVacancy, token: string) => {
 
   try {
     const response = await fetch(
-      `${process.env.NEXT_PUBLIC_VACANCIES_API_URL}/api/vacancies`,
+      `${process.env.NEXT_PUBLIC_VACANCIES_API_URL}/api/usersvacancies`,
       {
         method: "POST",
         headers: {
@@ -96,7 +96,7 @@ export const publish = async (formData: PublishVacancy, token: string) => {
   }
 };
 
-const convertFiltersToQueryParams = (filters: VacancyFilter): string => {
+const convertFiltersToQueryParams = (filters: VacancyPublicFilter): string => {
   const queryParams = new URLSearchParams();
 
   for (const [key, value] of Object.entries(filters)) {

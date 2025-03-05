@@ -1,4 +1,4 @@
-import { Vacancy } from "@/types/vacancy";
+import { VacancyPublicDto } from "@/types/vacancy";
 import { VacancyMode, VacancyModeLabels } from "@/types/VacancyMode";
 import Link from "next/link";
 import {
@@ -11,7 +11,7 @@ import {
 } from "react-icons/fa";
 
 interface VacancyDetailProps {
-  vacancy: Vacancy;
+  vacancy: VacancyPublicDto;
 }
 
 const VacancyDetails = ({ vacancy }: VacancyDetailProps) => {
@@ -29,12 +29,12 @@ const VacancyDetails = ({ vacancy }: VacancyDetailProps) => {
         <p className="text-muted text-xs mb-2">
           <FaCalendarAlt className="me-2" /> <strong>Publicado:</strong>{" "}
           <span className="text-primary">
-            {formatDate(vacancy.publishDate)}
+            {formatDate(vacancy.publishedAt)}
           </span>
         </p>
         <p className="text-muted text-xs mb-2">
           <FaClock className="me-2" /> <strong>Cierre:</strong>{" "}
-          <span className="text-danger">{formatDate(vacancy.closeDate)}</span>
+          <span className="text-danger">{formatDate(vacancy.expiresAt)}</span>
         </p>
 
         <p className="text-xs mb-2">

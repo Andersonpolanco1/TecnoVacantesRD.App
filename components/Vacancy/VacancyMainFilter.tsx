@@ -1,11 +1,11 @@
-import { VacancyFilter } from "@/types/VacancyFilters";
+import { VacancyPublicFilter } from "@/types/VacancyFilters";
 import React, { useState } from "react";
 import CategorySelect from "../category/CategorySelect";
 import VacancyModeSelect from "../Mode/vacancyMode";
 import ProvinceSelect from "../province/ProvinceSelect";
 
 interface FiltroVacantesProps {
-  onFilterChange: (filters: VacancyFilter) => void;
+  onFilterChange: (filters: VacancyPublicFilter) => void;
   onFilterClick: () => void;
 }
 
@@ -13,7 +13,7 @@ const VacancyMainFilter = ({
   onFilterChange,
   onFilterClick,
 }: FiltroVacantesProps) => {
-  const [filters, setFilters] = useState<VacancyFilter>({
+  const [filters, setFilters] = useState<VacancyPublicFilter>({
     description: null,
     salaryFrom: null,
     salaryTo: null,

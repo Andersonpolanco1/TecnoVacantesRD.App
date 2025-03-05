@@ -22,5 +22,5 @@ export async function middleware(req: NextRequest) {
 }
 
 export const config = {
-  matcher: [signInPath, ...restrictedPaths],
+  matcher: ["/signIn", "/vacancies/publish"],
 };
