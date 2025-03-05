@@ -2,7 +2,6 @@ import { getToken } from "next-auth/jwt";
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 
-const restrictedPaths = ["/vacancies/publish"];
 const signInPath = "/signIn"; // Ruta de inicio de sesión
 
 export async function middleware(req: NextRequest) {
@@ -13,8 +12,8 @@ export async function middleware(req: NextRequest) {
     return NextResponse.redirect(new URL("/", req.url));
   }
 
-  // Si no está logueado y trata de acceder a rutas protegidas, redirige a /signIn
-  if (!token && restrictedPaths.includes(req.nextUrl.pathname)) {
+  // Si no está logueado y trata de acceder a una ruta protegida, redirige a /signIn
+  if (!token && req.nextUrl.pathname.startsWith("/vacancies/mine")) {
     return NextResponse.redirect(new URL(signInPath, req.url));
   }
 
@@ -22,5 +21,5 @@ export async function middleware(req: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/signIn", "/vacancies/publish"],
+  matcher: ["/signIn", "/vacancies/mine/:path*"],
 };

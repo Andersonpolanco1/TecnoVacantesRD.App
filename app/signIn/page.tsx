@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import AuthButtons from "@/components/AuthButtons";
+import AuthButtons from "@/components/public/AuthButtons";
 
 export default function SignIn() {
   const [email, setEmail] = useState("");

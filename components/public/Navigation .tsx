@@ -5,7 +5,7 @@ import NavItem from "./NavItem";
 
 const navLinks = [
   { href: "/vacancies", label: "Vacantes" },
-  { href: "/vacancies/publish", label: "Publicar Vacante" },
+  { href: "/vacancies/mine/publish", label: "Publicar Vacante" },
 ];
 
 const Navigation = () => {

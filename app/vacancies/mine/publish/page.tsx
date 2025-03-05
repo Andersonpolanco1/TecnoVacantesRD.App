@@ -2,9 +2,9 @@
 
 import { useState } from "react";
 import { FaPlus } from "react-icons/fa";
-import ProvinceSelect from "@/components/province/ProvinceSelect";
-import VacancyModeSelect from "@/components/Mode/vacancyMode";
-import CategorySelect from "@/components/category/CategorySelect";
+import ProvinceSelect from "@/components/public/ProvinceSelect";
+import VacancyModeSelect from "@/components/public/vacancyMode";
+import CategorySelect from "@/components/public/CategorySelect";
 import { publish } from "@/lib/services/vacanciesService";
 import { useNotification } from "@/providers/notificationProvider";
 import { NOTIFICATION_COLORS } from "@/types/Notification";
@@ -156,7 +156,6 @@ const JobPostingForm = () => {
             value={formData.salary}
             onChange={handleChange}
             className="form-control"
-            required
           />
           {errors.salary && <div className="text-danger">{errors.salary}</div>}
         </div>

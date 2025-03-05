@@ -1,10 +1,12 @@
+import { PaginatedResponse } from "@/types/PaginatedResponse";
+import { VacancyPublicDto, VacancyUserDto } from "@/types/vacancy";
 import { VacancyPublicFilter } from "@/types/VacancyFilters";
 
-const fetchPaginated = async (
+const fetchPaginated = async <T>(
   url: string,
   filters: VacancyPublicFilter,
   token: string
-) => {
+): Promise<PaginatedResponse<T> | null> => {
   try {
     const queryString = convertFiltersToQueryParams(filters);
 
@@ -15,36 +17,45 @@ const fetchPaginated = async (
 
     const response = await fetch(`${url}?${queryString}`, {
       method: "GET",
-      headers: headers,
+      headers,
     });
 
     if (!response.ok) {
       throw new Error(`Error fetching vacancies: ${response.statusText}`);
     }
-    const data = await response.json();
+
+    const data: PaginatedResponse<T> = await response.json();
+    console.log(data);
     return data;
   } catch (error) {
-    return null;
+    console.error("Error in fetchPaginated:", error);
+    return PaginatedResponse.emptyObject<T>();
   }
 };
 
 export const fetchVacancies = async (filters: VacancyPublicFilter) => {
-  return await fetchPaginated(
+  var data = await fetchPaginated<VacancyPublicDto>(
     `${process.env.NEXT_PUBLIC_VACANCIES_API_URL}/api/vacancies`,
     filters,
     ""
   );
+
+  if (!data) data = PaginatedResponse.emptyObject<VacancyPublicDto>();
+  return data;
 };
 
 export const fetchUserVacancies = async (
   filters: VacancyPublicFilter,
   token: string
 ) => {
-  return await fetchPaginated(
-    `${process.env.NEXT_PUBLIC_VACANCIES_API_URL}/api/usersvacancies`,
+  var data = await fetchPaginated<VacancyUserDto>(
+    `${process.env.NEXT_PUBLIC_VACANCIES_API_URL}/api/vacancies/mine`,
     filters,
     token
   );
+  console.log(data);
+  if (!data) data = PaginatedResponse.emptyObject<VacancyUserDto>();
+  return data;
 };
 
 export const fetchVacancyById = async (publicId: string) => {
@@ -71,7 +82,7 @@ export const publish = async (formData: PublishVacancy, token: string) => {
 
   try {
     const response = await fetch(
-      `${process.env.NEXT_PUBLIC_VACANCIES_API_URL}/api/usersvacancies`,
+      `${process.env.NEXT_PUBLIC_VACANCIES_API_URL}/api/vacancies/mine`,
       {
         method: "POST",
         headers: {

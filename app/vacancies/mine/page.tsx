@@ -1,15 +1,15 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import VacancyMainFilter from "@/components/Vacancy/VacancyMainFilter";
 import { fetchUserVacancies } from "@/lib/services/vacanciesService";
 import { VacancyUserDto } from "@/types/vacancy";
 import { VacancyUserFilter } from "@/types/VacancyFilters";
-import Pagination from "@/components/pagination";
+import Pagination from "@/components/public/pagination";
 import { useNotification } from "@/providers/notificationProvider";
 import { NOTIFICATION_COLORS } from "@/types/Notification";
-import VacancyUserListItem from "@/components/Vacancy/VacancyUserListItem";
+import VacancyUserListItem from "@/components/loggedUsers/VacancyUserListItem";
 import { useSession } from "next-auth/react";
+import VacancyMainFilter from "@/components/public/VacancyMainFilter";
 
 export default function Page() {
   const [vacancies, setVacancies] = useState<VacancyUserDto[]>([]);
@@ -34,7 +34,7 @@ export default function Page() {
       showNotification(NOTIFICATION_COLORS.danger, "Sesión inválida", "");
       return;
     }
-
+    console.log(session?.accessToken);
     try {
       const data = await fetchUserVacancies(filters, session.accessToken);
       setVacancies(data.items);

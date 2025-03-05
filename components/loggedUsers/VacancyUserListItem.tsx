@@ -12,7 +12,7 @@ import {
   FaEdit,
   FaRegFileAlt,
 } from "react-icons/fa";
-import VacancyDescriptionModal from "./VacancyDescriptionModal";
+import VacancyDescriptionModal from "../public/VacancyDescriptionModal";
 import {
   getShortDescription,
   getStatusIcon,

@@ -1,5 +1,5 @@
-import GoBackButton from "@/components/GoBackButton";
-import VacancyDetails from "@/components/Vacancy/VacancyDetails";
+import GoBackButton from "@/components/public/GoBackButton";
+import VacancyDetails from "@/components/public/VacancyDetails";
 import { fetchVacancyById } from "@/lib/services/vacanciesService";
 import { Suspense } from "react";
 

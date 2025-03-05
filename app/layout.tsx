@@ -1,10 +1,10 @@
 import type { Metadata } from "next";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { getSession } from "@/app/api/auth/authOptions";
-import Navbar from "@/components/Navbar";
+import Navbar from "@/components/public/Navbar";
 import AppSessionProvider from "../providers/appSessionProvider";
 import { NotificationProvider } from "@/providers/notificationProvider";
-import ScrollToUpButton from "@/components/ScrollToUpButton";
+import ScrollToUpButton from "@/components/public/ScrollToUpButton";
 import { LoadingProvider } from "@/providers/loadingProvider";
 
 export const metadata: Metadata = {

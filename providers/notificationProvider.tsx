@@ -6,7 +6,7 @@ import {
   NotificationType,
   getIconByType,
 } from "@/types/Notification";
-import { NotificationList } from "@/components/NotificacionList";
+import { NotificationList } from "@/components/public/NotificacionList";
 
 interface NotificationContextType {
   showNotification: (

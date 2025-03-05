@@ -37,7 +37,7 @@ const Navbar = () => {
             {/* Mostrar información del usuario si la sesión está activa */}
             {session ? (
               <>
-                <Link className="nav-link" href="/vacancies/me">
+                <Link className="nav-link" href="/vacancies/mine">
                   Mis vacantes
                 </Link>
                 <li className="nav-item">
