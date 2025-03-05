@@ -6,7 +6,7 @@ import { fetchUserVacancies } from "@/lib/services/vacanciesService";
 import { VacancyUserDto } from "@/types/vacancy";
 import { VacancyUserFilter } from "@/types/VacancyFilters";
 import Pagination from "@/components/pagination";
-import { useNotification } from "@/providers/notificationContext";
+import { useNotification } from "@/providers/notificationProvider";
 import { NOTIFICATION_COLORS } from "@/types/Notification";
 import VacancyUserListItem from "@/components/Vacancy/VacancyUserListItem";
 import { useSession } from "next-auth/react";

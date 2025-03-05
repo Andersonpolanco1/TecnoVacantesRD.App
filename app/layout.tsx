@@ -2,10 +2,10 @@ import type { Metadata } from "next";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { getSession } from "@/app/api/auth/authOptions";
 import Navbar from "@/components/Navbar";
-import { LoadingProvider } from "../providers/loadingProvider";
 import AppSessionProvider from "../providers/appSessionProvider";
-import { NotificationProvider } from "@/providers/notificationContext";
+import { NotificationProvider } from "@/providers/notificationProvider";
 import ScrollToUpButton from "@/components/ScrollToUpButton";
+import { LoadingProvider } from "@/providers/loadingProvider";
 
 export const metadata: Metadata = {
   title: "Create Next App",

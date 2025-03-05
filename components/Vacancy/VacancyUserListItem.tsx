@@ -10,25 +10,14 @@ import {
   FaMapMarkerAlt,
   FaInfoCircle,
   FaEdit,
-  FaCheckCircle,
-  FaTimesCircle,
-  FaClock as FaPendingIcon,
   FaRegFileAlt,
 } from "react-icons/fa";
 import VacancyDescriptionModal from "./VacancyDescriptionModal";
-
-export const EnumVacancyStatusMap: Record<number, string> = {
-  0: "Pendiente revisión",
-  1: "Aprobada",
-  2: "Rechazada",
-  3: "Publicada",
-  4: "Expirada",
-  5: "Cerrada",
-};
-
-export const getVacancyStatus = (status: number): string => {
-  return EnumVacancyStatusMap[status] || "Desconocido";
-};
+import {
+  getShortDescription,
+  getStatusIcon,
+  getVacancyStatus,
+} from "@/lib/utils";
 
 interface VacancyListItemProps {
   vacancy: VacancyUserDto;
@@ -48,29 +37,6 @@ const VacancyUserListItem = ({ vacancy }: VacancyListItemProps) => {
   };
 
   const handleShowModal = () => setShowModal(true);
-
-  const shortDescription =
-    vacancy.vacancyDescription.length > 100
-      ? `${vacancy.vacancyDescription.substring(0, 100)}...`
-      : vacancy.vacancyDescription;
-
-  // Obtener el icono correspondiente al estado
-  const getStatusIcon = (status: number) => {
-    switch (status) {
-      case 1: // Aprobada
-        return <FaCheckCircle className="text-success" />;
-      case 2: // Rechazada
-        return <FaTimesCircle className="text-danger" />;
-      case 3: // Publicada
-        return <FaClock className="text-info" />;
-      case 4: // Expirada
-        return <FaClock className="text-muted" />;
-      case 5: // Cerrada
-        return <FaTimesCircle className="text-secondary" />;
-      default: // Pendiente revisión
-        return <FaPendingIcon className="text-warning" />;
-    }
-  };
 
   return (
     <div className="p-3 mb-3 border rounded-lg shadow-sm bg-white">
@@ -140,7 +106,9 @@ const VacancyUserListItem = ({ vacancy }: VacancyListItemProps) => {
           style={{ wordWrap: "break-word" }}
         >
           <FaRegFileAlt className="me-2" /> <strong>Descripción:</strong>{" "}
-          <span className="text-muted text-break">{shortDescription}</span>
+          <span className="text-muted text-break">
+            {getShortDescription(vacancy.vacancyDescription)}
+          </span>
           <button
             className="btn btn-link p-0 ms-2 text-decoration-none"
             onClick={handleShowModal}

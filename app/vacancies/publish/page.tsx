@@ -6,7 +6,7 @@ import ProvinceSelect from "@/components/province/ProvinceSelect";
 import VacancyModeSelect from "@/components/Mode/vacancyMode";
 import CategorySelect from "@/components/category/CategorySelect";
 import { publish } from "@/lib/services/vacanciesService";
-import { useNotification } from "@/providers/notificationContext";
+import { useNotification } from "@/providers/notificationProvider";
 import { NOTIFICATION_COLORS } from "@/types/Notification";
 import { VacancyMode } from "@/types/VacancyMode";
 import { useSession } from "next-auth/react";
