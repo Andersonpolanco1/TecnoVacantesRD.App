@@ -13,13 +13,8 @@ import {
   FaRegFileAlt,
 } from "react-icons/fa";
 import VacancyDescriptionModal from "../public/VacancyDescriptionModal";
-import {
-  formatDate,
-  formatLocation,
-  getShortDescription,
-  getStatusIcon,
-  getVacancyStatus,
-} from "@/lib/utils";
+import { formatDate, formatLocation, getVacancyStatus } from "@/lib/utils";
+import { getStatusIcon } from "@/lib/utilsX";
 
 interface VacancyListItemProps {
   vacancy: VacancyUserDto;
@@ -34,7 +29,7 @@ const VacancyUserListItem = ({ vacancy }: VacancyListItemProps) => {
     <div className="p-3 mb-3 border rounded-lg shadow-sm bg-white">
       <h5 className="font-weight-bold text-primary mb-1 d-flex justify-content-between align-items-center">
         <Link
-          href={`/vacancies/${vacancy.publicId}`}
+          href={`/vacancies/mine/${vacancy.publicId}`}
           className="text-primary text-decoration-none d-inline-block text-truncate"
           style={{ maxWidth: "calc(100% - 1.5rem)" }}
         >
@@ -53,7 +48,7 @@ const VacancyUserListItem = ({ vacancy }: VacancyListItemProps) => {
       </p>
 
       <div className="d-flex flex-column">
-        {/* Estado y fecha de creación */}
+        {/* Estado */}
         <p className="text-muted text-xs mb-1 d-flex align-items-center">
           {getStatusIcon(vacancy.status)}{" "}
           <strong className="ms-2">{getVacancyStatus(vacancy.status)}</strong>

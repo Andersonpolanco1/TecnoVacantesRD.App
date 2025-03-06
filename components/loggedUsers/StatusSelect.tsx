@@ -1,4 +1,4 @@
-import { EnumVacancyStatusMap, getStatusIcon } from "@/lib/utils";
+import { EnumVacancyStatusMap } from "@/lib/utils";
 import React, { useState, useEffect } from "react";
 
 interface StatusSelectProps {
@@ -10,7 +10,7 @@ const VacancyStatusSelect: React.FC<StatusSelectProps> = ({
   value,
   onChange,
 }) => {
-  const [selectedStatus, setSelectedStatus] = useState<number | "">(""); // Inicializar con vacío
+  const [selectedStatus, setSelectedStatus] = useState<number | "">("");
 
   useEffect(() => {
     if (value !== undefined && value !== null) {
@@ -20,7 +20,7 @@ const VacancyStatusSelect: React.FC<StatusSelectProps> = ({
 
   const handleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     const newValue =
-      event.target.value === "" ? "" : Number(event.target.value); // Si es vacío, pasar undefined
+      event.target.value === "" ? "" : Number(event.target.value);
     setSelectedStatus(newValue);
     onChange(newValue);
   };

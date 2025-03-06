@@ -9,7 +9,6 @@ import { useNotification } from "@/providers/notificationProvider";
 import { NOTIFICATION_COLORS } from "@/types/Notification";
 import VacancyUserListItem from "@/components/loggedUsers/VacancyUserListItem";
 import { useSession } from "next-auth/react";
-import VacancyMainFilter from "@/components/public/VacancyMainFilter";
 import AuthenticatedFilter from "@/components/loggedUsers/AuthenticatedFilter";
 
 export default function Page() {
