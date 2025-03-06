@@ -24,7 +24,7 @@ const VacancyDescriptionModal = ({
         tabIndex={-1}
         style={{ display: "block", zIndex: 100001 }}
         aria-labelledby="vacancyModalLabel"
-        aria-hidden="true"
+        aria-hidden={!show ? "true" : "false"}
       >
         <div className="modal-dialog modal-dialog-scrollable modal-dialog-centered">
           <div className="modal-content">

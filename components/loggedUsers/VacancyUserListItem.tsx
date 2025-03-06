@@ -35,11 +35,15 @@ const VacancyUserListItem = ({ vacancy }: VacancyListItemProps) => {
       <h5 className="font-weight-bold text-primary mb-1 d-flex justify-content-between align-items-center">
         <Link
           href={`/vacancies/${vacancy.publicId}`}
-          className="text-primary text-decoration-none text-break"
+          className="text-primary text-decoration-none d-inline-block text-truncate"
+          style={{ maxWidth: "calc(100% - 1.5rem)" }}
         >
           {vacancy.title}
         </Link>
-        <button className="btn btn-link p-0 text-primary" onClick={() => {}}>
+        <button
+          className="btn btn-link p-0 text-primary ms-2"
+          onClick={() => {}}
+        >
           <FaEdit />
         </button>
       </h5>
@@ -93,21 +97,24 @@ const VacancyUserListItem = ({ vacancy }: VacancyListItemProps) => {
           </span>
         </p>
 
-        <p
-          className="text-xs text-muted mb-0"
-          style={{ wordWrap: "break-word" }}
-        >
+        <div className="text-xs text-muted mb-0 position-relative">
           <FaRegFileAlt className="me-2" /> <strong>Descripción:</strong>{" "}
-          <span className="text-muted text-break">
-            {getShortDescription(vacancy.vacancyDescription)}
-          </span>
-          <button
-            className="btn btn-link p-0 ms-2 text-decoration-none"
-            onClick={handleShowModal}
+          <div
+            className="text-decoration-none d-inline-block text-truncate"
+            style={{ maxWidth: "calc(100% - 1.5rem)" }}
           >
-            <FaInfoCircle /> Ver más
-          </button>
-        </p>
+            {vacancy.vacancyDescription}
+          </div>
+          {/* Contenedor para el botón, separado del texto */}
+          <div className="d-flex justify-content-end">
+            <button
+              className="btn btn-link p-0 text-decoration-none"
+              onClick={handleShowModal}
+            >
+              <FaInfoCircle className="ms-2" /> Ver más
+            </button>
+          </div>
+        </div>
 
         {/* Modal de descripción */}
         {showModal && (

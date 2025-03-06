@@ -8,6 +8,10 @@ const authOptions: AuthOptions = {
       clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
     }),
   ],
+  session: {
+    strategy: "jwt",
+    maxAge: 43200, //12h from now
+  },
   jwt: {
     secret: process.env.NEXTAUTH_SECRET,
   },
@@ -32,7 +36,6 @@ const authOptions: AuthOptions = {
           if (response.ok) {
             const data = await response.json();
             token.accessToken = data.accessToken;
-            token.expiresAt = new Date(data.expiresAt).toISOString();
           } else {
             console.error("Error:", await response.text());
           }
@@ -46,7 +49,6 @@ const authOptions: AuthOptions = {
     async session({ session, token }) {
       session.provider = token.provider;
       session.accessToken = token.accessToken;
-      session.expires = String(token.expiresAt);
       return session;
     },
     async redirect({ url, baseUrl }) {
