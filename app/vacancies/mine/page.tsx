@@ -10,6 +10,7 @@ import { NOTIFICATION_COLORS } from "@/types/Notification";
 import VacancyUserListItem from "@/components/loggedUsers/VacancyUserListItem";
 import { useSession } from "next-auth/react";
 import VacancyMainFilter from "@/components/public/VacancyMainFilter";
+import AuthenticatedFilter from "@/components/loggedUsers/AuthenticatedFilter";
 
 export default function Page() {
   const [vacancies, setVacancies] = useState<VacancyUserDto[]>([]);
@@ -34,7 +35,6 @@ export default function Page() {
       showNotification(NOTIFICATION_COLORS.danger, "Sesión inválida", "");
       return;
     }
-    console.log(session?.accessToken);
     try {
       const data = await fetchUserVacancies(filters, session.accessToken);
       setVacancies(data.items);
@@ -100,7 +100,7 @@ export default function Page() {
             data-bs-parent="#filterAccordion"
           >
             <div className="accordion-body">
-              <VacancyMainFilter
+              <AuthenticatedFilter
                 onFilterChange={handleFilterChange}
                 onFilterClick={handleFilterClick}
               />

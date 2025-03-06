@@ -38,3 +38,13 @@ export const getShortDescription = (
     ? `${vacancyDescription.substring(0, maxLenght)}...`
     : vacancyDescription;
 };
+
+export const formatDate = (date: string) => {
+  if (!date) return "No disponible";
+  return new Date(date).toLocaleDateString();
+};
+
+export const formatLocation = (provinceName?: string) => {
+  if (!provinceName) return "No disponible";
+  return provinceName;
+};

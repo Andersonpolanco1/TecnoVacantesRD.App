@@ -105,19 +105,21 @@ export default function Page() {
           </div>
         </div>
       </div>
-      <ul className="vacancy-list list-unstyled">
+      <div className="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
         {vacancies.length > 0 ? (
           vacancies.map((vacancy) => (
-            <li key={vacancy.publicId} className="mb-4">
+            <div key={vacancy.publicId}>
               <VacancyListItem vacancy={vacancy} />
-            </li>
+            </div>
           ))
         ) : (
-          <p className="text-muted text-center">
-            No has publicado ninguna vacante.
-          </p>
+          <div className="col-12">
+            <div className="alert alert-info text-center" role="alert">
+              No has publicado ninguna vacante.
+            </div>
+          </div>
         )}
-      </ul>
+      </div>
       <div className="my-3">
         {totalPages != 0 && (
           <Pagination

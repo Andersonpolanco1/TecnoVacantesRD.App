@@ -14,6 +14,8 @@ import {
 } from "react-icons/fa";
 import VacancyDescriptionModal from "../public/VacancyDescriptionModal";
 import {
+  formatDate,
+  formatLocation,
   getShortDescription,
   getStatusIcon,
   getVacancyStatus,
@@ -25,16 +27,6 @@ interface VacancyListItemProps {
 
 const VacancyUserListItem = ({ vacancy }: VacancyListItemProps) => {
   const [showModal, setShowModal] = useState(false);
-
-  const formatDate = (date: string) => {
-    if (!date) return "No disponible";
-    return new Date(date).toLocaleDateString();
-  };
-
-  const formatLocation = (provinceName?: string) => {
-    if (!provinceName) return "No disponible";
-    return provinceName;
-  };
 
   const handleShowModal = () => setShowModal(true);
 

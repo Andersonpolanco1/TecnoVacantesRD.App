@@ -12,7 +12,8 @@ import {
   FaEdit,
   FaRegFileAlt,
 } from "react-icons/fa";
-import VacancyDescriptionModal from "./VacancyDescriptionModal";
+import VacancyDescriptionModal from "../public/VacancyDescriptionModal";
+import { formatDate, formatLocation, getShortDescription } from "@/lib/utils";
 
 interface VacancyListItemProps {
   vacancy: VacancyPublicDto;
@@ -21,30 +22,17 @@ interface VacancyListItemProps {
 const VacancyListItem = ({ vacancy }: VacancyListItemProps) => {
   const [showModal, setShowModal] = useState(false);
 
-  const formatDate = (date: string) => {
-    if (!date) return "No disponible";
-    return new Date(date).toLocaleDateString();
-  };
-
   const handleShowModal = () => setShowModal(true);
-
-  const shortDescription =
-    vacancy.vacancyDescription.length > 100
-      ? `${vacancy.vacancyDescription.substring(0, 100)}...`
-      : vacancy.vacancyDescription;
 
   return (
     <div className="p-3 mb-3 border rounded-lg shadow-sm bg-white">
       <h5 className="font-weight-bold text-primary mb-1 d-flex justify-content-between align-items-center">
         <Link
           href={`/vacancies/${vacancy.publicId}`}
-          className="text-primary text-decoration-none"
+          className="text-primary text-decoration-none text-break"
         >
           {vacancy.title}
         </Link>
-        <button className="btn btn-link p-0 text-primary" onClick={() => {}}>
-          <FaEdit />
-        </button>
       </h5>
 
       <p className="text-muted mb-2">
@@ -52,12 +40,15 @@ const VacancyListItem = ({ vacancy }: VacancyListItemProps) => {
       </p>
 
       <div className="d-flex flex-column">
+        {/* Estado y fecha de creación */}
+
         <p className="text-muted text-xs mb-1">
           <FaCalendarAlt className="me-2" /> <strong>Publicada:</strong>{" "}
           <span className="text-primary">
             {formatDate(vacancy.publishedAt)}
           </span>
         </p>
+
         <p className="text-muted text-xs mb-1">
           <FaClock className="me-2" /> <strong>Cierre:</strong>{" "}
           <span className="text-danger">{formatDate(vacancy.expiresAt)}</span>
@@ -69,6 +60,7 @@ const VacancyListItem = ({ vacancy }: VacancyListItemProps) => {
             {VacancyModeLabels[vacancy.mode as VacancyMode]}
           </span>
         </p>
+
         <p className="text-muted text-xs mb-1">
           <FaDollarSign className="me-2" /> <strong>Salario:</strong>{" "}
           <span className="text-success">
@@ -78,12 +70,19 @@ const VacancyListItem = ({ vacancy }: VacancyListItemProps) => {
 
         <p className="text-muted text-xs mb-1">
           <FaMapMarkerAlt className="me-2" />{" "}
-          <span className="fw-bold">{vacancy.provinceName}</span>
+          <span className="fw-bold">
+            {formatLocation(vacancy.provinceName)}
+          </span>
         </p>
 
-        <p className="text-xs text-muted mb-0">
+        <p
+          className="text-xs text-muted mb-0"
+          style={{ wordWrap: "break-word" }}
+        >
           <FaRegFileAlt className="me-2" /> <strong>Descripción:</strong>{" "}
-          <span className="text-muted">{shortDescription}</span>
+          <span className="text-muted text-break">
+            {getShortDescription(vacancy.vacancyDescription)}
+          </span>
           <button
             className="btn btn-link p-0 ms-2 text-decoration-none"
             onClick={handleShowModal}
@@ -91,17 +90,17 @@ const VacancyListItem = ({ vacancy }: VacancyListItemProps) => {
             <FaInfoCircle /> Ver más
           </button>
         </p>
-      </div>
 
-      {/* Modal de descripción */}
-      {showModal && (
-        <VacancyDescriptionModal
-          title={vacancy.title}
-          description={vacancy.vacancyDescription}
-          show={showModal}
-          onClose={() => setShowModal(false)}
-        />
-      )}
+        {/* Modal de descripción */}
+        {showModal && (
+          <VacancyDescriptionModal
+            title={vacancy.title}
+            description={vacancy.vacancyDescription}
+            show={showModal}
+            onClose={() => setShowModal(false)}
+          />
+        )}
+      </div>
     </div>
   );
 };

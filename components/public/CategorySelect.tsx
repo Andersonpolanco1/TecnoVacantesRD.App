@@ -25,12 +25,12 @@ export default function CategorySelect({
   }, []);
 
   return (
-    <>
-      <label htmlFor="category" className="form-label">
+    <div>
+      <label htmlFor="status" className="form-label">
         {flagRequired && <span className="text-danger">* </span>}Categoría
       </label>
       <select
-        id="category"
+        id="status"
         className="form-select"
         value={value ?? ""}
         onChange={(e) =>
@@ -45,6 +45,6 @@ export default function CategorySelect({
           </option>
         ))}
       </select>
-    </>
+    </div>
   );
 }

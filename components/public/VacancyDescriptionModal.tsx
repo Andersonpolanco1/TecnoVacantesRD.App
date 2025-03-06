@@ -29,13 +29,12 @@ const VacancyDescriptionModal = ({
         <div className="modal-dialog modal-dialog-scrollable modal-dialog-centered">
           <div className="modal-content">
             <div className="modal-header">
-              <h5 className="modal-title" id="vacancyModalLabel">
+              <h5 className="modal-title text-break" id="vacancyModalLabel">
                 {title}
               </h5>
-              <button type="button" className="btn-close" onClick={onClose} />
             </div>
             <div className="modal-body">
-              <p>{description}</p>
+              <p className="text-break">{description}</p>
             </div>
             <div className="modal-footer">
               <button

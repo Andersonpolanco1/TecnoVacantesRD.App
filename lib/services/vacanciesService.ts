@@ -25,7 +25,6 @@ const fetchPaginated = async <T>(
     }
 
     const data: PaginatedResponse<T> = await response.json();
-    console.log(data);
     return data;
   } catch (error) {
     console.error("Error in fetchPaginated:", error);
@@ -53,7 +52,6 @@ export const fetchUserVacancies = async (
     filters,
     token
   );
-  console.log(data);
   if (!data) data = PaginatedResponse.emptyObject<VacancyUserDto>();
   return data;
 };
