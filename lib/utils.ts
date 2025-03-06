@@ -8,7 +8,6 @@ export const EnumVacancyStatusMap: Record<number, string> = {
 };
 
 export const getVacancyStatus = (status: number): string => {
-  console.log(status);
   return EnumVacancyStatusMap[status] || "N/D";
 };
 
@@ -49,11 +48,9 @@ export const apiRequest = async <T>(
       headers,
       body: body ? JSON.stringify(body) : undefined,
     });
-    console.log(response);
 
     if (!response.ok) {
       const errorData = await response.json();
-      console.log(errorData);
       throw new Error(errorData.message || `Error ${response.status}`);
     }
 

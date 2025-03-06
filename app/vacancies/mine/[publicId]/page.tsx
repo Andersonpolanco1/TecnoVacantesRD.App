@@ -5,53 +5,60 @@ import VacancyDetails from "@/components/public/VacancyDetails";
 import { fetchUserVacancyById } from "@/lib/services/vacanciesService";
 import { useNotification } from "@/providers/notificationProvider";
 import { NOTIFICATION_COLORS } from "@/types/Notification";
+import { VacancyPublicDto } from "@/types/vacancy";
+import { use, useEffect, useState } from "react";
 import { useSession } from "next-auth/react";
-import { useEffect, useState } from "react";
-
-interface Params {
-  params: {
-    publicId: string;
-  };
-}
-
-const VacancyDetailPage = ({ params }: Params) => {
-  const { data: session } = useSession();
-  const { showNotification } = useNotification();
-  const [vacancy, setVacancy] = useState<any>(null);
+export default function VacancyDetailPage({
+  params,
+}: {
+  params: Promise<{ publicId: string }>;
+}) {
+  const { publicId } = use(params);
+  const [vacancy, setVacancy] = useState<VacancyPublicDto | null>(null);
   const [loading, setLoading] = useState(true);
+  const { showNotification } = useNotification();
+  const { data: session } = useSession();
 
   useEffect(() => {
+    if (!publicId) {
+      showNotification(
+        NOTIFICATION_COLORS.danger,
+        "ID de notificación inválido",
+        ""
+      );
+    }
+
     if (!session?.accessToken) {
       showNotification(NOTIFICATION_COLORS.danger, "Sesión inválida", "");
       return;
     }
 
-    const fetchVacancy = async () => {
-      setLoading(true);
-      const data = await fetchUserVacancyById(
-        params.publicId,
-        session.accessToken!
-      );
-      console.log(data);
+    const loadVacancy = async () => {
+      const data = await fetchUserVacancyById(publicId, session.accessToken!);
+      const success = data && "publicId" in data;
 
-      //validar data
+      if (!success) {
+        showNotification(
+          NOTIFICATION_COLORS.danger,
+          "Error de comunicación",
+          data?.message as string
+        );
+        return;
+      }
       setVacancy(data);
       setLoading(false);
     };
 
-    fetchVacancy();
-  }, [params.publicId, session?.accessToken, showNotification]);
+    loadVacancy();
+  }, [publicId, showNotification]);
 
-  if (!session?.accessToken) return <p>Sesión inválida</p>;
-  if (loading) return <p>Cargando vacante...</p>;
+  if (loading) return <div>Loading...</div>;
   if (!vacancy) return <p>Vacante no encontrada</p>;
-  console.log(vacancy);
+
   return (
-    <>
+    <div>
       <GoBackButton />
       <VacancyDetails vacancy={vacancy} />
-    </>
+    </div>
   );
-};
-
-export default VacancyDetailPage;
+}

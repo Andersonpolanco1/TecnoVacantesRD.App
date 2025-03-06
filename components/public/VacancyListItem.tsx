@@ -9,7 +9,6 @@ import {
   FaDollarSign,
   FaMapMarkerAlt,
   FaInfoCircle,
-  FaEdit,
   FaRegFileAlt,
 } from "react-icons/fa";
 import VacancyDescriptionModal from "../public/VacancyDescriptionModal";
