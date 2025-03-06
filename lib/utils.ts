@@ -9,7 +9,7 @@ export const EnumVacancyStatusMap: Record<number, string> = {
 
 export const getVacancyStatus = (status: number): string => {
   console.log(status);
-  return EnumVacancyStatusMap[status] || "Desconocido";
+  return EnumVacancyStatusMap[status] || "N/D";
 };
 
 export const getShortDescription = (
@@ -22,12 +22,12 @@ export const getShortDescription = (
 };
 
 export const formatDate = (date: string) => {
-  if (!date) return "No disponible";
+  if (!date) return "N/D";
   return new Date(date).toLocaleDateString();
 };
 
 export const formatLocation = (provinceName?: string) => {
-  if (!provinceName) return "No disponible";
+  if (!provinceName) return "N/D";
   return provinceName;
 };
 

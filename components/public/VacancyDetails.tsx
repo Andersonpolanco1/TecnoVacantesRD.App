@@ -52,7 +52,10 @@ const VacancyListItem = ({ vacancy }: VacancyListItemProps) => {
         <small>{vacancy.categoryName}</small>
       </p>
 
-      <div className="d-flex flex-column">
+      <div
+        className="d-grid gap-2"
+        style={{ gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))" }}
+      >
         {isUserVacancy && (
           <p className="text-muted text-xs mb-1 d-flex align-items-center">
             {getStatusIcon(vacancy.status)}
@@ -79,13 +82,14 @@ const VacancyListItem = ({ vacancy }: VacancyListItemProps) => {
           <span className="text-danger">{formatDate(vacancy.expiresAt)}</span>
         </p>
 
-        <p className="text-muted text-xs mb-1">
+        <p className="text-muted text-xs mb-1" style={{ gridColumn: "span 1" }}>
           <FaBullseye className="me-2" /> <strong>Modalidad:</strong>{" "}
           <span className="text-dark">
             {VacancyModeLabels[vacancy.mode as VacancyMode]}
           </span>
         </p>
-        <p className="text-muted text-xs mb-1">
+
+        <p className="text-muted text-xs mb-1" style={{ gridColumn: "span 1" }}>
           <FaDollarSign className="me-2" /> <strong>Salario:</strong>{" "}
           <span className="text-success">
             ${vacancy.salary ?? "No especificado"}
@@ -98,34 +102,31 @@ const VacancyListItem = ({ vacancy }: VacancyListItemProps) => {
             {formatLocation(vacancy.provinceName)}
           </span>
         </p>
-
-        <div className="text-xs text-muted mb-0 position-relative">
-          <FaRegFileAlt className="me-2" /> <strong>Descripción:</strong>{" "}
-          <div
-            className="text-decoration-none d-inline-block text-truncate"
-            style={{ maxWidth: "calc(100% - 1.5rem)" }}
-          >
-            {vacancy.vacancyDescription}
-          </div>
-          <div className="d-flex justify-content-end">
-            <button
-              className="btn btn-link p-0 text-decoration-none"
-              onClick={handleShowModal}
-            >
-              <FaInfoCircle className="ms-2" /> Ver más
-            </button>
-          </div>
-        </div>
-
-        {showModal && (
-          <VacancyDescriptionModal
-            title={vacancy.title}
-            description={vacancy.vacancyDescription}
-            show={showModal}
-            onClose={() => setShowModal(false)}
-          />
-        )}
       </div>
+
+      <div className="text-xs text-muted mb-0 position-relative mt-2">
+        <FaRegFileAlt className="me-2" /> <strong>Descripción:</strong>
+        <div className="text-decoration-none d-inline-block text-truncate w-100">
+          {vacancy.vacancyDescription}
+        </div>
+        <div className="d-flex justify-content-end">
+          <button
+            className="btn btn-link p-0 text-decoration-none"
+            onClick={handleShowModal}
+          >
+            <FaInfoCircle className="ms-2" /> Ver más
+          </button>
+        </div>
+      </div>
+
+      {showModal && (
+        <VacancyDescriptionModal
+          title={vacancy.title}
+          description={vacancy.vacancyDescription}
+          show={showModal}
+          onClose={() => setShowModal(false)}
+        />
+      )}
     </div>
   );
 };
