@@ -1,5 +1,4 @@
-import { getVacancyStatus } from "@/lib/utils";
-import { getStatusIcon } from "@/lib/utilsX";
+import { useState } from "react";
 import { VacancyPublicDto, VacancyUserDto } from "@/types/vacancy";
 import { VacancyMode, VacancyModeLabels } from "@/types/VacancyMode";
 import Link from "next/link";
@@ -9,86 +8,126 @@ import {
   FaBullseye,
   FaDollarSign,
   FaMapMarkerAlt,
-  FaPen,
+  FaInfoCircle,
+  FaEdit,
+  FaRegFileAlt,
 } from "react-icons/fa";
+import VacancyDescriptionModal from "../public/VacancyDescriptionModal";
+import { formatDate, formatLocation, getVacancyStatus } from "@/lib/utils";
+import { getStatusIcon } from "@/lib/utilsX";
 
-interface VacancyDetailProps {
+interface VacancyListItemProps {
   vacancy: VacancyPublicDto | VacancyUserDto;
 }
 
-const VacancyDetails: React.FC<VacancyDetailProps> = ({ vacancy }) => {
-  const formatDate = (date: string) => {
-    if (!date) return "No disponible";
-    return new Date(date).toLocaleDateString();
-  };
+const VacancyListItem = ({ vacancy }: VacancyListItemProps) => {
+  const [showModal, setShowModal] = useState(false);
+  const isUserVacancy = "status" in vacancy && "createdAt" in vacancy;
+
+  const handleShowModal = () => setShowModal(true);
 
   return (
-    <div className="p-4 mb-4 border rounded-lg shadow-sm bg-white">
-      <h2 className="font-bold text-blue-600 mb-4">{vacancy.title}</h2>
+    <div className="p-3 mb-3 border rounded-lg shadow-sm bg-white">
+      <h5 className="font-weight-bold text-primary mb-1 d-flex justify-content-between align-items-center">
+        <Link
+          href={`/vacancies/${isUserVacancy ? "mine/" : "public/"}${
+            vacancy.publicId
+          }`}
+          className="text-primary text-decoration-none d-inline-block text-truncate"
+          style={{ maxWidth: "calc(100% - 1.5rem)" }}
+        >
+          {vacancy.title}
+        </Link>
+        {isUserVacancy && (
+          <button
+            className="btn btn-link p-0 text-primary ms-2"
+            onClick={() => {}}
+          >
+            <FaEdit />
+          </button>
+        )}
+      </h5>
 
-      {/* Estado de la vacante (solo si es VacancyUserDto) */}
-      {"status" in vacancy && (
-        <div className="flex items-center mb-2">
-          {getStatusIcon(vacancy.status)}
-          <strong className="ml-2">{getVacancyStatus(vacancy.status)}</strong>
-        </div>
-      )}
-
-      {/* Detalles de la vacante */}
-      <p className="text-gray-600 text-sm flex items-center mb-2">
-        <FaCalendarAlt className="mr-2" /> <strong>Publicado:</strong>{" "}
-        <span className="text-blue-500">{formatDate(vacancy.publishedAt)}</span>
+      <p className="text-muted mb-2">
+        <small>{vacancy.categoryName}</small>
       </p>
 
-      {"createdAt" in vacancy && (
-        <p className="text-gray-600 text-sm flex items-center mb-2">
-          <FaCalendarAlt className="mr-2" /> <strong>Creada:</strong>{" "}
-          <span className="text-green-500">
-            {formatDate(vacancy.createdAt)}
+      <div className="d-flex flex-column">
+        {isUserVacancy && (
+          <p className="text-muted text-xs mb-1 d-flex align-items-center">
+            {getStatusIcon(vacancy.status)}
+            <strong className="ms-2">{getVacancyStatus(vacancy.status)}</strong>
+          </p>
+        )}
+
+        <p className="text-muted text-xs mb-1">
+          <FaCalendarAlt className="me-2" /> <strong>Publicada:</strong>{" "}
+          <span className="text-primary">
+            {formatDate(vacancy.publishedAt)}
           </span>
         </p>
-      )}
 
-      <p className="text-gray-600 text-sm flex items-center mb-2">
-        <FaClock className="mr-2" /> <strong>Cierre:</strong>{" "}
-        <span className="text-red-500">{formatDate(vacancy.expiresAt)}</span>
-      </p>
+        {isUserVacancy && (
+          <p className="text-muted text-xs mb-1">
+            <FaCalendarAlt className="me-2" /> <strong>Creada:</strong>{" "}
+            <span className="text-info">{formatDate(vacancy.createdAt)}</span>
+          </p>
+        )}
 
-      <p className="text-gray-800 text-sm flex items-center mb-2">
-        <FaBullseye className="mr-2" /> <strong>Modalidad:</strong>{" "}
-        <span className="text-gray-700">
-          {VacancyModeLabels[vacancy.mode as VacancyMode]}
-        </span>
-      </p>
+        <p className="text-muted text-xs mb-1">
+          <FaClock className="me-2" /> <strong>Cierre:</strong>{" "}
+          <span className="text-danger">{formatDate(vacancy.expiresAt)}</span>
+        </p>
 
-      <p className="text-gray-800 text-sm flex items-center mb-2">
-        <FaDollarSign className="mr-2" /> <strong>Salario:</strong>{" "}
-        <span className="text-green-600">
-          ${vacancy.salary ?? "No especificado"}
-        </span>
-      </p>
+        <p className="text-muted text-xs mb-1">
+          <FaBullseye className="me-2" /> <strong>Modalidad:</strong>{" "}
+          <span className="text-dark">
+            {VacancyModeLabels[vacancy.mode as VacancyMode]}
+          </span>
+        </p>
+        <p className="text-muted text-xs mb-1">
+          <FaDollarSign className="me-2" /> <strong>Salario:</strong>{" "}
+          <span className="text-success">
+            ${vacancy.salary ?? "No especificado"}
+          </span>
+        </p>
 
-      <p className="text-gray-800 text-sm flex items-center mb-2">
-        <FaMapMarkerAlt className="mr-2" /> <strong>Ubicación:</strong>{" "}
-        <span className="font-bold">{vacancy.provinceName}</span>
-      </p>
+        <p className="text-muted text-xs mb-1">
+          <FaMapMarkerAlt className="me-2" />{" "}
+          <span className="fw-bold">
+            {formatLocation(vacancy.provinceName)}
+          </span>
+        </p>
 
-      <p className="text-gray-700 text-sm flex items-center mb-2">
-        <FaPen className="mr-2" /> <strong>Descripción:</strong>{" "}
-        <span className="text-gray-600">{vacancy.vacancyDescription}</span>
-      </p>
+        <div className="text-xs text-muted mb-0 position-relative">
+          <FaRegFileAlt className="me-2" /> <strong>Descripción:</strong>{" "}
+          <div
+            className="text-decoration-none d-inline-block text-truncate"
+            style={{ maxWidth: "calc(100% - 1.5rem)" }}
+          >
+            {vacancy.vacancyDescription}
+          </div>
+          <div className="d-flex justify-content-end">
+            <button
+              className="btn btn-link p-0 text-decoration-none"
+              onClick={handleShowModal}
+            >
+              <FaInfoCircle className="ms-2" /> Ver más
+            </button>
+          </div>
+        </div>
 
-      {/* Botón para postularse */}
-      <div className="mt-4">
-        <Link
-          href={`/vacancies/${vacancy.publicId}/apply`}
-          className="px-4 py-2 bg-blue-600 text-white font-bold rounded hover:bg-blue-700"
-        >
-          Postúlate ahora
-        </Link>
+        {showModal && (
+          <VacancyDescriptionModal
+            title={vacancy.title}
+            description={vacancy.vacancyDescription}
+            show={showModal}
+            onClose={() => setShowModal(false)}
+          />
+        )}
       </div>
     </div>
   );
 };
 
-export default VacancyDetails;
+export default VacancyListItem;

@@ -23,7 +23,7 @@ export const fetchUserVacancies = async (
   const queryString = convertFiltersToQueryParams(filters);
   return (
     (await apiRequest<PaginatedResponse<VacancyUserDto>>(
-      `${API_URL}?${queryString}`,
+      `${API_URL}/mine?${queryString}`,
       "GET",
       token
     )) ?? PaginatedResponse.emptyObject<VacancyUserDto>()
