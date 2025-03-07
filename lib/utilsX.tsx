@@ -16,3 +16,8 @@ export const getStatusIcon = (status: number) => {
       return <FaClock className="text-warning" />;
   }
 };
+
+// Función que devuelve un componente JSX para renderizar contenido HTML
+export const renderHTML = (content: string) => {
+  return <div dangerouslySetInnerHTML={{ __html: content }} />;
+};

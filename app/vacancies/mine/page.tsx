@@ -117,9 +117,7 @@ export default function Page() {
           ))
         ) : (
           <div className="col-12">
-            <div className="alert alert-info text-center" role="alert">
-              No has publicado ninguna vacante.
-            </div>
+            <div>Sin resultados.</div>
           </div>
         )}
       </div>

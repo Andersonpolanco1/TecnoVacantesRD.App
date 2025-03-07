@@ -9,25 +9,11 @@ body {
   height: 500px;
 }
 
-/* @media (min-width: 640px) {
-  .rich-text-editor {
-    height: 600px;
-  }
-}
-
-@media (min-width: 768px) {
-  .rich-text-editor {
-    height: 600px;
-  }
-}
-
-@media (min-width: 1024px) {
-  .rich-text-editor {
-    height: 700px;
-  }
-} */
-
 .bg-custom {
   background-color: #f8f9fa; /* gris claro */
   padding: 1rem;
+}
+
+.text-justify {
+  text-align: justify;
 }

@@ -12,7 +12,8 @@ import {
   FaRegFileAlt,
 } from "react-icons/fa";
 import VacancyDescriptionModal from "../public/VacancyDescriptionModal";
-import { formatDate, formatLocation, getShortDescription } from "@/lib/utils";
+import { formatDate, formatLocation } from "@/lib/utils";
+import { stripTags } from "@/lib/utils";
 
 interface VacancyListItemProps {
   vacancy: VacancyPublicDto;
@@ -75,10 +76,16 @@ const VacancyListItem = ({ vacancy }: VacancyListItemProps) => {
         <div className="text-xs text-muted mb-0 position-relative">
           <FaRegFileAlt className="me-2" /> <strong>Descripción:</strong>{" "}
           <div
-            className="text-decoration-none d-inline-block text-truncate"
-            style={{ maxWidth: "calc(100% - 1.5rem)" }}
+            className="description-line-clamp"
+            style={{
+              display: "-webkit-box",
+              WebkitLineClamp: 3,
+              WebkitBoxOrient: "vertical",
+              overflow: "hidden",
+              height: "4.5rem",
+            }}
           >
-            {vacancy.vacancyDescription}
+            {stripTags(vacancy.vacancyDescription)}
           </div>
           {/* Contenedor para el botón, separado del texto */}
           <div className="d-flex justify-content-end">

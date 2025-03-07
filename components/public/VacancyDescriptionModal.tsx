@@ -34,7 +34,7 @@ const VacancyDescriptionModal = ({
               </h5>
             </div>
             <div className="modal-body">
-              <RichText value={description} readonly={true} />
+              <div dangerouslySetInnerHTML={{ __html: description }} />
             </div>
             <div className="modal-footer">
               <button

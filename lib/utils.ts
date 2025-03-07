@@ -73,3 +73,9 @@ export const convertFiltersToQueryParams = (
       .map(([key, value]) => [key, String(value)])
   ).toString();
 };
+
+//Emimina etiquetas html de textos
+export const stripTags = (html: string): string => {
+  const doc = new DOMParser().parseFromString(html, "text/html");
+  return doc.body.textContent || "";
+};

@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { VacancyPublicDto, VacancyUserDto } from "@/types/vacancy";
 import { VacancyMode, VacancyModeLabels } from "@/types/VacancyMode";
 import Link from "next/link";
@@ -8,24 +7,18 @@ import {
   FaBullseye,
   FaDollarSign,
   FaMapMarkerAlt,
-  FaInfoCircle,
   FaEdit,
   FaRegFileAlt,
 } from "react-icons/fa";
-import VacancyDescriptionModal from "../public/VacancyDescriptionModal";
 import { formatDate, formatLocation, getVacancyStatus } from "@/lib/utils";
-import { getStatusIcon } from "@/lib/utilsX";
-import RichText from "./RichText";
+import { getStatusIcon, renderHTML } from "@/lib/utilsX";
 
 interface VacancyListItemProps {
   vacancy: VacancyPublicDto | VacancyUserDto;
 }
 
 const VacancyListItem = ({ vacancy }: VacancyListItemProps) => {
-  const [showModal, setShowModal] = useState(false);
   const isUserVacancy = "status" in vacancy && "createdAt" in vacancy;
-
-  const handleShowModal = () => setShowModal(true);
 
   return (
     <div className="p-3 mb-3 border rounded-lg shadow-sm bg-white">
@@ -115,21 +108,15 @@ const VacancyListItem = ({ vacancy }: VacancyListItemProps) => {
         </div>
       </div>
       <br />
-      <div className="text-xs text-muted mb-0 position-relative mt-2">
+      <div className="text-xs text-muted mb-0 position-relative mt-2 text-justify">
         <FaRegFileAlt className="me-2" /> <strong>Descripción:</strong>
-        <div className="text-decoration-none d-inline-block text-truncate w-100">
-          <RichText value={vacancy.vacancyDescription} readonly={true} />
+        <div
+          className="w-100"
+          style={{ wordWrap: "break-word", whiteSpace: "normal" }}
+        >
+          {renderHTML(vacancy.vacancyDescription)}
         </div>
       </div>
-
-      {showModal && (
-        <VacancyDescriptionModal
-          title={vacancy.title}
-          description={vacancy.vacancyDescription}
-          show={showModal}
-          onClose={() => setShowModal(false)}
-        />
-      )}
     </div>
   );
 };
