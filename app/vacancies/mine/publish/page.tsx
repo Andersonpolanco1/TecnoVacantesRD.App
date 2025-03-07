@@ -1,6 +1,5 @@
 "use client";
 
-import { useState } from "react";
 import { FaPlus } from "react-icons/fa";
 import ProvinceSelect from "@/components/public/ProvinceSelect";
 import VacancyModeSelect from "@/components/public/vacancyMode";
@@ -10,6 +9,10 @@ import { useNotification } from "@/providers/notificationProvider";
 import { NOTIFICATION_COLORS } from "@/types/Notification";
 import { VacancyMode } from "@/types/VacancyMode";
 import { useSession } from "next-auth/react";
+import React, { useState } from "react";
+import ReactQuill from "react-quill-new";
+import "react-quill-new/dist/quill.snow.css";
+import RichText from "@/components/public/RichText";
 
 const JobPostingForm = () => {
   const { showNotification } = useNotification();
@@ -31,6 +34,7 @@ const JobPostingForm = () => {
       ...prevState,
       [fieldName]: value,
     }));
+    console.log(formData);
   };
 
   const handleChange = (
@@ -51,8 +55,7 @@ const JobPostingForm = () => {
       formData.description.length < 150 ||
       formData.description.length > 4000
     ) {
-      newErrors.description =
-        "La descripción debe tener entre 150 y 4000 caracteres.";
+      newErrors.description = `La descripción debe tener entre 150 y 4000 caracteres. Actual ${formData.description.length}`;
     }
 
     if (formData.salary < 0) {
@@ -92,13 +95,13 @@ const JobPostingForm = () => {
       showNotification(
         NOTIFICATION_COLORS.success,
         "Vacante publicada",
-        result.message
+        result.message!
       );
     else
       showNotification(
         NOTIFICATION_COLORS.warning,
         "No se ha publicado la vacante",
-        result.message
+        result.message!
       );
   };
 
@@ -131,15 +134,13 @@ const JobPostingForm = () => {
               (Mínimo 150 caracteres)
             </small>
           </label>
-          <textarea
-            id="description"
-            name="description"
+          <RichText
             value={formData.description}
-            onChange={handleChange}
-            className="form-control"
-            rows={5}
-            required
+            onChange={(value) => {
+              handleSelectChange("description", value);
+            }}
           />
+
           {errors.description && (
             <div className="text-danger">{errors.description}</div>
           )}

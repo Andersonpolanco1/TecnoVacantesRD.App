@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect } from "react";
+import RichText from "./RichText";
 
 interface VacancyModalProps {
   title: string;
@@ -34,7 +34,7 @@ const VacancyDescriptionModal = ({
               </h5>
             </div>
             <div className="modal-body">
-              <p className="text-break">{description}</p>
+              <RichText value={description} readonly={true} />
             </div>
             <div className="modal-footer">
               <button
