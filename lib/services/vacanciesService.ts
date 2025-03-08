@@ -78,30 +78,19 @@ export const ChangeState = async (
       return { success: false, message: "Autenticación no disponible" };
     }
 
-    const result = await apiRequest<{ success: boolean; message?: string }>(
+    const result = await apiRequest<{ publicId: string; newStatus: number }>(
       `${API_URL}/mine/change-state`,
       "POST",
       token,
       { trigger, publicId, reason }
     );
 
+    console.log(result);
+
     return (
       result ?? { success: false, message: "Error de conexión con la API" }
     );
-
-    // const response = await fetch(`${API_URL}/mine/change-state`, {
-    //   method: "POST",
-    //   headers: { "Content-Type": "application/json" },
-    //   body: JSON.stringify({
-    //     publicId: publicId,
-    //     trigger,
-    //     rejectedReason: reason ?? null,
-    //   }),
-    // });
-
-    // if (!response.ok) throw new Error("Error al cambiar el estado");
-    // alert("Estado cambiado con éxito");
   } catch (error) {
-    console.error(error);
+    return { success: false, message: "Error de conexión con la API" };
   }
 };

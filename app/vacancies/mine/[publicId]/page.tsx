@@ -67,7 +67,14 @@ export default function VacancyDetailPage({
         return;
       }
 
-      ChangeState(trigger, vacancy!.publicId, session!.accessToken, reason);
+      const response = await ChangeState(
+        trigger,
+        vacancy!.publicId,
+        session!.accessToken,
+        reason
+      );
+      if ("newStatus" in response)
+        setVacancy((prev) => ({ ...prev!, status: response.newStatus }));
     } catch (error) {
       console.error(error);
     }
