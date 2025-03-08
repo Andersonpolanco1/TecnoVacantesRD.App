@@ -1,16 +1,3 @@
-export const EnumVacancyStatusMap: Record<number, string> = {
-  0: "Pendiente revisión",
-  1: "Aprobada",
-  2: "Rechazada",
-  3: "Publicada",
-  4: "Expirada",
-  5: "Cerrada",
-};
-
-export const getVacancyStatus = (status: number): string => {
-  return EnumVacancyStatusMap[status] || "N/D";
-};
-
 export const getShortDescription = (
   vacancyDescription: string,
   maxLenght: number = 100
@@ -79,3 +66,46 @@ export const stripTags = (html: string): string => {
   const doc = new DOMParser().parseFromString(html, "text/html");
   return doc.body.textContent || "";
 };
+
+export enum EnumVacancyStatus {
+  PendingReview = 0,
+  Approved = 1,
+  Rejected = 2,
+  Published = 3,
+  Expired = 4,
+  Closed = 5,
+}
+
+export enum EnumVacancyTrigger {
+  Approve = 0,
+  Reject = 1,
+  Publish = 2,
+  Expire = 3,
+  Close = 4,
+  Reopen = 5,
+  ReviewAgain = 6,
+}
+
+const statusLabels = {
+  [EnumVacancyStatus.PendingReview]: "Pendiente revisión",
+  [EnumVacancyStatus.Approved]: "Aprobada",
+  [EnumVacancyStatus.Rejected]: "Rechazada",
+  [EnumVacancyStatus.Published]: "Publicada",
+  [EnumVacancyStatus.Expired]: "Expirada",
+  [EnumVacancyStatus.Closed]: "Cerrada",
+};
+
+const triggerLabels = {
+  [EnumVacancyTrigger.Approve]: "Aprobar",
+  [EnumVacancyTrigger.Reject]: "Rechazar",
+  [EnumVacancyTrigger.Publish]: "Publicar",
+  [EnumVacancyTrigger.Expire]: "Expirar",
+  [EnumVacancyTrigger.Close]: "Cerrar",
+  [EnumVacancyTrigger.Reopen]: "Reabrir",
+  [EnumVacancyTrigger.ReviewAgain]: "Enviar a revisión",
+};
+
+export const getVacancyStatus = (status: EnumVacancyStatus): string =>
+  statusLabels[status] || "N/D";
+export const getVacancyTrigger = (trigger: EnumVacancyTrigger): string =>
+  triggerLabels[trigger] || "N/D";

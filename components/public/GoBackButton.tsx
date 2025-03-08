@@ -8,9 +8,13 @@ const GoBackButton = () => {
   };
 
   return (
-    <div className="container my-3">
-      <button onClick={handleBackClick} className="btn btn-light">
-        <FaArrowLeft /> Volver Atrás
+    <div>
+      <button
+        onClick={handleBackClick}
+        className="btn btn-sm btn-light d-flex align-items-center"
+      >
+        <FaArrowLeft />
+        Atrás
       </button>
     </div>
   );

@@ -1,4 +1,4 @@
-import { EnumVacancyStatusMap } from "@/lib/utils";
+import { EnumVacancyStatus, getVacancyStatus } from "@/lib/utils";
 import React, { useState, useEffect } from "react";
 
 interface StatusSelectProps {
@@ -37,9 +37,9 @@ const VacancyStatusSelect: React.FC<StatusSelectProps> = ({
         className="form-select"
       >
         <option value={""}>Seleccionar</option>
-        {Object.entries(EnumVacancyStatusMap).map(([key, label]) => (
-          <option key={key} value={key}>
-            {label}
+        {Object.values(EnumVacancyStatus).map((status) => (
+          <option key={status} value={status}>
+            {getVacancyStatus(status as EnumVacancyStatus)}
           </option>
         ))}
       </select>
