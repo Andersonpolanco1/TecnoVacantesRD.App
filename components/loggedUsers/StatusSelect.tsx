@@ -1,3 +1,5 @@
+"use client";
+
 import { EnumVacancyStatus, getVacancyStatus } from "@/lib/utils";
 import React, { useState, useEffect } from "react";
 
@@ -37,11 +39,13 @@ const VacancyStatusSelect: React.FC<StatusSelectProps> = ({
         className="form-select"
       >
         <option value={""}>Seleccionar</option>
-        {Object.values(EnumVacancyStatus).map((status) => (
-          <option key={status} value={status}>
-            {getVacancyStatus(status as EnumVacancyStatus)}
-          </option>
-        ))}
+        {Object.values(EnumVacancyStatus)
+          .filter((status) => typeof status === "number")
+          .map((status) => (
+            <option key={status} value={status}>
+              {getVacancyStatus(status as EnumVacancyStatus)}
+            </option>
+          ))}
       </select>
     </div>
   );

@@ -13,6 +13,7 @@ import { use, useEffect, useState } from "react";
 import { useSession } from "next-auth/react";
 import VacancyActionButtons from "@/components/loggedUsers/VacancyActionButtons";
 import { EnumVacancyTrigger } from "@/lib/utils";
+
 export default function VacancyDetailPage({
   params,
 }: {
