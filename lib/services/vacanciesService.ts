@@ -1,7 +1,11 @@
 import { PaginatedResponse } from "@/types/PaginatedResponse";
 import { VacancyPublicDto, VacancyUserDto } from "@/types/vacancy";
 import { VacancyPublicFilter } from "@/types/VacancyFilters";
-import { apiRequest, convertFiltersToQueryParams } from "../utils";
+import {
+  apiRequest,
+  convertFiltersToQueryParams,
+  EnumVacancyTrigger,
+} from "../utils";
 
 const API_URL = `${process.env.NEXT_PUBLIC_VACANCIES_API_BASE_URL}/api/vacancies`;
 
@@ -61,4 +65,43 @@ export const publish = async (formData: PublishVacancy, token: string) => {
   );
 
   return result ?? { success: false, message: "Error de conexión con la API" };
+};
+
+export const ChangeState = async (
+  trigger: EnumVacancyTrigger,
+  publicId: string,
+  token: string,
+  reason?: string
+) => {
+  try {
+    if (!token) {
+      return { success: false, message: "Autenticación no disponible" };
+    }
+
+    const result = await apiRequest<{ success: boolean; message?: string }>(
+      `${API_URL}/mine/change-state`,
+      "POST",
+      token,
+      { trigger, publicId, reason }
+    );
+
+    return (
+      result ?? { success: false, message: "Error de conexión con la API" }
+    );
+
+    // const response = await fetch(`${API_URL}/mine/change-state`, {
+    //   method: "POST",
+    //   headers: { "Content-Type": "application/json" },
+    //   body: JSON.stringify({
+    //     publicId: publicId,
+    //     trigger,
+    //     rejectedReason: reason ?? null,
+    //   }),
+    // });
+
+    // if (!response.ok) throw new Error("Error al cambiar el estado");
+    // alert("Estado cambiado con éxito");
+  } catch (error) {
+    console.error(error);
+  }
 };

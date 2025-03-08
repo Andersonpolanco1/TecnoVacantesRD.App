@@ -2,13 +2,17 @@
 
 import GoBackButton from "@/components/public/GoBackButton";
 import VacancyDetails from "@/components/public/VacancyDetails";
-import { fetchUserVacancyById } from "@/lib/services/vacanciesService";
+import {
+  ChangeState,
+  fetchUserVacancyById,
+} from "@/lib/services/vacanciesService";
 import { useNotification } from "@/providers/notificationProvider";
 import { NOTIFICATION_COLORS } from "@/types/Notification";
 import { VacancyUserDto } from "@/types/vacancy";
 import { use, useEffect, useState } from "react";
 import { useSession } from "next-auth/react";
 import VacancyActionButtons from "@/components/loggedUsers/VacancyActionButtons";
+import { EnumVacancyTrigger } from "@/lib/utils";
 export default function VacancyDetailPage({
   params,
 }: {
@@ -53,6 +57,22 @@ export default function VacancyDetailPage({
     loadVacancy();
   }, [publicId, showNotification]);
 
+  const handleChangeState = async (
+    trigger: EnumVacancyTrigger,
+    reason?: string
+  ) => {
+    try {
+      if (!session?.accessToken) {
+        showNotification(NOTIFICATION_COLORS.danger, "Sesión inválida", "");
+        return;
+      }
+
+      ChangeState(trigger, vacancy!.publicId, session!.accessToken, reason);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   if (loading) return <div>Loading...</div>;
   if (!vacancy) return <p>Vacante no encontrada</p>;
 
@@ -65,10 +85,7 @@ export default function VacancyDetailPage({
         <div className="col-8 d-flex justify-content-end">
           <VacancyActionButtons
             vacancy={vacancy}
-            onAction={(trigger) => {
-              // Aquí debes manejar el cambio de estado, ya sea llamando a una API o ejecutando lógica en el frontend
-              console.log("Acción ejecutada:", trigger);
-            }}
+            onAction={handleChangeState}
           />
         </div>
       </div>
