@@ -1,119 +1,36 @@
-"use client";
+// app/vacancies/mine/[publicId]/page.tsx
 
-import GoBackButton from "@/components/public/GoBackButton";
+import { authOptions } from "@/app/api/auth/authOptions";
 import VacancyDetails from "@/components/public/VacancyDetails";
-import {
-  ChangeState,
-  fetchUserVacancyById,
-} from "@/lib/services/vacanciesService";
-import { useNotification } from "@/providers/notificationProvider";
-import { NOTIFICATION_COLORS } from "@/types/Notification";
+import { fetchUserVacancyById } from "@/lib/services/vacanciesService";
 import { VacancyUserDto } from "@/types/vacancy";
-import { useEffect, useState } from "react";
-import { useSession } from "next-auth/react";
-import VacancyActionButtons from "@/components/loggedUsers/VacancyActionButtons";
-import { EnumVacancyTrigger } from "@/lib/utils";
+import { getServerSession } from "next-auth";
 
-export default function VacancyDetailPage({
-  params,
-}: {
+interface VacancyDetailPageProps {
   params: { publicId: string };
-}) {
-  const { publicId } = params;
-  const [vacancy, setVacancy] = useState<VacancyUserDto | undefined>(undefined);
-  const [loading, setLoading] = useState(true);
-  const { showNotification } = useNotification();
-  const { data: session } = useSession();
+}
 
-  useEffect(() => {
-    if (!publicId) {
-      showNotification(
-        NOTIFICATION_COLORS.danger,
-        "ID de notificación inválido",
-        ""
-      );
-      setLoading(false);
-      return;
-    }
+export default async function VacancyDetailPage({
+  params,
+}: VacancyDetailPageProps) {
+  const { publicId } = await params;
 
-    if (!session?.accessToken) {
-      showNotification(NOTIFICATION_COLORS.danger, "Sesión inválida", "");
-      setLoading(false);
-      return;
-    }
+  const session = await getServerSession(authOptions);
 
-    const loadVacancy = async () => {
-      const response = await fetchUserVacancyById(
-        publicId,
-        session.accessToken!
-      );
+  if (!session || !session.accessToken) {
+    return <p>Acceso no autorizado</p>;
+  }
 
-      if (!response.success) {
-        showNotification(
-          NOTIFICATION_COLORS.danger,
-          "No se pudo obtener la vacante",
-          response?.message
-        );
-        setLoading(false);
-        return;
-      }
+  const response = await fetchUserVacancyById(publicId, session.accessToken);
 
-      console.log(response.data);
-      setVacancy(response.data);
-      setLoading(false);
-    };
+  if (!response.success) {
+    return <p>Vacante no encontrada</p>;
+  }
 
-    loadVacancy();
-  }, [publicId, session?.accessToken, showNotification]);
-
-  const handleChangeState = async (
-    trigger: EnumVacancyTrigger,
-    reason?: string
-  ) => {
-    if (!session?.accessToken) {
-      showNotification(NOTIFICATION_COLORS.danger, "Sesión inválida", "");
-      return;
-    }
-
-    const response = await ChangeState(
-      trigger,
-      vacancy!.publicId,
-      session.accessToken!,
-      reason
-    );
-
-    if (!response.success) {
-      showNotification(
-        NOTIFICATION_COLORS.danger,
-        "No se pudo cambiar el estado",
-        response.message
-      );
-      return;
-    }
-
-    setVacancy((prev) => ({
-      ...prev!,
-      status: response.data?.newStatus!,
-    }));
-  };
-
-  if (loading) return <div>Loading...</div>;
-  if (!vacancy) return <p>Vacante no encontrada</p>;
+  const vacancy: VacancyUserDto = response.data as VacancyUserDto;
 
   return (
     <div>
-      <div className="row d-flex flex-wrap bg-body my-3">
-        <div className="col-4 d-flex justify-content-start">
-          <GoBackButton />
-        </div>
-        <div className="col-8 d-flex justify-content-end">
-          <VacancyActionButtons
-            vacancy={vacancy}
-            onAction={handleChangeState}
-          />
-        </div>
-      </div>
-
       <VacancyDetails vacancy={vacancy} />
     </div>
   );

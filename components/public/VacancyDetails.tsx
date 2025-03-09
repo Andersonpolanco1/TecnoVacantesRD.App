@@ -33,10 +33,7 @@ const VacancyListItem = ({ vacancy }: VacancyListItemProps) => {
           {vacancy.title}
         </Link>
         {isUserVacancy && (
-          <button
-            className="btn btn-link p-0 text-primary ms-2"
-            onClick={() => {}}
-          >
+          <button className="btn btn-link p-0 text-primary ms-2">
             <FaEdit />
           </button>
         )}
