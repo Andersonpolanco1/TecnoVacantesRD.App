@@ -6,16 +6,15 @@ import {
   convertFiltersToQueryParams,
   EnumVacancyTrigger,
 } from "../utils";
+import { VacancyChangeStatusResponse } from "@/types/dtos/vacancyChangeStatusresponse";
 
 const API_URL = `${process.env.NEXT_PUBLIC_VACANCIES_API_BASE_URL}/api/vacancies`;
 
 // Obtiene vacantes paginadas
 export const fetchVacancies = async (filters: VacancyPublicFilter) => {
   const queryString = convertFiltersToQueryParams(filters);
-  return (
-    (await apiRequest<PaginatedResponse<VacancyPublicDto>>(
-      `${API_URL}?${queryString}`
-    )) ?? PaginatedResponse.emptyObject<VacancyPublicDto>()
+  return await apiRequest<PaginatedResponse<VacancyPublicDto>>(
+    `${API_URL}?${queryString}`
   );
 };
 
@@ -25,12 +24,10 @@ export const fetchUserVacancies = async (
   token: string
 ) => {
   const queryString = convertFiltersToQueryParams(filters);
-  return (
-    (await apiRequest<PaginatedResponse<VacancyUserDto>>(
-      `${API_URL}/mine?${queryString}`,
-      "GET",
-      token
-    )) ?? PaginatedResponse.emptyObject<VacancyUserDto>()
+  return await apiRequest<PaginatedResponse<VacancyUserDto>>(
+    `${API_URL}/mine?${queryString}`,
+    "GET",
+    token
   );
 };
 
@@ -57,14 +54,14 @@ export const publish = async (formData: PublishVacancy, token: string) => {
     return { success: false, message: "Autenticación no disponible" };
   }
 
-  const result = await apiRequest<{ success: boolean; message?: string }>(
+  const result = await apiRequest<{ guid: string }>(
     `${API_URL}/mine`,
     "POST",
     token,
     formData
   );
 
-  return result ?? { success: false, message: "Error de conexión con la API" };
+  return result;
 };
 
 export const ChangeState = async (
@@ -73,24 +70,11 @@ export const ChangeState = async (
   token: string,
   reason?: string
 ) => {
-  try {
-    if (!token) {
-      return { success: false, message: "Autenticación no disponible" };
-    }
-
-    const result = await apiRequest<{ publicId: string; newStatus: number }>(
-      `${API_URL}/mine/change-state`,
-      "POST",
-      token,
-      { trigger, publicId, reason }
-    );
-
-    console.log(result);
-
-    return (
-      result ?? { success: false, message: "Error de conexión con la API" }
-    );
-  } catch (error) {
-    return { success: false, message: "Error de conexión con la API" };
-  }
+  const result = await apiRequest<VacancyChangeStatusResponse>(
+    `${API_URL}/mine/change-state`,
+    "POST",
+    token,
+    { trigger, publicId, reason }
+  );
+  return result;
 };

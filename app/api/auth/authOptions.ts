@@ -1,3 +1,6 @@
+import { apiRequest } from "@/lib/utils";
+import { ApiResponse } from "@/types/dtos/ApiResponse";
+import { ApiTokenResponse } from "@/types/dtos/apiTokenResponse";
 import { AuthOptions, getServerSession } from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
 
@@ -18,29 +21,20 @@ const authOptions: AuthOptions = {
   callbacks: {
     async jwt({ token, account }) {
       if (account) {
-        try {
-          const response = await fetch(
-            `${process.env.NEXT_PUBLIC_VACANCIES_AUTH_API_URL}/api/auth/providers`,
-            {
-              method: "POST",
-              headers: {
-                "Content-Type": "application/json",
-              },
-              body: JSON.stringify({
-                provider: account.provider,
-                providerAccessToken: account.access_token,
-              }),
-            }
-          );
-
-          if (response.ok) {
-            const data = await response.json();
-            token.accessToken = data.accessToken;
-          } else {
-            console.error("Error:", await response.text());
+        const response = await apiRequest<ApiTokenResponse>(
+          `${process.env.NEXT_PUBLIC_VACANCIES_AUTH_API_URL}/api/auth/providers`,
+          "POST",
+          "",
+          {
+            provider: account.provider,
+            providerAccessToken: account.access_token,
           }
-        } catch (error) {
-          console.error("Error enviando el token al backend:", error);
+        );
+
+        if (response.success) {
+          token.accessToken = response.data?.accessToken;
+        } else {
+          throw new Error(response.message);
         }
       }
       return token;

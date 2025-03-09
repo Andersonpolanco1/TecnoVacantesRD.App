@@ -17,8 +17,8 @@ export default function CategorySelect({
 
   useEffect(() => {
     const loadCategories = async () => {
-      const data = await fetchProvinces();
-      setProvinces(data);
+      const response = await fetchProvinces();
+      if (response.success) setProvinces(response.data ?? []);
       setLoading(false);
     };
     loadCategories();

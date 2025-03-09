@@ -17,8 +17,11 @@ export default function CategorySelect({
 
   useEffect(() => {
     const loadCategories = async () => {
-      const data = await fetchCategories();
-      setCategories(data);
+      const response = await fetchCategories();
+      if (response.success) {
+        setCategories(response.data ?? []);
+      }
+
       setLoading(false);
     };
     loadCategories();

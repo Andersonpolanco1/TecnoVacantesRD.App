@@ -22,17 +22,17 @@ export default function VacancyDetailPage({
     if (!publicId) return;
 
     const loadVacancy = async () => {
-      const data = await fetchVacancyById(publicId);
+      const response = await fetchVacancyById(publicId);
 
-      if (!data) {
+      if (!response.success) {
         showNotification(
           NOTIFICATION_COLORS.danger,
-          "Error de comunicación",
-          "No se pudieron obtener las vacantes."
+          "No se pudo obtener la vacante",
+          response.message
         );
         return;
       }
-      setVacancy(data);
+      setVacancy(response.data as VacancyPublicDto);
       setLoading(false);
     };
 

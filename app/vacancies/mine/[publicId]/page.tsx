@@ -9,7 +9,7 @@ import {
 import { useNotification } from "@/providers/notificationProvider";
 import { NOTIFICATION_COLORS } from "@/types/Notification";
 import { VacancyUserDto } from "@/types/vacancy";
-import { use, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useSession } from "next-auth/react";
 import VacancyActionButtons from "@/components/loggedUsers/VacancyActionButtons";
 import { EnumVacancyTrigger } from "@/lib/utils";
@@ -17,10 +17,10 @@ import { EnumVacancyTrigger } from "@/lib/utils";
 export default function VacancyDetailPage({
   params,
 }: {
-  params: Promise<{ publicId: string }>;
+  params: { publicId: string };
 }) {
-  const { publicId } = use(params);
-  const [vacancy, setVacancy] = useState<VacancyUserDto | null>(null);
+  const { publicId } = params;
+  const [vacancy, setVacancy] = useState<VacancyUserDto | undefined>(undefined);
   const [loading, setLoading] = useState(true);
   const { showNotification } = useNotification();
   const { data: session } = useSession();
@@ -32,53 +32,69 @@ export default function VacancyDetailPage({
         "ID de notificación inválido",
         ""
       );
+      setLoading(false);
+      return;
     }
 
     if (!session?.accessToken) {
       showNotification(NOTIFICATION_COLORS.danger, "Sesión inválida", "");
+      setLoading(false);
       return;
     }
 
     const loadVacancy = async () => {
-      const data = await fetchUserVacancyById(publicId, session.accessToken!);
-      const success = data && "publicId" in data;
+      const response = await fetchUserVacancyById(
+        publicId,
+        session.accessToken!
+      );
 
-      if (!success) {
+      if (!response.success) {
         showNotification(
           NOTIFICATION_COLORS.danger,
-          "Error de comunicación",
-          data?.message as string
+          "No se pudo obtener la vacante",
+          response?.message
         );
+        setLoading(false);
         return;
       }
-      setVacancy(data);
+
+      console.log(response.data);
+      setVacancy(response.data);
       setLoading(false);
     };
 
     loadVacancy();
-  }, [publicId, showNotification]);
+  }, [publicId, session?.accessToken, showNotification]);
 
   const handleChangeState = async (
     trigger: EnumVacancyTrigger,
     reason?: string
   ) => {
-    try {
-      if (!session?.accessToken) {
-        showNotification(NOTIFICATION_COLORS.danger, "Sesión inválida", "");
-        return;
-      }
-
-      const response = await ChangeState(
-        trigger,
-        vacancy!.publicId,
-        session!.accessToken,
-        reason
-      );
-      if ("newStatus" in response)
-        setVacancy((prev) => ({ ...prev!, status: response.newStatus }));
-    } catch (error) {
-      console.error(error);
+    if (!session?.accessToken) {
+      showNotification(NOTIFICATION_COLORS.danger, "Sesión inválida", "");
+      return;
     }
+
+    const response = await ChangeState(
+      trigger,
+      vacancy!.publicId,
+      session.accessToken!,
+      reason
+    );
+
+    if (!response.success) {
+      showNotification(
+        NOTIFICATION_COLORS.danger,
+        "No se pudo cambiar el estado",
+        response.message
+      );
+      return;
+    }
+
+    setVacancy((prev) => ({
+      ...prev!,
+      status: response.data?.newStatus!,
+    }));
   };
 
   if (loading) return <div>Loading...</div>;

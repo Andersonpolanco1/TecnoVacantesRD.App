@@ -1,3 +1,5 @@
+import { ApiResponse } from "@/types/dtos/ApiResponse";
+
 export const getShortDescription = (
   vacancyDescription: string,
   maxLenght: number = 100
@@ -23,7 +25,7 @@ export const apiRequest = async <T>(
   method: string = "GET",
   token: string = "",
   body?: any
-): Promise<T | null> => {
+): Promise<ApiResponse<T>> => {
   try {
     const headers: HeadersInit = {
       "Content-Type": "application/json",
@@ -36,15 +38,15 @@ export const apiRequest = async <T>(
       body: body ? JSON.stringify(body) : undefined,
     });
 
-    if (!response.ok) {
-      const errorData = await response.json();
-      throw new Error(errorData.message || `Error ${response.status}`);
-    }
-
-    return await response.json();
+    const data: ApiResponse<T> = await response.json();
+    return data;
   } catch (error) {
     console.error(`Error in API request (${method} ${endpoint}):`, error);
-    return null;
+    return {
+      success: false,
+      message: "An error occurred during the API request.",
+      data: undefined,
+    };
   }
 };
 

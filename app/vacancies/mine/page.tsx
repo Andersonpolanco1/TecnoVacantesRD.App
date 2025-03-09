@@ -34,11 +34,20 @@ export default function Page() {
       showNotification(NOTIFICATION_COLORS.danger, "Sesión inválida", "");
       return;
     }
+    console.log(session.accessToken);
     try {
-      const data = await fetchUserVacancies(filters, session.accessToken);
-      setVacancies(data.items);
-      setCurrentPage(data.currentPage);
-      setTotalPages(data.totalPagesCount);
+      const response = await fetchUserVacancies(filters, session.accessToken);
+      if (!response.success) {
+        showNotification(
+          NOTIFICATION_COLORS.danger,
+          "Error al obtener vacantes",
+          response.message
+        );
+        return;
+      }
+      setVacancies(response.data?.items ?? []);
+      setCurrentPage(response.data?.currentPage ?? 0);
+      setTotalPages(response.data?.totalPagesCount ?? 0);
     } catch (error) {
       console.error("Error obteniendo vacantes:", error);
       showNotification(

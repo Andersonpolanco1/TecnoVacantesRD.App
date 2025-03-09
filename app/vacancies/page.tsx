@@ -29,17 +29,17 @@ export default function Page() {
 
   const loadVacancies = async () => {
     try {
-      const data = await fetchVacancies(filters);
-      if (data === null || !data.items || !Array.isArray(data.items)) {
+      const response = await fetchVacancies(filters);
+      if (!response.success) {
         showNotification(
           NOTIFICATION_COLORS.danger,
-          "Error de comunicación",
-          "No se pudieron obtener las vacantes."
+          "No se pudieron obtener las vacantes",
+          response.message
         );
       } else {
-        setVacancies(data.items);
-        setCurrentPage(data.currentPage);
-        setTotalPages(data.totalPagesCount);
+        setVacancies(response.data?.items ?? []);
+        setCurrentPage(response.data?.currentPage ?? 0);
+        setTotalPages(response.data?.totalPagesCount ?? 0);
       }
     } catch (error) {
       console.error("Error al obtener los datos:", error);
