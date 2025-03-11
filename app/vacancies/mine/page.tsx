@@ -30,6 +30,8 @@ export default function Page() {
   });
 
   const fetchData = async () => {
+    console.log(session?.user.accessToken);
+    console.log(session?.user.id);
     if (!session?.accessToken) {
       showNotification(NOTIFICATION_COLORS.danger, "Sesión inválida", "");
       return;
