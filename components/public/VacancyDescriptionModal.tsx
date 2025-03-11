@@ -1,5 +1,6 @@
 "use client";
 
+import { renderHTML } from "@/lib/utilsX";
 import RichText from "./RichText";
 
 interface VacancyModalProps {
@@ -33,9 +34,7 @@ const VacancyDescriptionModal = ({
                 {title}
               </h5>
             </div>
-            <div className="modal-body">
-              <div dangerouslySetInnerHTML={{ __html: description }} />
-            </div>
+            <div className="modal-body">{renderHTML(description)}</div>
             <div className="modal-footer">
               <button
                 type="button"

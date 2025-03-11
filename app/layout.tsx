@@ -32,16 +32,14 @@ export default async function RootLayout({
             <NotificationProvider>
               <div className="d-flex flex-column min-vh-100 pt-5 mt-3 relative">
                 <main className="flex-grow-1 container">{children}</main>
-                <footer className="bg-dark text-white text-center py-3">
-                  <p>
-                    &copy; 2025 TecnoVacantesRD. Todos los derechos reservados.
-                  </p>
-                </footer>
               </div>
               <ScrollToUpButton />
             </NotificationProvider>
           </LoadingProvider>
         </AppSessionProvider>
+        <footer className="bg-dark text-white text-center py-3">
+          <p>&copy; 2025 TecnoVacantesRD. Todos los derechos reservados.</p>
+        </footer>
 
         {/* Scripts de Bootstrap */}
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>

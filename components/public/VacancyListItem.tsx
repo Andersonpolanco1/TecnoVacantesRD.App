@@ -14,6 +14,7 @@ import {
 import VacancyDescriptionModal from "../public/VacancyDescriptionModal";
 import { formatDate, formatLocation } from "@/lib/utils";
 import { stripTags } from "@/lib/utils";
+import { renderHTML } from "@/lib/utilsX";
 
 interface VacancyListItemProps {
   vacancy: VacancyPublicDto;
@@ -85,7 +86,7 @@ const VacancyListItem = ({ vacancy }: VacancyListItemProps) => {
               height: "4.5rem",
             }}
           >
-            {stripTags(vacancy.vacancyDescription)}
+            {renderHTML(vacancy.vacancyDescription)}
           </div>
           {/* Contenedor para el botón, separado del texto */}
           <div className="d-flex justify-content-end">
