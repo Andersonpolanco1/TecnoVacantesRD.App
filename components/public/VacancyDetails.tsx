@@ -1,3 +1,5 @@
+"use client";
+
 import { VacancyPublicDto, VacancyUserDto } from "@/types/vacancy";
 import { VacancyMode, VacancyModeLabels } from "@/types/VacancyMode";
 import Link from "next/link";
