@@ -1,4 +1,4 @@
-import { apiRequest } from "@/lib/utils";
+import { apiRequestClient } from "@/lib/utils";
 import { AuthOptions, getServerSession } from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
 import CredentialsProvider from "next-auth/providers/credentials";
@@ -20,10 +20,9 @@ const authOptions: AuthOptions = {
         password: { label: "Password", type: "password" },
       },
       async authorize(credentials): Promise<User | null> {
-        const response = await apiRequest<{ accessToken: string }>(
+        const response = await apiRequestClient<ApiTokenResponse>(
           `${process.env.NEXT_PUBLIC_VACANCIES_AUTH_API_URL}/api/auth/login`,
           "POST",
-          "",
           {
             email: credentials?.email,
             password: credentials?.password,
@@ -54,6 +53,7 @@ const authOptions: AuthOptions = {
   session: {
     strategy: "jwt",
     maxAge: 43200, // 12h
+    updateAge: 3600, // Actualiza el token cada 1 hora
   },
   jwt: {
     secret: process.env.NEXTAUTH_SECRET,
@@ -61,11 +61,26 @@ const authOptions: AuthOptions = {
   callbacks: {
     async jwt({ token, account }) {
       console.log("jwt()");
-      if (account?.provider === "google") {
-        const providerResponse = await apiRequest<ApiTokenResponse>(
+      console.log(token);
+      console.log(account);
+      if (!account || !token) return token;
+
+      console.log("no ha expirado");
+      console.log("exp: " + new Date(token.expiresAt).toISOString());
+      console.log("now: " + new Date().toISOString());
+
+      if (
+        token.accessToken &&
+        token.expiresAt &&
+        new Date(token.expiresAt) > new Date()
+      ) {
+        return token;
+      }
+
+      if (account.provider === "google") {
+        const providerResponse = await apiRequestClient<ApiTokenResponse>(
           `${process.env.NEXT_PUBLIC_VACANCIES_AUTH_API_URL}/api/auth/register-with-providers`,
           "POST",
-          "",
           {
             provider: account.provider,
             providerAccessToken: account.access_token,
@@ -80,6 +95,7 @@ const authOptions: AuthOptions = {
           token.accessToken = providerResponse.data.accessToken;
           token.id = decodedToken?.sub;
           token.email = decodedToken?.email;
+          token.expiresAt = new Date(decodedToken?.exp * 1000).toISOString();
           token.roles =
             decodedToken[
               "http://schemas.microsoft.com/ws/2008/06/identity/claims/role"
@@ -98,13 +114,14 @@ const authOptions: AuthOptions = {
 
     async session({ session, token }) {
       session.accessToken = token.accessToken;
-      session.user = {
-        id: token.id,
-        email: token.email,
-        roles: token.roles,
-        accessToken: token.accessToken,
-      };
-      console.log("++[session datos agregados]++ ");
+      (session.expires = token.expiresAt),
+        (session.user = {
+          id: token.id,
+          email: token.email,
+          roles: token.roles,
+          accessToken: token.accessToken,
+        });
+      console.log("++[session datos agregados, expires= " + session.expires);
       return session;
     },
 

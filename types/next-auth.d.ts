@@ -20,28 +20,6 @@ declare module "next-auth/jwt" {
     id: string;
     email: string;
     roles: string[];
+    expiresAt: string;
   }
 }
-
-// import NextAuth, { DefaultSession, DefaultUser } from "next-auth";
-
-// declare module "next-auth" {
-//   interface Session extends DefaultSession {
-//     accessToken?: string;
-//     provider?: string;
-//   }
-
-//   interface User extends DefaultUser {
-//     userId?: number;
-//     accessToken?: string;
-//     provider?: string;
-//     roles: ?string[];
-//   }
-// }
-
-// declare module "next-auth/jwt" {
-//   interface JWT {
-//     accessToken?: string;
-//     provider?: string;
-//   }
-// }

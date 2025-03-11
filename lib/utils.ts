@@ -1,4 +1,5 @@
 import { ApiResponse } from "@/types/dtos/ApiResponse";
+import { getSession } from "next-auth/react";
 
 export const getShortDescription = (
   vacancyDescription: string,
@@ -20,10 +21,10 @@ export const formatLocation = (provinceName?: string) => {
 };
 
 //funcion generica para peticiones http
-export const apiRequest = async <T>(
+export const apiRequestServer = async <T>(
   endpoint: string,
   method: string = "GET",
-  token: string = "",
+  token?: string,
   body?: any
 ): Promise<ApiResponse<T>> => {
   try {
@@ -31,6 +32,37 @@ export const apiRequest = async <T>(
       "Content-Type": "application/json",
     };
     if (token) headers.Authorization = `Bearer ${token}`;
+
+    const response = await fetch(endpoint, {
+      method,
+      headers,
+      body: body ? JSON.stringify(body) : undefined,
+    });
+
+    const data: ApiResponse<T> = await response.json();
+    return data;
+  } catch (error) {
+    console.error(`Error in API request (${method} ${endpoint}):`, error);
+    return {
+      success: false,
+      message: "An error occurred during the API request.",
+      data: undefined,
+    };
+  }
+};
+
+export const apiRequestClient = async <T>(
+  endpoint: string,
+  method: string = "GET",
+  body?: any
+): Promise<ApiResponse<T>> => {
+  const session = await getSession();
+  const accessToken = session?.accessToken;
+  try {
+    const headers: HeadersInit = {
+      "Content-Type": "application/json",
+    };
+    if (accessToken) headers.Authorization = `Bearer ${accessToken}`;
 
     const response = await fetch(endpoint, {
       method,

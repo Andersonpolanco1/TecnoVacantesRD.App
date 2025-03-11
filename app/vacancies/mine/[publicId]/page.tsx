@@ -24,6 +24,7 @@ export default async function VacancyDetailPage({
   const response = await fetchUserVacancyById(publicId, session.accessToken);
 
   if (!response.success) {
+    console.log(response);
     return <p>Vacante no encontrada</p>;
   }
 

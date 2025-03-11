@@ -18,7 +18,6 @@ export default function Page() {
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(0);
   const { showNotification } = useNotification();
-  const { data: session } = useSession();
 
   const [filters, setFilters] = useState<VacancyUserFilter>({
     description: null,
@@ -30,15 +29,8 @@ export default function Page() {
   });
 
   const fetchData = async () => {
-    console.log(session?.user.accessToken);
-    console.log(session?.user.id);
-    if (!session?.accessToken) {
-      showNotification(NOTIFICATION_COLORS.danger, "Sesión inválida", "");
-      return;
-    }
-    console.log(session.accessToken);
     try {
-      const response = await fetchUserVacancies(filters, session.accessToken);
+      const response = await fetchUserVacancies(filters);
       if (!response.success) {
         showNotification(
           NOTIFICATION_COLORS.danger,
