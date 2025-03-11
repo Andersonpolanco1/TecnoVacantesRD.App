@@ -10,7 +10,6 @@
   },
   "dependencies": {
     "bootstrap": "^5.3.3",
-    "dompurify": "^3.2.4",
     "jsonwebtoken": "^9.0.2",
     "next": "15.1.7",
     "next-auth": "^4.24.11",

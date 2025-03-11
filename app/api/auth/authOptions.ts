@@ -60,14 +60,7 @@ const authOptions: AuthOptions = {
   },
   callbacks: {
     async jwt({ token, account }) {
-      console.log("jwt()");
-      console.log(token);
-      console.log(account);
       if (!account || !token) return token;
-
-      console.log("no ha expirado");
-      console.log("exp: " + new Date(token.expiresAt).toISOString());
-      console.log("now: " + new Date().toISOString());
 
       if (
         token.accessToken &&
@@ -88,7 +81,6 @@ const authOptions: AuthOptions = {
         );
 
         if (providerResponse.success && providerResponse.data?.accessToken) {
-          console.log("jwt() datos obtenidos");
           const decodedToken: any = jwt.decode(
             providerResponse.data.accessToken
           );
