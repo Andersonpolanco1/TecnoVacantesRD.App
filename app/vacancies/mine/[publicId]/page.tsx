@@ -1,6 +1,6 @@
 // app/vacancies/mine/[publicId]/page.tsx
 
-import VacancyDetailServer from "@/components/loggedUsers/server/VacancyDetailServer";
+import VacancyDetailServer from "@/components/vacancyDetails/VacancyDetailServer";
 
 interface VacancyDetailPageProps {
   params: { publicId: string };

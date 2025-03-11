@@ -14,9 +14,9 @@ import {
   EnumVacancyTrigger,
   getVacancyTrigger,
 } from "@/lib/utils";
-import ConfirmModal from "../ModalConfirm";
+import ConfirmModal from "./ModalConfirm";
 import { VacancyUserDto } from "@/types/vacancy";
-import ActionButton from "../ActionButton";
+import ActionButton from "./ActionButton";
 
 interface VacancyActionButtonsProps {
   vacancy: VacancyUserDto;

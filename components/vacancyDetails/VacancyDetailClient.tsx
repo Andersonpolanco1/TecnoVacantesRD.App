@@ -2,11 +2,11 @@
 "use client";
 
 import { useState } from "react";
-import VacancyActionButtons from "@/components/loggedUsers/VacancyActionButtons";
-import VacancyDetails from "@/components/public/VacancyDetails";
+import VacancyActionButtons from "@/components/VacancyActionButtons";
 import { ChangeState } from "@/lib/services/vacanciesService";
 import { EnumVacancyTrigger } from "@/lib/utils";
 import { VacancyUserDto } from "@/types/vacancy";
+import VacancyDetails from "./VacancyDetails";
 
 interface VacancyDetailClientProps {
   vacancy: VacancyUserDto;

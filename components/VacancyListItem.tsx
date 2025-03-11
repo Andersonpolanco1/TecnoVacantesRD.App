@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { VacancyUserDto } from "@/types/vacancy";
+import { VacancyPublicDto } from "@/types/vacancy";
 import { VacancyMode, VacancyModeLabels } from "@/types/VacancyMode";
 import Link from "next/link";
 import {
@@ -9,23 +9,17 @@ import {
   FaDollarSign,
   FaMapMarkerAlt,
   FaInfoCircle,
-  FaEdit,
   FaRegFileAlt,
 } from "react-icons/fa";
-import VacancyDescriptionModal from "../public/VacancyDescriptionModal";
-import {
-  formatDate,
-  formatLocation,
-  getVacancyStatus,
-  stripTags,
-} from "@/lib/utils";
-import { getStatusIcon } from "@/lib/utilsX";
+import { formatDate, formatLocation } from "@/lib/utils";
+import { renderHTML } from "@/lib/utilsX";
+import VacancyDescriptionModal from "./VacancyDescriptionModal";
 
 interface VacancyListItemProps {
-  vacancy: VacancyUserDto;
+  vacancy: VacancyPublicDto;
 }
 
-const VacancyUserListItem = ({ vacancy }: VacancyListItemProps) => {
+const VacancyListItem = ({ vacancy }: VacancyListItemProps) => {
   const [showModal, setShowModal] = useState(false);
 
   const handleShowModal = () => setShowModal(true);
@@ -34,18 +28,12 @@ const VacancyUserListItem = ({ vacancy }: VacancyListItemProps) => {
     <div className="p-3 mb-3 border rounded-lg shadow-sm bg-white">
       <h5 className="font-weight-bold text-primary mb-1 d-flex justify-content-between align-items-center">
         <Link
-          href={`/vacancies/mine/${vacancy.publicId}`}
+          href={`/vacancies/${vacancy.publicId}`}
           className="text-primary text-decoration-none d-inline-block text-truncate"
           style={{ maxWidth: "calc(100% - 1.5rem)" }}
         >
           {vacancy.title}
         </Link>
-        <button
-          className="btn btn-link p-0 text-primary ms-2"
-          onClick={() => {}}
-        >
-          <FaEdit />
-        </button>
       </h5>
 
       <p className="text-muted mb-2">
@@ -53,23 +41,11 @@ const VacancyUserListItem = ({ vacancy }: VacancyListItemProps) => {
       </p>
 
       <div className="d-flex flex-column">
-        {/* Estado */}
-        <p className="text-muted text-xs mb-1 d-flex align-items-center">
-          {getStatusIcon(vacancy.status)}{" "}
-          <strong className="ms-2">{getVacancyStatus(vacancy.status)}</strong>
-        </p>
-
         <p className="text-muted text-xs mb-1">
           <FaCalendarAlt className="me-2" /> <strong>Publicada:</strong>{" "}
           <span className="text-primary">
             {formatDate(vacancy.publishedAt)}
           </span>
-        </p>
-
-        {/* Nueva sección: Fecha de creación */}
-        <p className="text-muted text-xs mb-1">
-          <FaCalendarAlt className="me-2" /> <strong>Creada:</strong>{" "}
-          <span className="text-info">{formatDate(vacancy.createdAt)}</span>
         </p>
 
         <p className="text-muted text-xs mb-1">
@@ -109,7 +85,7 @@ const VacancyUserListItem = ({ vacancy }: VacancyListItemProps) => {
               height: "4.5rem",
             }}
           >
-            {stripTags(vacancy.vacancyDescription)}
+            {renderHTML(vacancy.vacancyDescription)}
           </div>
           {/* Contenedor para el botón, separado del texto */}
           <div className="d-flex justify-content-end">
@@ -136,4 +112,4 @@ const VacancyUserListItem = ({ vacancy }: VacancyListItemProps) => {
   );
 };
 
-export default VacancyUserListItem;
+export default VacancyListItem;

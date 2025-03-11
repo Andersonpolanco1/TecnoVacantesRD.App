@@ -1,6 +1,6 @@
 // app/vacancies/[publicId]/page.tsx
 
-import VacancyDetails from "@/components/public/VacancyDetails";
+import VacancyDetails from "@/components/vacancyDetails/VacancyDetails";
 import { fetchVacancyById } from "@/lib/services/vacanciesService";
 import { VacancyPublicDto } from "@/types/vacancy";
 

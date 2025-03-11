@@ -4,12 +4,11 @@ import React, { useEffect, useState } from "react";
 import { fetchUserVacancies } from "@/lib/services/vacanciesService";
 import { VacancyUserDto } from "@/types/vacancy";
 import { VacancyUserFilter } from "@/types/VacancyFilters";
-import Pagination from "@/components/public/pagination";
+import Pagination from "@/components/pagination";
 import { useNotification } from "@/providers/notificationProvider";
 import { NOTIFICATION_COLORS } from "@/types/Notification";
-import VacancyUserListItem from "@/components/loggedUsers/VacancyUserListItem";
-import { useSession } from "next-auth/react";
-import AuthenticatedFilter from "@/components/loggedUsers/AuthenticatedFilter";
+import VacancyUserListItem from "@/components/VacancyUserListItem";
+import AuthenticatedFilter from "@/components/AuthenticatedFilter";
 
 export default function Page() {
   const [vacancies, setVacancies] = useState<VacancyUserDto[]>([]);

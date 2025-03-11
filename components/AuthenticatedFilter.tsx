@@ -1,25 +1,29 @@
-import { VacancyPublicFilter } from "@/types/VacancyFilters";
+"use client";
+
 import React, { useState } from "react";
-import CategorySelect from "./CategorySelect";
-import VacancyModeSelect from "./vacancyMode";
 import ProvinceSelect from "./ProvinceSelect";
+import VacancyModeSelect from "./vacancyMode";
+import CategorySelect from "./CategorySelect";
+import { VacancyUserFilter } from "@/types/VacancyFilters";
+import VacancyStatusSelect from "./StatusSelect";
 
 interface FiltroVacantesProps {
-  onFilterChange: (filters: VacancyPublicFilter) => void;
+  onFilterChange: (filters: VacancyUserFilter) => void;
   onFilterClick: () => void;
 }
 
-const VacancyMainFilter = ({
+const AuthenticatedFilter = ({
   onFilterChange,
   onFilterClick,
 }: FiltroVacantesProps) => {
-  const [filters, setFilters] = useState<VacancyPublicFilter>({
+  const [filters, setFilters] = useState<VacancyUserFilter>({
     description: null,
     salaryFrom: null,
     salaryTo: null,
     provinceId: null,
     mode: null,
     categoryId: null,
+    status: null,
   });
 
   const handleFilterChange = (field: string, value: any) => {
@@ -83,7 +87,6 @@ const VacancyMainFilter = ({
       </div>
 
       <div className="row">
-        {/* Filtro por Ubicación */}
         <div className="col-md-4 mb-3">
           <ProvinceSelect
             flagRequired={false}
@@ -92,7 +95,6 @@ const VacancyMainFilter = ({
           />
         </div>
 
-        {/* Filtro por Modo y Categoría en la misma fila */}
         <div className="col-md-4 mb-3">
           <VacancyModeSelect
             flagRequired={false}
@@ -102,7 +104,6 @@ const VacancyMainFilter = ({
         </div>
 
         <div className="col-md-4 mb-3">
-          {/* Filtro por Modo y Categoría en la misma fila */}
           <CategorySelect
             flagRequired={false}
             value={filters.categoryId}
@@ -112,8 +113,15 @@ const VacancyMainFilter = ({
       </div>
 
       <div className="row">
+        <div className="col-md-4 mb-3">
+          <VacancyStatusSelect
+            onChange={(value) => handleFilterChange("status", value)}
+            value={filters.status}
+          />
+        </div>
+
         {/* Botón de Filtrar */}
-        <div className="col-12 col-md-6 d-grid text-center mt-4">
+        <div className="col-md-4 mb-3">
           <button
             type="button"
             className="btn btn-primary w-100"
@@ -126,7 +134,7 @@ const VacancyMainFilter = ({
         </div>
 
         {/* Botón de Resetear Filtros */}
-        <div className="col-12 col-md-6 d-grid text-center mt-4">
+        <div className="col-md-4 mb-3">
           <button
             type="button"
             className="btn btn-secondary w-100"
@@ -138,6 +146,7 @@ const VacancyMainFilter = ({
                 location: null,
                 mode: null,
                 categoryId: null,
+                status: null,
               };
               setFilters(resetFilters);
               onFilterChange(resetFilters);
@@ -151,4 +160,4 @@ const VacancyMainFilter = ({
   );
 };
 
-export default VacancyMainFilter;
+export default AuthenticatedFilter;

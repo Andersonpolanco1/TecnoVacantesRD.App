@@ -3,7 +3,7 @@ import { authOptions } from "@/app/api/auth/authOptions";
 import { fetchUserVacancyById } from "@/lib/services/vacanciesService";
 import { getServerSession } from "next-auth";
 import { VacancyUserDto } from "@/types/vacancy";
-import VacancyDetailClient from "../client/VacancyDetailClient";
+import VacancyDetailClient from "./VacancyDetailClient";
 
 interface VacancyDetailServerProps {
   publicId: string;

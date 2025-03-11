@@ -12,7 +12,7 @@ export const getShortDescription = (
 
 export const formatDate = (date: string) => {
   if (!date) return "N/D";
-  return new Date(date).toLocaleDateString();
+  return date;
 };
 
 export const formatLocation = (provinceName?: string) => {

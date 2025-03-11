@@ -4,11 +4,11 @@ import React, { useEffect, useState } from "react";
 import { fetchVacancies } from "@/lib/services/vacanciesService";
 import { VacancyPublicDto } from "@/types/vacancy";
 import { VacancyPublicFilter } from "@/types/VacancyFilters";
-import Pagination from "@/components/public/pagination";
+import Pagination from "@/components/pagination";
 import { useNotification } from "@/providers/notificationProvider";
 import { NOTIFICATION_COLORS } from "@/types/Notification";
-import VacancyListItem from "@/components/public/VacancyListItem";
-import VacancyMainFilter from "@/components/public/VacancyMainFilter";
+import VacancyListItem from "@/components/VacancyListItem";
+import VacancyMainFilter from "@/components/VacancyMainFilter";
 
 export default function Page() {
   const [vacancies, setVacancies] = useState<VacancyPublicDto[]>([]);

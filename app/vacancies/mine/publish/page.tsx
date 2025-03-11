@@ -1,9 +1,9 @@
 "use client";
 
 import { FaPlus } from "react-icons/fa";
-import ProvinceSelect from "@/components/public/ProvinceSelect";
-import VacancyModeSelect from "@/components/public/vacancyMode";
-import CategorySelect from "@/components/public/CategorySelect";
+import ProvinceSelect from "@/components/ProvinceSelect";
+import VacancyModeSelect from "@/components/vacancyMode";
+import CategorySelect from "@/components/CategorySelect";
 import { publish } from "@/lib/services/vacanciesService";
 import { useNotification } from "@/providers/notificationProvider";
 import { NOTIFICATION_COLORS } from "@/types/Notification";
@@ -12,7 +12,7 @@ import { useSession } from "next-auth/react";
 import React, { useState } from "react";
 import ReactQuill from "react-quill-new";
 import "react-quill-new/dist/quill.snow.css";
-import RichText from "@/components/public/RichText";
+import RichText from "@/components/RichText";
 
 const JobPostingForm = () => {
   const { showNotification } = useNotification();
