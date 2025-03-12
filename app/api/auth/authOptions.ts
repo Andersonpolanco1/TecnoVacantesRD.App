@@ -7,7 +7,7 @@ import { User } from "next-auth";
 import { ApiTokenResponse } from "@/types/dtos/apiTokenResponse";
 
 const authOptions: AuthOptions = {
-  debug: true,
+  debug: false,
   providers: [
     GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID!,
@@ -35,8 +35,6 @@ const authOptions: AuthOptions = {
 
         const accessToken = response.data.accessToken;
         const decodedToken: any = jwt.decode(accessToken);
-        console.log(decodedToken);
-        alert(decodedToken);
 
         return {
           accessToken,
@@ -113,7 +111,6 @@ const authOptions: AuthOptions = {
           roles: token.roles,
           accessToken: token.accessToken,
         });
-      console.log("++[session datos agregados, expires= " + session.expires);
       return session;
     },
 

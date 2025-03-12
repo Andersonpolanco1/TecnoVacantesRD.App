@@ -1,18 +1,15 @@
+"use client";
+
 import { VacancyPublicFilter } from "@/types/VacancyFilters";
-import React, { useState } from "react";
+import { useState } from "react";
+import { useRouter } from "next/navigation";
 import ProvinceSelect from "./ProvinceSelect";
 import VacancyModeSelect from "./vacancyMode";
-import CategorySelect from "./ProvinceSelect";
+import CategorySelect from "./CategorySelect";
 
-interface FiltroVacantesProps {
-  onFilterChange: (filters: VacancyPublicFilter) => void;
-  onFilterClick: () => void;
-}
+const VacanciesPublicFilter = () => {
+  const router = useRouter();
 
-const VacancyMainFilter = ({
-  onFilterChange,
-  onFilterClick,
-}: FiltroVacantesProps) => {
   const [filters, setFilters] = useState<VacancyPublicFilter>({
     description: null,
     salaryFrom: null,
@@ -26,16 +23,23 @@ const VacancyMainFilter = ({
   const handleFilterChange = (field: string, value: any) => {
     const updatedFilters = { ...filters, [field]: value };
     setFilters(updatedFilters);
-    onFilterChange(updatedFilters);
   };
+
   function handleFilterSubmit() {
-    onFilterClick();
+    const queryParams = new URLSearchParams();
+
+    Object.entries(filters).forEach(([key, value]) => {
+      if (value !== null && value !== "") {
+        queryParams.set(key, String(value));
+      }
+    });
+
+    router.push(`/vacancies?${queryParams.toString()}`); // Redirige con los nuevos filtros
   }
 
   return (
-    <div>
+    <div className="bg-light my-3 p-2">
       <div className="row">
-        {/* Filtro por Descripción */}
         <div className="col-md-4 mb-3">
           <label htmlFor="description" className="form-label">
             Descripción
@@ -50,7 +54,6 @@ const VacancyMainFilter = ({
           />
         </div>
 
-        {/* Filtro por Salario Desde */}
         <div className="col-md-4 mb-3">
           <label htmlFor="salaryFrom" className="form-label">
             Salario desde
@@ -66,7 +69,6 @@ const VacancyMainFilter = ({
           />
         </div>
 
-        {/* Filtro por Salario Hasta */}
         <div className="col-md-4 mb-3">
           <label htmlFor="salaryTo" className="form-label">
             Salario hasta
@@ -84,7 +86,6 @@ const VacancyMainFilter = ({
       </div>
 
       <div className="row">
-        {/* Filtro por Ubicación */}
         <div className="col-md-4 mb-3">
           <ProvinceSelect
             flagRequired={false}
@@ -93,7 +94,6 @@ const VacancyMainFilter = ({
           />
         </div>
 
-        {/* Filtro por Modo y Categoría en la misma fila */}
         <div className="col-md-4 mb-3">
           <VacancyModeSelect
             flagRequired={false}
@@ -103,7 +103,6 @@ const VacancyMainFilter = ({
         </div>
 
         <div className="col-md-4 mb-3">
-          {/* Filtro por Modo y Categoría en la misma fila */}
           <CategorySelect
             flagRequired={false}
             value={filters.categoryId}
@@ -113,33 +112,31 @@ const VacancyMainFilter = ({
       </div>
 
       <div className="row">
-        {/* Botón de Filtrar */}
         <div className="col-12 col-md-6 d-grid text-center mt-4">
           <button
             type="button"
             className="btn btn-primary w-100"
-            onClick={() => {
-              handleFilterSubmit();
-            }}
+            onClick={handleFilterSubmit}
           >
             Filtrar
           </button>
         </div>
 
-        {/* Botón de Resetear Filtros */}
         <div className="col-12 col-md-6 d-grid text-center mt-4">
           <button
             type="button"
             className="btn btn-secondary w-100"
             onClick={() => {
-              const resetFilters = {
+              setFilters({
                 description: null,
                 salaryFrom: null,
                 salaryTo: null,
-                location: null,
+                provinceId: null,
                 mode: null,
                 categoryId: null,
-              };
+                page: 1,
+              });
+              router.push("/vacancies");
             }}
           >
             Resetear Filtros
@@ -150,4 +147,4 @@ const VacancyMainFilter = ({
   );
 };
 
-export default VacancyMainFilter;
+export default VacanciesPublicFilter;

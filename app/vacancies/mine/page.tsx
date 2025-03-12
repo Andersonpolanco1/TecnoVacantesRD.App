@@ -25,6 +25,7 @@ export default function Page() {
     provinceId: null,
     mode: null,
     categoryId: null,
+    page: 1,
   });
 
   const fetchData = async () => {
