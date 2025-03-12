@@ -14,7 +14,7 @@ const API_URL = `${process.env.NEXT_PUBLIC_VACANCIES_API_BASE_URL}/api/vacancies
 // Obtiene vacantes paginadas
 export const fetchVacancies = async (filters: VacancyPublicFilter) => {
   const queryString = convertFiltersToQueryParams(filters);
-  return await apiRequestClient<PaginatedResponse<VacancyPublicDto>>(
+  return await apiRequestServer<PaginatedResponse<VacancyPublicDto>>(
     `${API_URL}?${queryString}`
   );
 };

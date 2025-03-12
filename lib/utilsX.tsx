@@ -1,4 +1,5 @@
 import { FaCheckCircle, FaClock, FaTimesCircle } from "react-icons/fa";
+import sanitizeHtml from "sanitize-html";
 
 export const getStatusIcon = (status: number) => {
   switch (status) {
@@ -18,6 +19,16 @@ export const getStatusIcon = (status: number) => {
 };
 
 // Función que devuelve un componente JSX para renderizar contenido HTML
-export const renderHTML = (content: string) => {
-  return <div dangerouslySetInnerHTML={{ __html: content }} />;
+export const renderHTML = (content?: string) => {
+  if (!content) return null;
+  const sanitizedContent = sanitizeHtml(content, {
+    allowedTags: sanitizeHtml.defaults.allowedTags.concat(["img", "iframe"]),
+    allowedAttributes: {
+      "*": ["style", "class"],
+      a: ["href"],
+      img: ["src", "alt"],
+    },
+  });
+
+  return <div dangerouslySetInnerHTML={{ __html: sanitizedContent }} />;
 };

@@ -1,132 +1,44 @@
-"use client";
+// app/vacancies/page.tsx
 
-import React, { useEffect, useState } from "react";
+import VacanciesPublicListClient from "@/components/vacanciesPublicList/vacanciesPublicListClient";
 import { fetchVacancies } from "@/lib/services/vacanciesService";
 import { VacancyPublicDto } from "@/types/vacancy";
 import { VacancyPublicFilter } from "@/types/VacancyFilters";
-import Pagination from "@/components/pagination";
-import { useNotification } from "@/providers/notificationProvider";
-import { NOTIFICATION_COLORS } from "@/types/Notification";
-import VacancyListItem from "@/components/VacancyListItem";
-import VacancyMainFilter from "@/components/VacancyMainFilter";
+import { VacancyMode } from "@/types/VacancyMode";
 
-export default function Page() {
-  const [vacancies, setVacancies] = useState<VacancyPublicDto[]>([]);
-  const [shouldFetch, setShouldFetch] = useState(true);
-  const [filterExpanded, setFilterExpanded] = useState(false);
-  const [currentPage, setCurrentPage] = useState(1);
-  const [totalPages, setTotalPages] = useState(0);
-  const { showNotification } = useNotification();
+interface PageProps {
+  searchParams: Record<string, string | undefined>;
+}
 
-  const [filters, setFilters] = useState<VacancyPublicFilter>({
-    description: null,
-    salaryFrom: null,
-    salaryTo: null,
-    provinceId: null,
-    mode: null,
-    categoryId: null,
-  });
-
-  const loadVacancies = async () => {
-    try {
-      const response = await fetchVacancies(filters);
-      if (!response.success) {
-        showNotification(
-          NOTIFICATION_COLORS.danger,
-          "No se pudieron obtener las vacantes",
-          response.message
-        );
-      } else {
-        setVacancies(response.data?.items ?? []);
-        setCurrentPage(response.data?.currentPage ?? 0);
-        setTotalPages(response.data?.totalPagesCount ?? 0);
-      }
-    } catch (error) {
-      console.error("Error al obtener los datos:", error);
-    }
+function parseSearchParams(params: Record<string, string | undefined>) {
+  return {
+    description: params.description || null,
+    salaryFrom: params.salaryFrom ? Number(params.salaryFrom) : null,
+    salaryTo: params.salaryTo ? Number(params.salaryTo) : null,
+    provinceId: params.provinceId ? Number(params.provinceId) : null,
+    mode: params.mode ? (Number(params.mode) as VacancyMode) : null,
+    categoryId: params.categoryId ? Number(params.categoryId) : null,
   };
+}
 
-  const handleFilterChange = (newFilters: VacancyPublicFilter) => {
-    setFilters(newFilters);
-  };
+export default async function Page({ searchParams }: PageProps) {
+  const para = await searchParams;
+  const filters: VacancyPublicFilter = parseSearchParams(para);
 
-  const handleFilterClick = () => {
-    setShouldFetch(true);
-  };
+  const response = await fetchVacancies(filters);
+  const vacancies: VacancyPublicDto[] = response.success
+    ? response.data!.items
+    : [];
 
-  const handleFilterToggle = () => {
-    setFilterExpanded(!filterExpanded);
-  };
-
-  const handlePageChange = (pageNumber: number) => {
-    const updatedFilters = { ...filters, ["currentPage"]: pageNumber };
-    setFilters(updatedFilters);
-    setShouldFetch(true);
-  };
-
-  useEffect(() => {
-    if (shouldFetch) {
-      loadVacancies();
-      setShouldFetch(false);
-    }
-  }, [shouldFetch, filters]);
+  const currentPage = response.success ? response.data!.currentPage : 1;
+  const totalPages = response.success ? response.data!.totalPagesCount : 0;
 
   return (
-    <>
-      <div className="accordion mb-4" id="filterAccordion">
-        <div className="accordion-item">
-          <h2 className="accordion-header" id="filterHeading">
-            <button
-              className="accordion-button bg-light"
-              type="button"
-              data-bs-toggle="collapse"
-              data-bs-target="#filterCollapse"
-              aria-expanded={filterExpanded ? "true" : "false"}
-              aria-controls="filterCollapse"
-              onClick={handleFilterToggle}
-            >
-              Filtrar vacantes
-            </button>
-          </h2>
-          <div
-            id="filterCollapse"
-            className={`accordion-collapse collapse ${
-              filterExpanded ? "show" : ""
-            }`}
-            aria-labelledby="filterHeading"
-            data-bs-parent="#filterAccordion"
-          >
-            <div className="accordion-body">
-              <VacancyMainFilter
-                onFilterChange={handleFilterChange}
-                onFilterClick={handleFilterClick}
-              />
-            </div>
-          </div>
-        </div>
-      </div>
-      <div className="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
-        {vacancies.length > 0 ? (
-          vacancies.map((vacancy) => (
-            <div key={vacancy.publicId}>
-              <VacancyListItem vacancy={vacancy} />
-            </div>
-          ))
-        ) : (
-          <div className="col-12">
-            <div>Sin resultados.</div>
-          </div>
-        )}
-      </div>
-      <div className="my-3">
-        {totalPages != 0 && (
-          <Pagination
-            currentPage={currentPage}
-            totalPagesCount={totalPages}
-            onPageChange={(page) => handlePageChange(page)}
-          />
-        )}
-      </div>
-    </>
+    <VacanciesPublicListClient
+      initialVacancies={vacancies}
+      initialFilters={filters}
+      initialPage={currentPage}
+      totalPages={totalPages}
+    />
   );
 }

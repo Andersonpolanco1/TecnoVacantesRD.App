@@ -1,7 +1,6 @@
 "use client";
 
 import { renderHTML } from "@/lib/utilsX";
-import RichText from "../RichText";
 
 interface VacancyModalProps {
   title: string;

@@ -1,3 +1,5 @@
+"use client";
+
 import { useState } from "react";
 import { VacancyPublicDto } from "@/types/vacancy";
 import { VacancyMode, VacancyModeLabels } from "@/types/VacancyMode";

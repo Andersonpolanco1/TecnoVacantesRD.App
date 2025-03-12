@@ -7,7 +7,7 @@ interface Props {
   flagRequired: boolean;
 }
 
-export default function CategorySelect({
+export default function ProvinceSelect({
   value,
   onChange,
   flagRequired,

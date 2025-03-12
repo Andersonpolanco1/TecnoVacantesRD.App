@@ -2,7 +2,7 @@ import { VacancyPublicFilter } from "@/types/VacancyFilters";
 import React, { useState } from "react";
 import ProvinceSelect from "./ProvinceSelect";
 import VacancyModeSelect from "./vacancyMode";
-import CategorySelect from "./ProvinceSelect";
+import CategorySelect from "./CategorySelect";
 
 interface FiltroVacantesProps {
   onFilterChange: (filters: VacancyPublicFilter) => void;
