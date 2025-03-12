@@ -4,6 +4,7 @@ import VacanciesPublicFilter from "@/components/VacanciesPublicFilters";
 import { fetchVacancies } from "@/lib/services/vacanciesService";
 import { VacancyPublicDto } from "@/types/vacancy";
 import { VacancyPublicFilter } from "@/types/VacancyFilters";
+import { RiFilterFill } from "react-icons/ri";
 
 interface PageProps {
   searchParams: Record<string, string | undefined>;
@@ -49,18 +50,18 @@ export default async function Page({ searchParams }: PageProps) {
           aria-expanded="false"
           aria-controls="filtersCollapse"
         >
-          Ocultar / ver filtros de búsqueda
+          <RiFilterFill className="me-2" />
+          Filtrar
         </button>
         <span className="fw-bold small ms-2">
-          Registros encontrados: {totalItems} {hasFilters ? "(filtrado)" : ""}
+          Registros: {totalItems} {hasFilters ? "(filtrados)" : ""}
         </span>
       </div>
-
       {/* Contenedor colapsable para los filtros */}
-      <div className="collapse show" id="filtersCollapse">
+      <div className="collapse" id="filtersCollapse">
         <VacanciesPublicFilter />
       </div>
-
+      {/* Lista de vacantes */}
       <div className="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
         {vacancies.length ? (
           vacancies.map((vacancy) => (
@@ -73,15 +74,16 @@ export default async function Page({ searchParams }: PageProps) {
             <div>Sin resultados.</div>
           </div>
         )}
-        {totalPages > 0 && (
-          <div className="my-3">
-            <ServerPagination
-              currentPage={currentPage}
-              totalPagesCount={totalPages}
-            />
-          </div>
-        )}
       </div>
+      {/* paginacion */}
+      {totalPages > 1 && (
+        <div className="my-3">
+          <ServerPagination
+            currentPage={currentPage}
+            totalPagesCount={totalPages}
+          />
+        </div>
+      )}
     </>
   );
 }

@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import ProvinceSelect from "./ProvinceSelect";
 import VacancyModeSelect from "./vacancyMode";
 import CategorySelect from "./CategorySelect";
+import { RiFilterFill, RiFilterOffFill } from "react-icons/ri";
 
 const VacanciesPublicFilter = () => {
   const router = useRouter();
@@ -118,6 +119,7 @@ const VacanciesPublicFilter = () => {
             className="btn btn-primary btn-sm"
             onClick={handleFilterSubmit}
           >
+            <RiFilterFill className="me-2" />
             Filtrar
           </button>
         </div>
@@ -139,6 +141,7 @@ const VacanciesPublicFilter = () => {
               router.push("/vacancies");
             }}
           >
+            <RiFilterOffFill className="me-2" />
             Resetear Filtros
           </button>
         </div>

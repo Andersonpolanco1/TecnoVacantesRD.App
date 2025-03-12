@@ -20,54 +20,58 @@ const ServerPagination: React.FC<PaginationProps> = ({
 
   return (
     <div className="d-flex justify-content-center align-items-center gap-2">
-      {/* Botón "Primera Página" */}
-      <Link href={`?page=1`} passHref>
-        <button
-          className="btn btn-outline-primary btn-sm"
-          disabled={isFirstPage}
-          aria-label="First Page"
-        >
-          <FaAngleDoubleLeft />
-        </button>
-      </Link>
+      {/* Ocultar el botón "Primera Página" si es la primera página */}
+      {!isFirstPage && (
+        <Link href={`?page=1`} passHref>
+          <button
+            className="btn btn-outline-primary btn-sm"
+            aria-label="First Page"
+          >
+            <FaAngleDoubleLeft />
+          </button>
+        </Link>
+      )}
 
-      {/* Botón "Anterior" */}
-      <Link href={`?page=${currentPage - 1}`} passHref>
-        <button
-          className="btn btn-outline-primary btn-sm"
-          disabled={isFirstPage}
-          aria-label="Previous Page"
-        >
-          <FaAngleLeft />
-        </button>
-      </Link>
+      {/* Ocultar el botón "Anterior" si es la primera página */}
+      {!isFirstPage && (
+        <Link href={`?page=${currentPage - 1}`} passHref>
+          <button
+            className="btn btn-outline-primary btn-sm"
+            aria-label="Previous Page"
+          >
+            <FaAngleLeft />
+          </button>
+        </Link>
+      )}
 
       {/* Mostrar la página actual */}
       <span>
         {currentPage} de {totalPagesCount}
       </span>
 
-      {/* Botón "Siguiente" */}
-      <Link href={`?page=${currentPage + 1}`} passHref>
-        <button
-          className="btn btn-outline-primary btn-sm"
-          disabled={isLastPage}
-          aria-label="Next Page"
-        >
-          <FaAngleRight />
-        </button>
-      </Link>
+      {/* Ocultar el botón "Siguiente" si es la última página */}
+      {!isLastPage && (
+        <Link href={`?page=${currentPage + 1}`} passHref>
+          <button
+            className="btn btn-outline-primary btn-sm"
+            aria-label="Next Page"
+          >
+            <FaAngleRight />
+          </button>
+        </Link>
+      )}
 
-      {/* Botón "Última Página" */}
-      <Link href={`?page=${totalPagesCount}`} passHref>
-        <button
-          className="btn btn-outline-primary btn-sm"
-          disabled={isLastPage}
-          aria-label="Last Page"
-        >
-          <FaAngleDoubleRight />
-        </button>
-      </Link>
+      {/* Ocultar el botón "Última Página" si es la última página */}
+      {!isLastPage && (
+        <Link href={`?page=${totalPagesCount}`} passHref>
+          <button
+            className="btn btn-outline-primary btn-sm"
+            aria-label="Last Page"
+          >
+            <FaAngleDoubleRight />
+          </button>
+        </Link>
+      )}
     </div>
   );
 };
