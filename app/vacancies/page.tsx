@@ -32,6 +32,10 @@ export default async function Page({ searchParams }: PageProps) {
 
   const currentPage = filters.page;
   const totalPages = response.success ? response.data!.totalPagesCount : 0;
+  const totalItems = response.success ? response.data!.totalItemsCount : 0;
+  const hasFilters = Object.entries(filters).some(
+    ([key, value]) => key !== "page" && value !== null
+  );
 
   return (
     <>
@@ -47,6 +51,9 @@ export default async function Page({ searchParams }: PageProps) {
         >
           Ocultar / ver filtros de búsqueda
         </button>
+        <span className="fw-bold small ms-2">
+          Registros encontrados: {totalItems} {hasFilters ? "(filtrado)" : ""}
+        </span>
       </div>
 
       {/* Contenedor colapsable para los filtros */}

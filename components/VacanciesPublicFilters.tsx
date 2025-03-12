@@ -115,7 +115,7 @@ const VacanciesPublicFilter = () => {
         <div className="col-12 col-md-6 d-grid text-center mt-4">
           <button
             type="button"
-            className="btn btn-primary w-100"
+            className="btn btn-primary btn-sm"
             onClick={handleFilterSubmit}
           >
             Filtrar
@@ -125,7 +125,7 @@ const VacanciesPublicFilter = () => {
         <div className="col-12 col-md-6 d-grid text-center mt-4">
           <button
             type="button"
-            className="btn btn-secondary w-100"
+            className="btn btn-secondary btn-sm"
             onClick={() => {
               setFilters({
                 description: null,
