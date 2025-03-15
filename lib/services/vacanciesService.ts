@@ -20,11 +20,15 @@ export const fetchVacancies = async (filters: VacancyPublicFilter) => {
 };
 
 // Obtiene vacantes del usuario autenticado
-export const fetchUserVacancies = async (filters: VacancyPublicFilter) => {
+export const fetchUserVacancies = async (
+  filters: VacancyPublicFilter,
+  token: string
+) => {
   const queryString = convertFiltersToQueryParams(filters);
-  return await apiRequestClient<PaginatedResponse<VacancyUserDto>>(
+  return await apiRequestServer<PaginatedResponse<VacancyUserDto>>(
     `${API_URL}/mine?${queryString}`,
-    "GET"
+    "GET",
+    token
   );
 };
 

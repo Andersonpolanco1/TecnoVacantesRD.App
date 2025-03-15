@@ -28,14 +28,13 @@ const VacanciesPublicFilter = () => {
 
   function handleFilterSubmit() {
     const queryParams = new URLSearchParams();
-
     Object.entries(filters).forEach(([key, value]) => {
       if (value !== null && value !== "") {
         queryParams.set(key, String(value));
       }
     });
 
-    router.push(`/vacancies?${queryParams.toString()}`); // Redirige con los nuevos filtros
+    router.push(`/vacancies?${queryParams.toString()}`);
   }
 
   return (
