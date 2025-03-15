@@ -1,7 +1,6 @@
 import { VacancyMode } from "./VacancyMode";
 
 export interface VacancyPublicFilter {
-  page: number;
   description?: string | null;
   salaryFrom?: number | null;
   salaryTo?: number | null;

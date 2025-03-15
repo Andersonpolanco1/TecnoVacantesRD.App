@@ -1,7 +1,4 @@
-"use client";
-
-import { useState } from "react";
-import { VacancyPublicDto } from "@/types/vacancy";
+import { VacancyPublicDto, VacancyUserDto } from "@/types/vacancy";
 import { VacancyMode, VacancyModeLabels } from "@/types/VacancyMode";
 import Link from "next/link";
 import {
@@ -10,37 +7,58 @@ import {
   FaBullseye,
   FaDollarSign,
   FaMapMarkerAlt,
-  FaInfoCircle,
   FaRegFileAlt,
+  FaInfoCircle,
+  FaEdit,
 } from "react-icons/fa";
-import { formatDate, formatLocation } from "@/lib/utils";
-import { renderHTML } from "@/lib/utilsX";
-import VacancyDescriptionModal from "./VacancyDescriptionModal";
+import { formatDate, formatLocation, getVacancyStatus } from "@/lib/utils";
+import { getStatusIcon, renderHTML } from "@/lib/utilsX";
 
 interface VacancyListItemProps {
-  vacancy: VacancyPublicDto;
+  vacancy: VacancyPublicDto | VacancyUserDto;
 }
 
 const VacancyListItem = ({ vacancy }: VacancyListItemProps) => {
-  const [showModal, setShowModal] = useState(false);
-
-  const handleShowModal = () => setShowModal(true);
+  const isUserVacancy = "status" in vacancy && "createdAt" in vacancy;
 
   return (
     <div className="p-3 mb-3 border rounded-lg shadow-sm bg-white">
       <h5 className="font-weight-bold text-primary mb-1 d-flex justify-content-between align-items-center">
         <Link
-          href={`/vacancies/${vacancy.publicId}`}
+          href={
+            isUserVacancy
+              ? `/vacancies/mine/${vacancy.publicId}`
+              : `/vacancies/${vacancy.publicId}`
+          }
           className="text-primary text-decoration-none d-inline-block text-truncate"
           style={{ maxWidth: "calc(100% - 1.5rem)" }}
         >
           {vacancy.title}
         </Link>
+        {isUserVacancy && (
+          <button className="btn btn-link p-0 text-primary ms-2">
+            <FaEdit />
+          </button>
+        )}
       </h5>
 
       <p className="text-muted mb-2">
         <small>{vacancy.categoryName}</small>
       </p>
+
+      {isUserVacancy && (
+        <>
+          <p className="text-muted text-xs mb-1 d-flex align-items-center">
+            {getStatusIcon(vacancy.status)}
+            <strong className="ms-2">{getVacancyStatus(vacancy.status)}</strong>
+          </p>
+
+          <p className="text-muted text-xs mb-1">
+            <FaCalendarAlt className="me-2" /> <strong>Creada:</strong>{" "}
+            <span className="text-info">{formatDate(vacancy.createdAt)}</span>
+          </p>
+        </>
+      )}
 
       <div className="d-flex flex-column">
         <p className="text-muted text-xs mb-1">
@@ -61,6 +79,7 @@ const VacancyListItem = ({ vacancy }: VacancyListItemProps) => {
             {VacancyModeLabels[vacancy.mode as VacancyMode]}
           </span>
         </p>
+
         <p className="text-muted text-xs mb-1">
           <FaDollarSign className="me-2" /> <strong>Salario:</strong>{" "}
           <span className="text-success">
@@ -91,24 +110,16 @@ const VacancyListItem = ({ vacancy }: VacancyListItemProps) => {
           </div>
           {/* Contenedor para el botón, separado del texto */}
           <div className="d-flex justify-content-end">
-            <button
+            <Link
+              href="#"
               className="btn btn-link p-0 text-decoration-none"
-              onClick={handleShowModal}
+              // In a server-side rendered environment, `onClick` handlers for modals are typically not used.
+              // If you want to show more details server-side, you can pass them directly within the component.
             >
               <FaInfoCircle className="ms-2" /> Ver más
-            </button>
+            </Link>
           </div>
         </div>
-
-        {/* Modal de descripción */}
-        {showModal && (
-          <VacancyDescriptionModal
-            title={vacancy.title}
-            description={vacancy.vacancyDescription}
-            show={showModal}
-            onClose={() => setShowModal(false)}
-          />
-        )}
       </div>
     </div>
   );

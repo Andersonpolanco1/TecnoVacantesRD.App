@@ -22,7 +22,7 @@ const ServerPagination: React.FC<PaginationProps> = ({
     <div className="d-flex justify-content-center align-items-center gap-2">
       {/* Ocultar el botón "Primera Página" si es la primera página */}
       {!isFirstPage && (
-        <Link href={`?page=1`} passHref>
+        <Link href={`?currentPage=1`} passHref>
           <button
             className="btn btn-outline-primary btn-sm"
             aria-label="First Page"
@@ -34,7 +34,7 @@ const ServerPagination: React.FC<PaginationProps> = ({
 
       {/* Ocultar el botón "Anterior" si es la primera página */}
       {!isFirstPage && (
-        <Link href={`?page=${currentPage - 1}`} passHref>
+        <Link href={`?currentPage=${currentPage - 1}`} passHref>
           <button
             className="btn btn-outline-primary btn-sm"
             aria-label="Previous Page"
@@ -51,7 +51,7 @@ const ServerPagination: React.FC<PaginationProps> = ({
 
       {/* Ocultar el botón "Siguiente" si es la última página */}
       {!isLastPage && (
-        <Link href={`?page=${currentPage + 1}`} passHref>
+        <Link href={`?currentPage=${currentPage + 1}`} passHref>
           <button
             className="btn btn-outline-primary btn-sm"
             aria-label="Next Page"
@@ -63,7 +63,7 @@ const ServerPagination: React.FC<PaginationProps> = ({
 
       {/* Ocultar el botón "Última Página" si es la última página */}
       {!isLastPage && (
-        <Link href={`?page=${totalPagesCount}`} passHref>
+        <Link href={`?currentPage=${totalPagesCount}`} passHref>
           <button
             className="btn btn-outline-primary btn-sm"
             aria-label="Last Page"

@@ -18,7 +18,7 @@ const VacanciesPublicFilter = () => {
     provinceId: null,
     mode: null,
     categoryId: null,
-    page: 1,
+    currentPage: 1,
   });
 
   const handleFilterChange = (field: string, value: any) => {
@@ -135,7 +135,7 @@ const VacanciesPublicFilter = () => {
                 provinceId: null,
                 mode: null,
                 categoryId: null,
-                page: 1,
+                currentPage: 1,
               });
               router.push("/vacancies");
             }}

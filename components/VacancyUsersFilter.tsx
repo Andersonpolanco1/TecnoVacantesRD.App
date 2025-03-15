@@ -1,21 +1,17 @@
 "use client";
 
-import React, { useState } from "react";
+import { VacancyUserFilter } from "@/types/VacancyFilters";
+import { useState } from "react";
+import { useRouter } from "next/navigation";
 import ProvinceSelect from "./ProvinceSelect";
 import VacancyModeSelect from "./vacancyMode";
 import CategorySelect from "./CategorySelect";
-import { VacancyUserFilter } from "@/types/VacancyFilters";
+import { RiFilterFill, RiFilterOffFill } from "react-icons/ri";
 import VacancyStatusSelect from "./StatusSelect";
 
-interface FiltroVacantesProps {
-  onFilterChange: (filters: VacancyUserFilter) => void;
-  onFilterClick: () => void;
-}
+const VacanciesPublicFilter = () => {
+  const router = useRouter();
 
-const AuthenticatedFilter = ({
-  onFilterChange,
-  onFilterClick,
-}: FiltroVacantesProps) => {
   const [filters, setFilters] = useState<VacancyUserFilter>({
     description: null,
     salaryFrom: null,
@@ -24,21 +20,28 @@ const AuthenticatedFilter = ({
     mode: null,
     categoryId: null,
     status: null,
+    currentPage: 1,
   });
 
   const handleFilterChange = (field: string, value: any) => {
     const updatedFilters = { ...filters, [field]: value };
     setFilters(updatedFilters);
-    onFilterChange(updatedFilters);
   };
+
   function handleFilterSubmit() {
-    onFilterClick();
+    const queryParams = new URLSearchParams();
+    Object.entries(filters).forEach(([key, value]) => {
+      if (value !== null && value !== "") {
+        queryParams.set(key, String(value));
+      }
+    });
+
+    router.push(`/vacancies/mine?${queryParams.toString()}`);
   }
 
   return (
-    <div>
+    <div className="bg-light my-3 p-2">
       <div className="row">
-        {/* Filtro por Descripción */}
         <div className="col-md-4 mb-3">
           <label htmlFor="description" className="form-label">
             Descripción
@@ -53,7 +56,6 @@ const AuthenticatedFilter = ({
           />
         </div>
 
-        {/* Filtro por Salario Desde */}
         <div className="col-md-4 mb-3">
           <label htmlFor="salaryFrom" className="form-label">
             Salario desde
@@ -69,7 +71,6 @@ const AuthenticatedFilter = ({
           />
         </div>
 
-        {/* Filtro por Salario Hasta */}
         <div className="col-md-4 mb-3">
           <label htmlFor="salaryTo" className="form-label">
             Salario hasta
@@ -119,39 +120,35 @@ const AuthenticatedFilter = ({
             value={filters.status}
           />
         </div>
-
-        {/* Botón de Filtrar */}
-        <div className="col-md-4 mb-3">
+        <div className="col-12 col-md-4 text-center justify-content-center mt-4">
           <button
             type="button"
-            className="btn btn-primary w-100"
-            onClick={() => {
-              handleFilterSubmit();
-            }}
+            className="btn btn-primary btn-sm w-100"
+            onClick={handleFilterSubmit}
           >
+            <RiFilterFill className="me-2" />
             Filtrar
           </button>
         </div>
 
-        {/* Botón de Resetear Filtros */}
-        <div className="col-md-4 mb-3">
+        <div className="col-12 col-md-4 text-center justify-content-center mt-4">
           <button
             type="button"
-            className="btn btn-secondary w-100"
+            className="btn btn-secondary btn-sm w-100"
             onClick={() => {
-              const resetFilters = {
+              setFilters({
                 description: null,
                 salaryFrom: null,
                 salaryTo: null,
-                location: null,
+                provinceId: null,
                 mode: null,
                 categoryId: null,
-                status: null,
-              };
-              setFilters(resetFilters);
-              onFilterChange(resetFilters);
+                currentPage: 1,
+              });
+              router.push("/vacancies");
             }}
           >
+            <RiFilterOffFill className="me-2" />
             Resetear Filtros
           </button>
         </div>
@@ -160,4 +157,4 @@ const AuthenticatedFilter = ({
   );
 };
 
-export default AuthenticatedFilter;
+export default VacanciesPublicFilter;

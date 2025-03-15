@@ -1,12 +1,12 @@
 import { authOptions } from "@/app/api/auth/authOptions";
-import PublicVacancyListItem from "@/components/PublicVacancyListItem";
+import PublicVacancyListItem from "@/components/VacancyListItem";
 import ServerPagination from "@/components/ServerPagination";
-import VacanciesPublicFilter from "@/components/VacanciesPublicFilters";
 import { fetchUserVacancies } from "@/lib/services/vacanciesService";
 import { VacancyUserDto } from "@/types/vacancy";
 import { VacancyUserFilter } from "@/types/VacancyFilters";
 import { getServerSession } from "next-auth";
 import { RiFilterFill } from "react-icons/ri";
+import VacancyUsersFilter from "@/components/VacancyUsersFilter";
 
 interface PageProps {
   searchParams: Record<string, string | undefined>;
@@ -20,7 +20,8 @@ function parseSearchParams(params: Record<string, string | undefined>) {
     provinceId: params.provinceId ? Number(params.provinceId) : null,
     mode: params.mode ? Number(params.mode) : null,
     categoryId: params.categoryId ? Number(params.categoryId) : null,
-    page: params.page ? Number(params.page) : 1,
+    status: params.status ? Number(params.status) : null,
+    currentPage: params.currentPage ? Number(params.currentPage) : 1,
   };
 }
 
@@ -38,11 +39,11 @@ export default async function Page({ searchParams }: PageProps) {
     ? response.data!.items
     : [];
 
-  const currentPage = filters.page;
+  const currentPage = filters.currentPage ?? 1;
   const totalPages = response.success ? response.data!.totalPagesCount : 0;
   const totalItems = response.success ? response.data!.totalItemsCount : 0;
   const hasFilters = Object.entries(filters).some(
-    ([key, value]) => key !== "page" && value !== null
+    ([key, value]) => key !== "currentPage" && value !== null
   );
 
   return (
@@ -66,7 +67,7 @@ export default async function Page({ searchParams }: PageProps) {
       </div>
       {/* Contenedor colapsable para los filtros */}
       <div className="collapse" id="filtersCollapse">
-        <VacanciesPublicFilter />
+        <VacancyUsersFilter />
       </div>
       {/* Lista de vacantes */}
       <div className="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">

@@ -1,4 +1,4 @@
-import PublicVacancyListItem from "@/components/PublicVacancyListItem";
+import PublicVacancyListItem from "@/components/VacancyListItem";
 import ServerPagination from "@/components/ServerPagination";
 import VacanciesPublicFilter from "@/components/VacanciesPublicFilters";
 import { fetchVacancies } from "@/lib/services/vacanciesService";
@@ -31,7 +31,7 @@ export default async function Page({ searchParams }: PageProps) {
     ? response.data!.items
     : [];
 
-  const currentPage = filters.page;
+  const currentPage = filters.currentPage ?? 1;
   const totalPages = response.success ? response.data!.totalPagesCount : 0;
   const totalItems = response.success ? response.data!.totalItemsCount : 0;
   const hasFilters = Object.entries(filters).some(
