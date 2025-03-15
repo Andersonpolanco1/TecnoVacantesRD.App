@@ -4,7 +4,7 @@
 import { useState } from "react";
 import VacancyActionButtons from "@/components/VacancyActionButtons";
 import { ChangeState } from "@/lib/services/vacanciesService";
-import { EnumVacancyTrigger } from "@/lib/utils";
+import { EnumVacancyStatus, EnumVacancyTrigger } from "@/lib/utils";
 import { VacancyUserDto } from "@/types/vacancy";
 import VacancyDetails from "./VacancyDetails";
 
@@ -22,8 +22,15 @@ export default function VacancyDetailClient({
     reason?: string
   ) => {
     try {
-      await ChangeState(trigger, currentVacancy.publicId, reason);
-      // Aquí podrías actualizar el estado si necesitas reflejar el cambio en la UI
+      const result = await ChangeState(
+        trigger,
+        currentVacancy.publicId,
+        reason
+      );
+      setCurrentVacancy((prev) => ({
+        ...prev,
+        status: result.data?.newStatus as EnumVacancyStatus,
+      }));
     } catch (error) {
       console.error(error);
     }
@@ -31,10 +38,12 @@ export default function VacancyDetailClient({
 
   return (
     <div>
-      <VacancyActionButtons
-        vacancy={currentVacancy}
-        onAction={handleChangeState}
-      />
+      <div className="my-3">
+        <VacancyActionButtons
+          vacancy={currentVacancy}
+          onAction={handleChangeState}
+        />
+      </div>
       <VacancyDetails vacancy={currentVacancy} />
     </div>
   );

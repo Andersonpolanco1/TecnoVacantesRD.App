@@ -1,5 +1,6 @@
-import { VacancyPublicDto, VacancyUserDto } from "@/types/vacancy";
-import { VacancyMode, VacancyModeLabels } from "@/types/VacancyMode";
+"use client";
+
+import { useState } from "react";
 import Link from "next/link";
 import {
   FaCalendarAlt,
@@ -11,14 +12,23 @@ import {
   FaInfoCircle,
   FaEdit,
 } from "react-icons/fa";
-import { formatDate, formatLocation, getVacancyStatus } from "@/lib/utils";
+import {
+  formatDate,
+  formatLocation,
+  getVacancyStatus,
+  stripTags,
+} from "@/lib/utils";
 import { getStatusIcon, renderHTML } from "@/lib/utilsX";
+import { VacancyMode, VacancyModeLabels } from "@/types/VacancyMode";
+import { VacancyPublicDto, VacancyUserDto } from "@/types/vacancy";
+import VacancyDescriptionModal from "@/components/VacancyDescriptionModal";
 
 interface VacancyListItemProps {
   vacancy: VacancyPublicDto | VacancyUserDto;
 }
 
 const VacancyListItem = ({ vacancy }: VacancyListItemProps) => {
+  const [showModal, setShowModal] = useState(false);
   const isUserVacancy = "status" in vacancy && "createdAt" in vacancy;
 
   return (
@@ -106,21 +116,25 @@ const VacancyListItem = ({ vacancy }: VacancyListItemProps) => {
               height: "4.5rem",
             }}
           >
-            {renderHTML(vacancy.vacancyDescription)}
+            {stripTags(vacancy.vacancyDescription)}
           </div>
-          {/* Contenedor para el botón, separado del texto */}
           <div className="d-flex justify-content-end">
-            <Link
-              href="#"
+            <button
               className="btn btn-link p-0 text-decoration-none"
-              // In a server-side rendered environment, `onClick` handlers for modals are typically not used.
-              // If you want to show more details server-side, you can pass them directly within the component.
+              onClick={() => setShowModal(true)}
             >
               <FaInfoCircle className="ms-2" /> Ver más
-            </Link>
+            </button>
           </div>
         </div>
       </div>
+
+      <VacancyDescriptionModal
+        title={vacancy.title}
+        description={vacancy.vacancyDescription}
+        show={showModal}
+        onClose={() => setShowModal(false)}
+      />
     </div>
   );
 };

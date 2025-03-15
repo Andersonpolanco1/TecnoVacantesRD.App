@@ -1,4 +1,4 @@
-import PublicVacancyListItem from "@/components/VacancyListItem";
+import VacancyListItem from "@/components/VacancyListItem";
 import ServerPagination from "@/components/ServerPagination";
 import VacanciesPublicFilter from "@/components/VacanciesPublicFilters";
 import { fetchVacancies } from "@/lib/services/vacanciesService";
@@ -66,7 +66,7 @@ export default async function Page({ searchParams }: PageProps) {
         {vacancies.length ? (
           vacancies.map((vacancy) => (
             <div key={vacancy.publicId}>
-              <PublicVacancyListItem vacancy={vacancy} />
+              <VacancyListItem vacancy={vacancy} />
             </div>
           ))
         ) : (
