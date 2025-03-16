@@ -12,7 +12,7 @@ const VacanciesPublicFilter = () => {
   const router = useRouter();
 
   const [filters, setFilters] = useState<VacancyPublicFilter>({
-    description: null,
+    search: null,
     salaryFrom: null,
     salaryTo: null,
     provinceId: null,
@@ -41,16 +41,16 @@ const VacanciesPublicFilter = () => {
     <div className="bg-light my-3 p-2">
       <div className="row">
         <div className="col-md-4 mb-3">
-          <label htmlFor="description" className="form-label">
-            Descripción
+          <label htmlFor="search" className="form-label">
+            Buscar
           </label>
           <input
             type="text"
-            id="description"
+            id="search"
             className="form-control"
-            value={filters.description ?? ""}
-            onChange={(e) => handleFilterChange("description", e.target.value)}
-            placeholder="Descripción de la vacante"
+            value={filters.search ?? ""}
+            onChange={(e) => handleFilterChange("search", e.target.value)}
+            placeholder="Buscar en título y descripción"
           />
         </div>
 
@@ -129,7 +129,7 @@ const VacanciesPublicFilter = () => {
             className="btn btn-secondary btn-sm"
             onClick={() => {
               setFilters({
-                description: null,
+                search: null,
                 salaryFrom: null,
                 salaryTo: null,
                 provinceId: null,

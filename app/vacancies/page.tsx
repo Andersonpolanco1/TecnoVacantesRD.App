@@ -12,7 +12,7 @@ interface PageProps {
 
 function parseSearchParams(params: Record<string, string | undefined>) {
   return {
-    description: params.description || null,
+    search: params.search || null,
     salaryFrom: params.salaryFrom ? Number(params.salaryFrom) : null,
     salaryTo: params.salaryTo ? Number(params.salaryTo) : null,
     provinceId: params.provinceId ? Number(params.provinceId) : null,

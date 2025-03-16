@@ -13,7 +13,7 @@ const VacanciesPublicFilter = () => {
   const router = useRouter();
 
   const [filters, setFilters] = useState<VacancyUserFilter>({
-    description: null,
+    search: null,
     salaryFrom: null,
     salaryTo: null,
     provinceId: null,
@@ -50,7 +50,7 @@ const VacanciesPublicFilter = () => {
             type="text"
             id="description"
             className="form-control"
-            value={filters.description ?? ""}
+            value={filters.search ?? ""}
             onChange={(e) => handleFilterChange("description", e.target.value)}
             placeholder="Descripción de la vacante"
           />
@@ -137,7 +137,7 @@ const VacanciesPublicFilter = () => {
             className="btn btn-secondary btn-sm w-100"
             onClick={() => {
               setFilters({
-                description: null,
+                search: null,
                 salaryFrom: null,
                 salaryTo: null,
                 provinceId: null,

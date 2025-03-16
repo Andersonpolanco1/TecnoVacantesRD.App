@@ -108,10 +108,10 @@ const VacancyListItem = ({ vacancy }: VacancyListItemProps) => {
         </div>
       </div>
       <br />
-      <div className="text-xs text-muted mb-0 position-relative mt-2 text-justify">
+      <div className="text-xs text-muted mb-0 position-relative text-justify">
         <FaRegFileAlt className="me-2" /> <strong>Descripción:</strong>
         <div
-          className="w-100"
+          className="w-100 my-3"
           style={{ wordWrap: "break-word", whiteSpace: "normal" }}
         >
           {renderHTML(vacancy.vacancyDescription)}

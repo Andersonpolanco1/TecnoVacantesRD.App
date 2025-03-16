@@ -108,9 +108,8 @@ const VacancyListItem = ({ vacancy }: VacancyListItemProps) => {
         </p>
 
         <div className="text-xs text-muted mb-0 position-relative">
-          <FaRegFileAlt className="me-2" /> <strong>Descripción:</strong>{" "}
           <div
-            className="description-line-clamp"
+            className="description-line-clamp mt-2"
             style={{
               display: "-webkit-box",
               WebkitLineClamp: 3,
@@ -119,9 +118,7 @@ const VacancyListItem = ({ vacancy }: VacancyListItemProps) => {
               height: "4.5rem",
             }}
           >
-            {removeHtmlTags(
-              vacancy.vacancyDescription.replace(/(<([^>]+)>)/gi, "")
-            )}
+            {removeHtmlTags(vacancy.vacancyDescription)}
           </div>
           <div className="d-flex justify-content-end">
             <button
