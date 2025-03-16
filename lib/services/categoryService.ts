@@ -5,6 +5,5 @@ const API_URL = `${process.env.NEXT_PUBLIC_VACANCIES_API_BASE_URL}/api/categorie
 // Obtiene provincias
 export const fetchCategories = async () => {
   var data = (await apiRequestClient<Category[]>(`${API_URL}`)) ?? [];
-  console.log(data);
   return data;
 };

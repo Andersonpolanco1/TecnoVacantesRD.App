@@ -19,7 +19,7 @@ export interface Notification {
   id: string;
   type: NotificationType;
   title: string;
-  message: string;
+  message?: string;
   icon: ReactNode;
 }
 

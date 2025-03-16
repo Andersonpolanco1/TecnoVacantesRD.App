@@ -26,18 +26,19 @@ const VacancyListItem = ({ vacancy }: VacancyListItemProps) => {
     <div className="p-3 mb-3 border rounded-lg shadow-sm bg-white">
       <h5 className="font-weight-bold text-primary mb-1 d-flex justify-content-between align-items-center">
         <Link
-          href={`/vacancies/${isUserVacancy ? "mine/" : "public/"}${
-            vacancy.publicId
-          }`}
+          href={`/vacancies/${isUserVacancy ? "mine/" : ""}${vacancy.publicId}`}
           className="text-primary text-decoration-none d-inline-block text-truncate"
           style={{ maxWidth: "calc(100% - 1.5rem)" }}
         >
           {vacancy.title}
         </Link>
         {isUserVacancy && (
-          <button className="btn btn-link p-0 text-primary ms-2">
+          <Link
+            href={`/vacancies/mine/${vacancy.publicId}/edit`}
+            className="text-primary ms-2"
+          >
             <FaEdit />
-          </button>
+          </Link>
         )}
       </h5>
       <p className="text-muted mb-2">

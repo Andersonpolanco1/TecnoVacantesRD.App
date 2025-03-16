@@ -39,6 +39,14 @@ export const apiRequestServer = async <T>(
       body: body ? JSON.stringify(body) : undefined,
     });
 
+    if (!response.ok) {
+      const errorResponse = await response.json().catch(() => null);
+      return ApiResponse.ErrorResponse(
+        errorResponse?.message ||
+          `Request failed with status ${response.status}`
+      );
+    }
+
     const data: ApiResponse<T> = await response.json();
     return data;
   } catch (error) {
@@ -70,6 +78,14 @@ export const apiRequestClient = async <T>(
       body: body ? JSON.stringify(body) : undefined,
     });
 
+    if (!response.ok) {
+      const errorResponse = await response.json().catch(() => null);
+      return ApiResponse.ErrorResponse(
+        errorResponse?.message ||
+          `Request failed with status ${response.status}`
+      );
+    }
+
     const data: ApiResponse<T> = await response.json();
     return data;
   } catch (error) {
@@ -99,6 +115,10 @@ export const convertFiltersToQueryParams = (
 export const stripTags = (html: string): string => {
   const doc = new DOMParser().parseFromString(html, "text/html");
   return doc.body.textContent || "";
+};
+
+export const removeHtmlTags = (htmlString: string): string => {
+  return htmlString.replace(/(<([^>]+)>)/gi, "");
 };
 
 export enum EnumVacancyStatus {

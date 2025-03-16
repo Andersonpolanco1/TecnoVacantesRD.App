@@ -6,8 +6,10 @@ export interface VacancyPublicDto {
   expiresAt: string;
   salary: number;
   provinceName: string;
+  provinceId?: number;
   mode: number;
   categoryName: string;
+  categoryId: number;
 }
 
 export interface VacancyUserDto extends VacancyPublicDto {

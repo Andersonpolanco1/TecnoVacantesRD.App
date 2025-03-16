@@ -24,56 +24,54 @@ const ConfirmModal = ({
     onClose();
   };
 
-  return (
-    <>
-      {isOpen && (
-        <div
-          className="modal fade show"
-          style={{ display: "block" }}
-          tabIndex={-1}
-          aria-hidden="true"
-        >
-          <div className="modal-dialog modal-dialog-centered">
-            <div className="modal-content">
-              <div className="modal-header">
-                <h5 className="modal-title">Confirmar Acción</h5>
-                <button type="button" className="btn-close" onClick={onClose} />
+  return isOpen ? (
+    <div
+      className="modal fade show"
+      style={{ display: "block" }}
+      tabIndex={-1}
+      role="dialog"
+      aria-modal="true"
+    >
+      <div className="modal-dialog modal-dialog-centered">
+        <div className="modal-content">
+          <div className="modal-header">
+            <h5 className="modal-title">Confirmar Acción</h5>
+            <button type="button" className="btn-close" onClick={onClose} />
+          </div>
+          <div className="modal-body">
+            <p>{actionDescription}</p>
+            {showReasonInput && (
+              <div>
+                <label htmlFor="reasonInput">Motivo del rechazo:</label>
+                <textarea
+                  id="reasonInput"
+                  className="form-control"
+                  value={rejectedReason}
+                  onChange={(e) => setRejectedReason(e.target.value)}
+                />
               </div>
-              <div className="modal-body">
-                <p>{actionDescription}</p>
-                {showReasonInput && (
-                  <div>
-                    <label>Motivo del rechazo:</label>
-                    <textarea
-                      className="form-control"
-                      value={rejectedReason}
-                      onChange={(e) => setRejectedReason(e.target.value)}
-                    />
-                  </div>
-                )}
-              </div>
-              <div className="modal-footer">
-                <button
-                  type="button"
-                  className="btn btn-secondary"
-                  onClick={onClose}
-                >
-                  Cancelar
-                </button>
-                <button
-                  type="button"
-                  className="btn btn-primary"
-                  onClick={handleConfirm}
-                >
-                  Confirmar
-                </button>
-              </div>
-            </div>
+            )}
+          </div>
+          <div className="modal-footer">
+            <button
+              type="button"
+              className="btn btn-secondary"
+              onClick={onClose}
+            >
+              Cancelar
+            </button>
+            <button
+              type="button"
+              className="btn btn-primary"
+              onClick={handleConfirm}
+            >
+              Confirmar
+            </button>
           </div>
         </div>
-      )}
-    </>
-  );
+      </div>
+    </div>
+  ) : null;
 };
 
 export default ConfirmModal;

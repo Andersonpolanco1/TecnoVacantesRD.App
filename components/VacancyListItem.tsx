@@ -16,9 +16,9 @@ import {
   formatDate,
   formatLocation,
   getVacancyStatus,
-  stripTags,
+  removeHtmlTags,
 } from "@/lib/utils";
-import { getStatusIcon, renderHTML } from "@/lib/utilsX";
+import { getStatusIcon } from "@/lib/utilsX";
 import { VacancyMode, VacancyModeLabels } from "@/types/VacancyMode";
 import { VacancyPublicDto, VacancyUserDto } from "@/types/vacancy";
 import VacancyDescriptionModal from "@/components/VacancyDescriptionModal";
@@ -46,9 +46,12 @@ const VacancyListItem = ({ vacancy }: VacancyListItemProps) => {
           {vacancy.title}
         </Link>
         {isUserVacancy && (
-          <button className="btn btn-link p-0 text-primary ms-2">
+          <Link
+            href={`/vacancies/mine/${vacancy.publicId}/edit`}
+            className="text-primary ms-2"
+          >
             <FaEdit />
-          </button>
+          </Link>
         )}
       </h5>
 
@@ -116,7 +119,9 @@ const VacancyListItem = ({ vacancy }: VacancyListItemProps) => {
               height: "4.5rem",
             }}
           >
-            {stripTags(vacancy.vacancyDescription)}
+            {removeHtmlTags(
+              vacancy.vacancyDescription.replace(/(<([^>]+)>)/gi, "")
+            )}
           </div>
           <div className="d-flex justify-content-end">
             <button

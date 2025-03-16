@@ -39,7 +39,7 @@ const VacancyActionButtons = ({
   const handleCloseModal = () => setIsModalOpen(false);
 
   const handleConfirmAction = async (rejectedReason: string | undefined) => {
-    if (selectedAction) {
+    if (selectedAction !== null && selectedAction !== undefined) {
       onAction(selectedAction, rejectedReason);
       setIsModalOpen(false);
     }
@@ -102,14 +102,7 @@ const VacancyActionButtons = ({
         className: "btn-secondary",
       },
     ],
-    [EnumVacancyStatus.Expired]: [
-      {
-        label: "Revisar nuevamente",
-        icon: <FaUndo />,
-        action: EnumVacancyTrigger.ReviewAgain,
-        className: "btn-info",
-      },
-    ],
+    [EnumVacancyStatus.Expired]: [],
     [EnumVacancyStatus.Closed]: [],
   };
 

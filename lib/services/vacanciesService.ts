@@ -8,6 +8,7 @@ import {
   EnumVacancyTrigger,
 } from "../utils";
 import { VacancyChangeStatusResponse } from "@/types/dtos/vacancyChangeStatusresponse";
+import { ApiResponse } from "@/types/dtos/ApiResponse";
 
 const API_URL = `${process.env.NEXT_PUBLIC_VACANCIES_API_BASE_URL}/api/vacancies`;
 
@@ -40,7 +41,9 @@ export const fetchVacancyById = async (publicId: string) => {
 // Obtiene una vacante de usuario por ID
 export const fetchUserVacancyById = async (publicId: string, token: string) => {
   if (!token) {
-    return { success: false, message: "Autenticación no disponible" };
+    return ApiResponse.ErrorResponse<VacancyUserDto>(
+      "Autenticación no disponible"
+    );
   }
   return await apiRequestServer<VacancyUserDto>(
     `${API_URL}/mine/${publicId}`,
@@ -52,11 +55,29 @@ export const fetchUserVacancyById = async (publicId: string, token: string) => {
 // Publica una nueva vacante
 export const publish = async (formData: PublishVacancy, token: string) => {
   if (!token) {
-    return { success: false, message: "Autenticación no disponible" };
+    return ApiResponse.ErrorResponse<boolean>("Autenticación no disponible");
   }
 
   const result = await apiRequestClient<{ guid: string }>(
     `${API_URL}/mine`,
+    "POST",
+    formData
+  );
+
+  return result;
+};
+
+// Actualizar una nueva vacante
+export const update = async (
+  VacancyGuid: string,
+  formData: PublishVacancy,
+  token: string
+) => {
+  if (!token) {
+    return ApiResponse.ErrorResponse<boolean>("Autenticación no disponible");
+  }
+  const result = await apiRequestClient<{ data: boolean }>(
+    `${API_URL}/mine/${VacancyGuid}/edit`,
     "POST",
     formData
   );

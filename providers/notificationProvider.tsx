@@ -12,7 +12,7 @@ interface NotificationContextType {
   showNotification: (
     type: NotificationType,
     title: string,
-    message: string
+    message?: string
   ) => void;
   notifications: Notification[];
 }
@@ -34,7 +34,7 @@ export const NotificationProvider = ({
   const showNotification = (
     type: NotificationType,
     title: string,
-    message: string
+    message?: string
   ) => {
     const id = crypto.randomUUID();
     const icon = getIconByType(type);
