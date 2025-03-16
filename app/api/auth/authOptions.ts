@@ -36,15 +36,18 @@ const authOptions: AuthOptions = {
         const accessToken = response.data.accessToken;
         const decodedToken: any = jwt.decode(accessToken);
 
-        return {
-          accessToken,
-          id: decodedToken?.sub, // Ajusta según el claim de tu token
+        const user = {
+          id: decodedToken?.sub,
+          name: "",
           email: decodedToken?.email,
+          accessToken: response.data.accessToken,
           roles:
             decodedToken[
               "http://schemas.microsoft.com/ws/2008/06/identity/claims/role"
             ] || [],
-        } as User;
+        };
+
+        return user as User;
       },
     }),
   ],
@@ -57,7 +60,7 @@ const authOptions: AuthOptions = {
     secret: process.env.NEXTAUTH_SECRET,
   },
   callbacks: {
-    async jwt({ token, account }) {
+    async jwt({ token, account, user }) {
       if (!account || !token) return token;
 
       if (
@@ -95,8 +98,15 @@ const authOptions: AuthOptions = {
         }
       }
 
-      if (account?.provider === "email") {
-        console.log("jwt() Es email");
+      if (account?.provider === "credentials") {
+        if (user) {
+          token.id = user.id;
+          token.name = user.name;
+          token.email = user.email;
+          token.accessToken = user.accessToken!;
+          token.roles = user.roles;
+        }
+        return token;
       }
 
       return token;

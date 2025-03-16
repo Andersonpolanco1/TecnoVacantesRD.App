@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import AuthButtons from "@/components/AuthButtons";
+import { signIn } from "next-auth/react";
 
 export default function SignIn() {
   const [email, setEmail] = useState("");
@@ -10,7 +11,10 @@ export default function SignIn() {
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     console.log("Iniciando sesión con:", email, password);
-    // Aquí puedes agregar la lógica de autenticación con tu API
+    const res = await signIn("credentials", {
+      email,
+      password,
+    });
   };
 
   return (
