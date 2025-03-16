@@ -29,15 +29,14 @@ const VacancyListItem = ({ vacancy }: VacancyListItemProps) => {
   const isUserVacancy = "status" in vacancy && "createdAt" in vacancy;
 
   return (
-    <div className="p-3 mb-3 border rounded-lg shadow-sm bg-white">
+    <div className="p-3 my-3 border rounded-lg shadow-sm bg-white">
       <h5 className="font-weight-bold text-primary mb-1 d-flex justify-content-between align-items-center">
-        <Link
-          href={`/vacancies/${isUserVacancy ? "mine/" : ""}${vacancy.publicId}`}
+        <div
           className="text-primary text-decoration-none d-inline-block text-truncate"
           style={{ maxWidth: "calc(100% - 1.5rem)" }}
         >
           {vacancy.title}
-        </Link>
+        </div>
         {isUserVacancy && (
           <Link
             href={`/vacancies/mine/${vacancy.publicId}/edit`}
@@ -86,7 +85,7 @@ const VacancyListItem = ({ vacancy }: VacancyListItemProps) => {
           {isUserVacancy && (
             <p className="text-muted text-xs mb-1">
               <FaCalendarAlt className="me-2" /> <strong>Creada:</strong>{" "}
-              <span className="text-info">{formatDate(vacancy.createdAt)}</span>
+              <span>{formatDate(vacancy.createdAt)}</span>
             </p>
           )}
 
@@ -100,9 +99,7 @@ const VacancyListItem = ({ vacancy }: VacancyListItemProps) => {
             style={{ gridColumn: "span 1" }}
           >
             <FaBullseye className="me-2" /> <strong>Modalidad:</strong>{" "}
-            <span className="text-dark">
-              {VacancyModeLabels[vacancy.mode as VacancyMode]}
-            </span>
+            <span>{VacancyModeLabels[vacancy.mode as VacancyMode]}</span>
           </p>
 
           <p
@@ -116,10 +113,9 @@ const VacancyListItem = ({ vacancy }: VacancyListItemProps) => {
           </p>
 
           <p className="text-muted text-xs mb-1">
-            <FaMapMarkerAlt className="me-2" />{" "}
-            <span className="fw-bold">
-              {formatLocation(vacancy.provinceName)}
-            </span>
+            <FaMapMarkerAlt className="me-2" />
+            <strong>Ubicación:</strong>{" "}
+            <span>{formatLocation(vacancy.provinceName)}</span>
           </p>
         </div>
       </div>

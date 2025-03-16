@@ -39,7 +39,7 @@ export default async function Page({ searchParams }: PageProps) {
   );
 
   return (
-    <>
+    <div className="my-4">
       {/* Botón para mostrar/ocultar los filtros */}
       <div className="mb-3">
         <button
@@ -84,6 +84,6 @@ export default async function Page({ searchParams }: PageProps) {
           />
         </div>
       )}
-    </>
+    </div>
   );
 }

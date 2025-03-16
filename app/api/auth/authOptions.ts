@@ -87,6 +87,8 @@ const authOptions: AuthOptions = {
           );
           token.accessToken = providerResponse.data.accessToken;
           token.id = decodedToken?.sub;
+          token.name = user?.name;
+          token.picture = user.image;
           token.email = decodedToken?.email;
           token.expiresAt = new Date(decodedToken?.exp * 1000).toISOString();
           token.roles =
@@ -103,6 +105,7 @@ const authOptions: AuthOptions = {
           token.id = user.id;
           token.name = user.name;
           token.email = user.email;
+          token.picture = user.image;
           token.accessToken = user.accessToken!;
           token.roles = user.roles;
         }
@@ -117,6 +120,8 @@ const authOptions: AuthOptions = {
       (session.expires = token.expiresAt),
         (session.user = {
           id: token.id,
+          name: token?.name,
+          image: token.picture,
           email: token.email,
           roles: token.roles,
           accessToken: token.accessToken,

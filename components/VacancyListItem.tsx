@@ -8,7 +8,6 @@ import {
   FaBullseye,
   FaDollarSign,
   FaMapMarkerAlt,
-  FaRegFileAlt,
   FaInfoCircle,
   FaEdit,
 } from "react-icons/fa";
@@ -80,7 +79,7 @@ const VacancyListItem = ({ vacancy }: VacancyListItemProps) => {
 
           <p className="text-muted text-xs mb-1">
             <FaCalendarAlt className="me-2" /> <strong>Creada:</strong>{" "}
-            <span className="text-info">{formatDate(vacancy.createdAt)}</span>
+            <span>{formatDate(vacancy.createdAt)}</span>
           </p>
         </>
       )}
@@ -100,9 +99,7 @@ const VacancyListItem = ({ vacancy }: VacancyListItemProps) => {
 
         <p className="text-muted text-xs mb-1">
           <FaBullseye className="me-2" /> <strong>Modalidad:</strong>{" "}
-          <span className="text-dark">
-            {VacancyModeLabels[vacancy.mode as VacancyMode]}
-          </span>
+          <span>{VacancyModeLabels[vacancy.mode as VacancyMode]}</span>
         </p>
 
         <p className="text-muted text-xs mb-1">
@@ -113,10 +110,8 @@ const VacancyListItem = ({ vacancy }: VacancyListItemProps) => {
         </p>
 
         <p className="text-muted text-xs mb-1">
-          <FaMapMarkerAlt className="me-2" />{" "}
-          <span className="fw-bold">
-            {formatLocation(vacancy.provinceName)}
-          </span>
+          <FaMapMarkerAlt className="me-2" /> <strong>Ubicación:</strong>{" "}
+          <span>{formatLocation(vacancy.provinceName)}</span>
         </p>
 
         <div className="text-xs text-muted mb-0 position-relative">

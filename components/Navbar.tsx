@@ -2,23 +2,22 @@
 
 import { signOut, useSession } from "next-auth/react";
 import Link from "next/link";
+import { FaRegFileAlt, FaSignOutAlt, FaUser } from "react-icons/fa";
 import Navigation from "./Navigation ";
-import { FaSignOutAlt } from "react-icons/fa";
 
 const Navbar = () => {
   const { data: session, status } = useSession();
 
-  // Si la sesión está cargando
   if (status === "loading") {
-    return <nav>Loading...</nav>;
+    return <nav className="p-4 text-center">Cargando...</nav>;
   }
 
   return (
     <nav className="navbar navbar-expand-lg navbar-dark bg-primary fixed-top">
-      <div className="container-fluid">
-        <a className="navbar-brand" href="/vacancies">
+      <div className="container">
+        <Link className="navbar-brand" href="/vacancies">
           TecnoVacantesRD
-        </a>
+        </Link>
         <button
           className="navbar-toggler"
           type="button"
@@ -30,35 +29,62 @@ const Navbar = () => {
         >
           <span className="navbar-toggler-icon"></span>
         </button>
+
         <div className="collapse navbar-collapse" id="navbarNav">
-          <ul className="navbar-nav ms-auto">
+          <ul className="navbar-nav ms-auto d-flex align-items-center gap-3">
             <Navigation />
 
-            {/* Mostrar información del usuario si la sesión está activa */}
             {session ? (
-              <>
-                <Link className="nav-link" href="/vacancies/mine">
-                  Mis vacantes
-                </Link>
-                <li className="nav-item">
-                  <span className="nav-link">Hola, {session.user?.name}</span>
-                </li>
-              </>
+              <li className="nav-item dropdown">
+                <a
+                  className="nav-link dropdown-toggle d-flex align-items-center"
+                  href="#"
+                  id="userDropdown"
+                  role="button"
+                  data-bs-toggle="dropdown"
+                  aria-expanded="false"
+                >
+                  <img
+                    src={session.user?.image || "/default-avatar.png"}
+                    alt="User Avatar"
+                    className="rounded-circle me-2"
+                    width="32"
+                    height="32"
+                  />
+                  <span>{session.user?.name}</span>
+                </a>
+                <ul
+                  className="dropdown-menu dropdown-menu-end"
+                  aria-labelledby="userDropdown"
+                >
+                  <li>
+                    <Link className="dropdown-item" href="/profile">
+                      <FaUser className="me-2" /> Perfil
+                    </Link>
+                  </li>
+                  <li>
+                    <Link className="dropdown-item" href="/vacancies/mine">
+                      <FaRegFileAlt className="me-2" /> Mis vacantes
+                    </Link>
+                  </li>
+                  <li>
+                    <button
+                      onClick={() => signOut()}
+                      className="dropdown-item text-danger"
+                    >
+                      <FaSignOutAlt className="me-2" /> Cerrar sesión
+                    </button>
+                  </li>
+                </ul>
+              </li>
             ) : (
               <li className="nav-item">
-                {/* Redirigir al formulario de inicio de sesión */}
-                <Link className="nav-link" href="/signIn">
+                <Link
+                  className="nav-link btn btn-outline-light px-3"
+                  href="/signIn"
+                >
                   Iniciar sesión
                 </Link>
-              </li>
-            )}
-
-            {/* Botón de cerrar sesión si la sesión está activa */}
-            {session && (
-              <li className="nav-item">
-                <button onClick={() => signOut()} className="btn btn-danger">
-                  <FaSignOutAlt className="me-2" /> Cerrar sesión
-                </button>
               </li>
             )}
           </ul>
