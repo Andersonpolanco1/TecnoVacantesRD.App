@@ -28,7 +28,6 @@ function parseSearchParams(params: Record<string, string | undefined>) {
 export default async function Page({ searchParams }: PageProps) {
   const params = await searchParams;
   const filters: VacancyUserFilter = parseSearchParams(params);
-  //obtener token
   const session = await getServerSession(authOptions);
 
   const response = await fetchUserVacancies(

@@ -68,12 +68,6 @@ const VacancyActionButtons = ({
         className: "btn-primary",
       },
       {
-        label: "Expirar",
-        icon: <FaRegClock />,
-        action: EnumVacancyTrigger.Expire,
-        className: "btn-warning",
-      },
-      {
         label: "Cerrar",
         icon: <FaLock />,
         action: EnumVacancyTrigger.Close,
@@ -89,12 +83,6 @@ const VacancyActionButtons = ({
       },
     ],
     [EnumVacancyStatus.Published]: [
-      {
-        label: "Expirar",
-        icon: <FaRegClock />,
-        action: EnumVacancyTrigger.Expire,
-        className: "btn-warning",
-      },
       {
         label: "Cerrar",
         icon: <FaLock />,

@@ -13,6 +13,7 @@ import {
   FaEdit,
 } from "react-icons/fa";
 import {
+  EnumVacancyStatus,
   formatDate,
   formatLocation,
   getVacancyStatus,
@@ -22,6 +23,7 @@ import { getStatusIcon } from "@/lib/utilsX";
 import { VacancyMode, VacancyModeLabels } from "@/types/VacancyMode";
 import { VacancyPublicDto, VacancyUserDto } from "@/types/vacancy";
 import VacancyDescriptionModal from "@/components/VacancyDescriptionModal";
+import { CanEdit } from "@/lib/services/vacanciesService";
 
 interface VacancyListItemProps {
   vacancy: VacancyPublicDto | VacancyUserDto;
@@ -48,7 +50,17 @@ const VacancyListItem = ({ vacancy }: VacancyListItemProps) => {
         {isUserVacancy && (
           <Link
             href={`/vacancies/mine/${vacancy.publicId}/edit`}
-            className="text-primary ms-2"
+            className={`ms-2 ${
+              CanEdit(vacancy.status as EnumVacancyStatus)
+                ? "text-primary"
+                : "disabled text-secondary"
+            }`}
+            style={
+              CanEdit(vacancy.status as EnumVacancyStatus)
+                ? {}
+                : { pointerEvents: "none" }
+            }
+            aria-disabled={!CanEdit(vacancy.status as EnumVacancyStatus)}
           >
             <FaEdit />
           </Link>

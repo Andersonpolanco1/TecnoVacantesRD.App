@@ -145,7 +145,7 @@ const VacanciesPublicFilter = () => {
                 categoryId: null,
                 currentPage: 1,
               });
-              router.push("/vacancies");
+              router.push("/vacancies/mine");
             }}
           >
             <RiFilterOffFill className="me-2" />

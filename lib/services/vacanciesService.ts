@@ -5,10 +5,12 @@ import {
   apiRequestClient,
   apiRequestServer,
   convertFiltersToQueryParams,
+  EnumVacancyStatus,
   EnumVacancyTrigger,
 } from "../utils";
 import { VacancyChangeStatusResponse } from "@/types/dtos/vacancyChangeStatusresponse";
 import { ApiResponse } from "@/types/dtos/ApiResponse";
+import { stat } from "fs";
 
 const API_URL = `${process.env.NEXT_PUBLIC_VACANCIES_API_BASE_URL}/api/vacancies`;
 
@@ -96,4 +98,14 @@ export const ChangeState = async (
     { trigger, publicId, reason }
   );
   return result;
+};
+
+export const CanEdit = (status: EnumVacancyStatus): boolean => {
+  const editableStatuses = new Set([
+    EnumVacancyStatus.PendingReview,
+    EnumVacancyStatus.Approved,
+    EnumVacancyStatus.Published,
+  ]);
+
+  return editableStatuses.has(status);
 };

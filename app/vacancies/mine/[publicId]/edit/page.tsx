@@ -2,11 +2,16 @@
 
 import { useSession } from "next-auth/react";
 import { use, useEffect, useState } from "react";
-import { fetchUserVacancyById, update } from "@/lib/services/vacanciesService";
+import {
+  CanEdit,
+  fetchUserVacancyById,
+  update,
+} from "@/lib/services/vacanciesService";
 import VacancyPost from "@/components/VacancyPost";
 import { ApiResponse } from "@/types/dtos/ApiResponse";
 import { VacancyUserDto } from "@/types/vacancy";
 import { useNotification } from "@/providers/notificationProvider";
+import { EnumVacancyStatus } from "@/lib/utils";
 
 interface VacancyDetailPageProps {
   params: Promise<{ publicId: string }>;
@@ -38,7 +43,6 @@ const Page = ({ params }: VacancyDetailPageProps) => {
         resolvedParams.publicId,
         session.accessToken as string
       );
-
       setResponse(result);
     };
 
@@ -62,6 +66,9 @@ const Page = ({ params }: VacancyDetailPageProps) => {
   if (!response?.success)
     return <p>No se pudo obtener la vacante. {response?.message}</p>;
 
+  if (!CanEdit(response.data?.status as EnumVacancyStatus)) {
+    return <p>Esta vacante ya no se puede editar</p>;
+  }
   return (
     <VacancyPost
       onSubmit={handleUpdate}
