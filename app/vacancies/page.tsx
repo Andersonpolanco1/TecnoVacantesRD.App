@@ -41,22 +41,14 @@ export default async function Page({ searchParams }: PageProps) {
   return (
     <div className="my-4">
       {/* Botón para mostrar/ocultar los filtros */}
-      <div className="mb-5 flex items-center gap-4">
-        <button
-          className="btn btn-sm btn-primary px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 flex items-center"
-          type="button"
-        >
-          <RiFilterFill className="mr-2" />
-          Filtrar
-        </button>
-
-        <span>
-          Registros: {totalItems} {hasFilters ? "(filtrados)" : ""}
-        </span>
-      </div>
 
       <div className="my-5">
         <VacanciesPublicFilter />
+      </div>
+      <div className="my-5">
+        <span className="text-gray-600 font-medium">
+          Registros: {totalItems} {hasFilters ? "(filtrados)" : ""}
+        </span>
       </div>
 
       {/* Lista de vacantes */}

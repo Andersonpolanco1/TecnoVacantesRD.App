@@ -35,7 +35,7 @@ const VacancyPost: React.FC<JobPostingFormProps> = ({
     if (initialData) {
       setFormData(initialData);
     }
-  }, [initialData]);
+  }, []);
 
   const handleSelectChange = (fieldName: string, value: any) => {
     setFormData((prevState) => ({
@@ -160,6 +160,7 @@ const VacancyPost: React.FC<JobPostingFormProps> = ({
               (Mínimo 150 caracteres)
             </span>
           </label>
+          {console.log("rich text")}
           <RichText
             readonly={false}
             value={formData.description}

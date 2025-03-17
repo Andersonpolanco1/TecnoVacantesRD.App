@@ -10,8 +10,9 @@ import {
   MenuItem,
   MenuItems,
 } from "@headlessui/react";
-import { Bars3Icon, BellIcon, XMarkIcon } from "@heroicons/react/24/outline";
+import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 import { RiUserFill } from "react-icons/ri";
+import Image from "next/image";
 
 const navigation = [
   { name: "Vacantes", href: "/vacancies", current: false },
@@ -87,10 +88,12 @@ const Navbar = () => {
                   <MenuButton className="relative flex rounded-full bg-gray-800 text-sm focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800 focus:outline-hidden">
                     <span className="absolute -inset-1.5" />
                     <span className="sr-only">Open user menu</span>
-                    <img
+                    <Image
                       alt="User profile"
-                      src={session.user?.image ?? "#"}
-                      className="size-8 rounded-full"
+                      src={session.user?.image ?? "/default-avatar.png"} // Ruta a la imagen
+                      width={40} // Ajuste de ancho
+                      height={40} // Ajuste de alto
+                      className="rounded-full"
                     />
                   </MenuButton>
                 </div>

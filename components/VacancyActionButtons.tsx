@@ -6,7 +6,6 @@ import {
   FaTimes,
   FaCloudUploadAlt,
   FaLock,
-  FaRegClock,
   FaUndo,
 } from "react-icons/fa";
 import {
@@ -51,13 +50,13 @@ const VacancyActionButtons = ({
         label: "Aprobar",
         icon: <FaCheck />,
         action: EnumVacancyTrigger.Approve,
-        className: "btn-success",
+        className: "bg-green-500 hover:bg-green-600 text-white",
       },
       {
         label: "Rechazar",
         icon: <FaTimes />,
         action: EnumVacancyTrigger.Reject,
-        className: "btn-danger",
+        className: "bg-red-500 hover:bg-red-600 text-white",
       },
     ],
     [EnumVacancyStatus.Approved]: [
@@ -65,13 +64,13 @@ const VacancyActionButtons = ({
         label: "Publicar",
         icon: <FaCloudUploadAlt />,
         action: EnumVacancyTrigger.Publish,
-        className: "btn-primary",
+        className: "bg-blue-500 hover:bg-blue-600 text-white",
       },
       {
         label: "Cerrar",
         icon: <FaLock />,
         action: EnumVacancyTrigger.Close,
-        className: "btn-secondary",
+        className: "bg-gray-500 hover:bg-gray-600 text-white",
       },
     ],
     [EnumVacancyStatus.Rejected]: [
@@ -79,7 +78,7 @@ const VacancyActionButtons = ({
         label: "Revisar nuevamente",
         icon: <FaUndo />,
         action: EnumVacancyTrigger.ReviewAgain,
-        className: "btn-info",
+        className: "bg-teal-500 hover:bg-teal-600 text-white",
       },
     ],
     [EnumVacancyStatus.Published]: [
@@ -87,7 +86,7 @@ const VacancyActionButtons = ({
         label: "Cerrar",
         icon: <FaLock />,
         action: EnumVacancyTrigger.Close,
-        className: "btn-secondary",
+        className: "bg-gray-500 hover:bg-gray-600 text-white",
       },
     ],
     [EnumVacancyStatus.Expired]: [],
@@ -102,21 +101,21 @@ const VacancyActionButtons = ({
         icon={icon}
         label={label}
         action={() => handleShowModal(action)}
-        className={`${className} me-2`}
+        className={`${className} mr-2`}
       />
     ));
   };
 
   return (
     <>
-      <div className="d-flex justify-content-end">{getButtonActions()}</div>
+      <div className="flex justify-end">{getButtonActions()}</div>
       <ConfirmModal
         isOpen={isModalOpen}
         onClose={handleCloseModal}
         onConfirm={handleConfirmAction}
         actionDescription={`¿Estás seguro de que deseas ${getVacancyTrigger(
           selectedAction as EnumVacancyTrigger
-        )} esta vacante?`}
+        )} esta vacante: ${vacancy.title}?`}
         showReasonInput={selectedAction === EnumVacancyTrigger.Reject}
       />
     </>

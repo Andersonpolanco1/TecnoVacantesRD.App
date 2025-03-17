@@ -29,7 +29,7 @@ export default async function RootLayout({
           <LoadingProvider>
             <Navbar />
             <NotificationProvider>
-              <main className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8 flex-grow">
+              <main className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8 flex-grow pt-16">
                 {children}
               </main>
               <ScrollToUpButton />

@@ -1,12 +1,17 @@
 "use client";
 
 import { VacancyPublicFilter } from "@/types/VacancyFilters";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import ProvinceSelect from "./ProvinceSelect";
 import VacancyModeSelect from "./vacancyMode";
 import CategorySelect from "./CategorySelect";
-import { RiFilterFill, RiFilterOffFill } from "react-icons/ri";
+import {
+  RiFilterFill,
+  RiFilterOffFill,
+  RiArrowDownSLine,
+  RiArrowUpSLine,
+} from "react-icons/ri";
 
 const VacanciesPublicFilter = () => {
   const router = useRouter();
@@ -20,6 +25,8 @@ const VacanciesPublicFilter = () => {
     categoryId: null,
     currentPage: 1,
   });
+
+  const [isFiltersVisible, setIsFiltersVisible] = useState(true);
 
   const handleFilterChange = (field: string, value: any) => {
     const updatedFilters = { ...filters, [field]: value };
@@ -39,8 +46,24 @@ const VacanciesPublicFilter = () => {
 
   return (
     <div className="bg-white p-6 rounded-lg shadow-md">
+      {/* Botón para contraer/expandir los filtros */}
+      <button
+        type="button"
+        className="text-blue-500 flex items-center gap-2 mb-4"
+        onClick={() => setIsFiltersVisible(!isFiltersVisible)}
+      >
+        {isFiltersVisible ? <RiArrowUpSLine /> : <RiArrowDownSLine />}
+        {isFiltersVisible ? "Contraer Filtros" : "Mostrar Filtros"}
+      </button>
+
       {/* Filtros de búsqueda */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+      <div
+        className={
+          isFiltersVisible
+            ? "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4"
+            : "hidden"
+        }
+      >
         <div className="md:mb-4">
           <label
             htmlFor="search"
@@ -117,41 +140,41 @@ const VacanciesPublicFilter = () => {
             onChange={(value) => handleFilterChange("categoryId", value)}
           />
         </div>
-      </div>
 
-      {/* Botones de acción */}
-      <div className="flex flex-col sm:flex-row gap-4 mt-6">
-        <div className="w-full sm:w-1/2">
-          <button
-            type="button"
-            className="w-full px-4 py-2 bg-blue-500 text-white rounded-lg shadow hover:bg-blue-600 flex items-center justify-center gap-2"
-            onClick={handleFilterSubmit}
-          >
-            <RiFilterFill className="text-lg" />
-            Filtrar
-          </button>
-        </div>
+        {/* Botones de acción */}
+        <div className="flex flex-col sm:flex-row gap-4 mt-6">
+          <div className="w-full sm:w-1/2">
+            <button
+              type="button"
+              className="w-full px-4 py-2 bg-blue-500 text-white rounded-lg shadow hover:bg-blue-600 flex items-center justify-center gap-2"
+              onClick={handleFilterSubmit}
+            >
+              <RiFilterFill className="text-lg" />
+              Filtrar
+            </button>
+          </div>
 
-        <div className="w-full sm:w-1/2">
-          <button
-            type="button"
-            className="w-full px-4 py-2 bg-gray-500 text-white rounded-lg shadow hover:bg-gray-600 flex items-center justify-center gap-2"
-            onClick={() => {
-              setFilters({
-                search: null,
-                salaryFrom: null,
-                salaryTo: null,
-                provinceId: null,
-                mode: null,
-                categoryId: null,
-                currentPage: 1,
-              });
-              router.push("/vacancies");
-            }}
-          >
-            <RiFilterOffFill className="text-lg" />
-            Resetear Filtros
-          </button>
+          <div className="w-full sm:w-1/2">
+            <button
+              type="button"
+              className="w-full px-4 py-2 bg-gray-500 text-white rounded-lg shadow hover:bg-gray-600 flex items-center justify-center gap-2"
+              onClick={() => {
+                setFilters({
+                  search: null,
+                  salaryFrom: null,
+                  salaryTo: null,
+                  provinceId: null,
+                  mode: null,
+                  categoryId: null,
+                  currentPage: 1,
+                });
+                router.push("/vacancies");
+              }}
+            >
+              <RiFilterOffFill className="text-lg" />
+              Resetear Filtros
+            </button>
+          </div>
         </div>
       </div>
     </div>

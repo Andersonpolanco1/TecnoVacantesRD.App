@@ -6,11 +6,17 @@ import { useRouter } from "next/navigation";
 import ProvinceSelect from "./ProvinceSelect";
 import VacancyModeSelect from "./vacancyMode";
 import CategorySelect from "./CategorySelect";
-import { RiFilterFill, RiFilterOffFill } from "react-icons/ri";
+import {
+  RiArrowDownSLine,
+  RiArrowUpSLine,
+  RiFilterFill,
+  RiFilterOffFill,
+} from "react-icons/ri";
 import VacancyStatusSelect from "./StatusSelect";
 
 const VacanciesUserFilter = () => {
   const router = useRouter();
+  const [isFiltersVisible, setIsFiltersVisible] = useState(true);
 
   const [filters, setFilters] = useState<VacancyUserFilter>({
     search: null,
@@ -39,7 +45,24 @@ const VacanciesUserFilter = () => {
 
   return (
     <div className="bg-white p-6 rounded-lg shadow-lg">
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+      {/* Botón para contraer/expandir los filtros */}
+      <button
+        type="button"
+        className="text-blue-500 flex items-center gap-2 mb-4"
+        onClick={() => setIsFiltersVisible(!isFiltersVisible)}
+      >
+        {isFiltersVisible ? <RiArrowUpSLine /> : <RiArrowDownSLine />}
+        {isFiltersVisible ? "Contraer Filtros" : "Mostrar Filtros"}
+      </button>
+
+      {/* Filtros de búsqueda */}
+      <div
+        className={
+          isFiltersVisible
+            ? "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4"
+            : "hidden"
+        }
+      >
         <div>
           <label
             htmlFor="search"
@@ -56,7 +79,6 @@ const VacanciesUserFilter = () => {
             placeholder="Buscar en título y descripción"
           />
         </div>
-
         <div>
           <label
             htmlFor="salaryFrom"
@@ -74,7 +96,6 @@ const VacanciesUserFilter = () => {
             min="0"
           />
         </div>
-
         <div>
           <label
             htmlFor="salaryTo"
@@ -92,7 +113,6 @@ const VacanciesUserFilter = () => {
             min="0"
           />
         </div>
-
         <div>
           <ProvinceSelect
             flagRequired={false}
@@ -100,7 +120,6 @@ const VacanciesUserFilter = () => {
             value={filters.provinceId}
           />
         </div>
-
         <div>
           <VacancyModeSelect
             flagRequired={false}
@@ -108,7 +127,6 @@ const VacanciesUserFilter = () => {
             value={filters.mode}
           />
         </div>
-
         <div>
           <CategorySelect
             flagRequired={false}
@@ -116,7 +134,6 @@ const VacanciesUserFilter = () => {
             onChange={(value) => handleFilterChange("categoryId", value)}
           />
         </div>
-
         <div>
           <VacancyStatusSelect
             onChange={(value) => handleFilterChange("status", value)}
@@ -136,7 +153,6 @@ const VacanciesUserFilter = () => {
             Filtrar
           </button>
         </div>
-
         <div className="md:mb-4">
           <label className="opacity-0">Reset</label>{" "}
           {/* Texto invisible para mantener alineación */}
