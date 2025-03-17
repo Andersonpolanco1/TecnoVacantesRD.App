@@ -41,7 +41,7 @@ const VacanciesPublicFilter = () => {
     <div className="bg-white p-6 rounded-lg shadow-md">
       {/* Filtros de búsqueda */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-        <div className="mb-4">
+        <div className="md:mb-4">
           <label
             htmlFor="search"
             className="block text-sm font-medium text-gray-700"
@@ -58,7 +58,7 @@ const VacanciesPublicFilter = () => {
           />
         </div>
 
-        <div className="mb-4">
+        <div className="md:mb-4">
           <label
             htmlFor="salaryFrom"
             className="block text-sm font-medium text-gray-700"
@@ -76,7 +76,7 @@ const VacanciesPublicFilter = () => {
           />
         </div>
 
-        <div className="mb-4">
+        <div className="md:mb-4">
           <label
             htmlFor="salaryTo"
             className="block text-sm font-medium text-gray-700"
@@ -94,7 +94,7 @@ const VacanciesPublicFilter = () => {
           />
         </div>
 
-        <div className="mb-4">
+        <div className="md:mb-4">
           <ProvinceSelect
             flagRequired={false}
             onChange={(value) => handleFilterChange("provinceId", value)}
@@ -102,7 +102,7 @@ const VacanciesPublicFilter = () => {
           />
         </div>
 
-        <div className="mb-4">
+        <div className="md:mb-4">
           <VacancyModeSelect
             flagRequired={false}
             onChange={(value) => handleFilterChange("mode", value)}
@@ -110,7 +110,7 @@ const VacanciesPublicFilter = () => {
           />
         </div>
 
-        <div className="mb-4">
+        <div className="md:mb-4">
           <CategorySelect
             flagRequired={false}
             value={filters.categoryId}

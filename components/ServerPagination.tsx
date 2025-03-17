@@ -19,12 +19,12 @@ const ServerPagination: React.FC<PaginationProps> = ({
   const isLastPage = currentPage === totalPagesCount;
 
   return (
-    <div className="d-flex justify-content-center align-items-center gap-2">
+    <div className="flex justify-center items-center gap-2">
       {/* Ocultar el botón "Primera Página" si es la primera página */}
       {!isFirstPage && (
         <Link href={`?currentPage=1`} passHref>
           <button
-            className="btn btn-outline-primary btn-sm"
+            className="px-3 py-1 border border-gray-300 rounded-sm text-sm text-blue-600 hover:text-blue-800 focus:outline-none"
             aria-label="First Page"
           >
             <FaAngleDoubleLeft />
@@ -36,7 +36,7 @@ const ServerPagination: React.FC<PaginationProps> = ({
       {!isFirstPage && (
         <Link href={`?currentPage=${currentPage - 1}`} passHref>
           <button
-            className="btn btn-outline-primary btn-sm"
+            className="px-3 py-1 border border-gray-300 rounded-sm text-sm text-blue-600 hover:text-blue-800 focus:outline-none"
             aria-label="Previous Page"
           >
             <FaAngleLeft />
@@ -45,7 +45,7 @@ const ServerPagination: React.FC<PaginationProps> = ({
       )}
 
       {/* Mostrar la página actual */}
-      <span>
+      <span className="text-sm text-gray-700">
         {currentPage} de {totalPagesCount}
       </span>
 
@@ -53,7 +53,7 @@ const ServerPagination: React.FC<PaginationProps> = ({
       {!isLastPage && (
         <Link href={`?currentPage=${currentPage + 1}`} passHref>
           <button
-            className="btn btn-outline-primary btn-sm"
+            className="px-3 py-1 border border-gray-300 rounded-sm text-sm text-blue-600 hover:text-blue-800 focus:outline-none"
             aria-label="Next Page"
           >
             <FaAngleRight />
@@ -65,7 +65,7 @@ const ServerPagination: React.FC<PaginationProps> = ({
       {!isLastPage && (
         <Link href={`?currentPage=${totalPagesCount}`} passHref>
           <button
-            className="btn btn-outline-primary btn-sm"
+            className="px-3 py-1 border border-gray-300 rounded-sm text-sm text-blue-600 hover:text-blue-800 focus:outline-none"
             aria-label="Last Page"
           >
             <FaAngleDoubleRight />

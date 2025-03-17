@@ -27,7 +27,7 @@ export default function ProvinceSelect({
   }, []);
 
   return (
-    <div className="mb-4">
+    <div>
       <label
         htmlFor="provinceId"
         className="block text-sm font-medium text-gray-700"

@@ -33,10 +33,11 @@ const ScrollToUpButton = () => {
     <button
       title="Go up"
       onClick={scrollToTop}
-      style={{ zIndex: 100000 }}
-      className={`btn btn-primary position-fixed shadow-lg rounded-circle top-50 end-0 translate-middle-y ${
-        isMobile ? "me-2" : "me-5"
-      } ${isVisible ? "d-block" : "d-none"}`}
+      className={`fixed z-50 shadow-lg rounded-full ${
+        isMobile ? "right-2" : "right-5"
+      } bottom-1/2 transform -translate-y-1/2 ${
+        isVisible ? "block" : "hidden"
+      } p-3 bg-blue-600 text-white hover:bg-blue-800 transition-all duration-300`}
     >
       <FaArrowUp size={isMobile ? 20 : 30} />
     </button>

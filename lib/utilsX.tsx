@@ -4,17 +4,16 @@ import sanitizeHtml from "sanitize-html";
 export const getStatusIcon = (status: number) => {
   switch (status) {
     case 1:
-      return <FaCheckCircle className="text-success" />;
+      return <FaCheckCircle className="text-green-500" />;
     case 2:
-      return <FaTimesCircle className="text-danger" />;
+      return <FaTimesCircle className="text-red-500" />;
     case 3:
-      return <FaClock className="text-info" />;
+      return <FaClock className="text-blue-500" />;
     case 4:
-      return <FaClock className="text-muted" />;
+      return <FaClock className="text-gray-500" />;
     case 5:
-      return <FaTimesCircle className="text-secondary" />;
     default:
-      return <FaClock className="text-warning" />;
+      return <FaClock className="text-yellow-500" />;
   }
 };
 

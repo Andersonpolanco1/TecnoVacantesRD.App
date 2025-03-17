@@ -29,10 +29,10 @@ const VacancyListItem = ({ vacancy }: VacancyListItemProps) => {
   const isUserVacancy = "status" in vacancy && "createdAt" in vacancy;
 
   return (
-    <div className="p-3 my-3 border rounded-lg shadow-sm bg-white">
-      <h5 className="font-weight-bold text-primary mb-1 d-flex justify-content-between align-items-center">
+    <div className="p-4 my-4 border border-gray-300 rounded-lg shadow-sm bg-white">
+      <h5 className="font-bold text-primary mb-1 flex justify-between items-center">
         <div
-          className="text-primary text-decoration-none d-inline-block text-truncate"
+          className="text-primary text-decoration-none inline-block truncate"
           style={{ maxWidth: "calc(100% - 1.5rem)" }}
         >
           {vacancy.title}
@@ -40,10 +40,10 @@ const VacancyListItem = ({ vacancy }: VacancyListItemProps) => {
         {isUserVacancy && (
           <Link
             href={`/vacancies/mine/${vacancy.publicId}/edit`}
-            className={`ms-2 ${
+            className={`ml-2 ${
               CanEdit(vacancy.status as EnumVacancyStatus)
                 ? "text-primary"
-                : "disabled text-secondary"
+                : "text-gray-400"
             }`}
             style={
               CanEdit(vacancy.status as EnumVacancyStatus)
@@ -59,71 +59,72 @@ const VacancyListItem = ({ vacancy }: VacancyListItemProps) => {
       <p className="text-muted mb-2">
         <small>{vacancy.categoryName}</small>
       </p>
-      <div className="bg-custom">
+      <div className="bg-gray-50 p-3 rounded-lg">
         <div
-          className="d-grid gap-2"
+          className="grid gap-3"
           style={{
             gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))",
           }}
         >
           {isUserVacancy && (
-            <p className="text-muted text-xs mb-1 d-flex align-items-center">
+            <p className="text-gray-600 text-xs mb-1 flex items-center">
               {getStatusIcon(vacancy.status)}
-              <strong className="ms-2">
+              <strong className="ml-2">
                 {getVacancyStatus(vacancy.status)}
               </strong>
             </p>
           )}
 
-          <p className="text-muted text-xs mb-1">
-            <FaCalendarAlt className="me-2" /> <strong>Publicada:</strong>{" "}
-            <span className="text-primary">
+          <p className="text-gray-600 text-xs mb-1 flex items-center">
+            <FaCalendarAlt className="mr-2" /> <strong>Publicada:</strong>{" "}
+            <span className="text-primary ml-1">
               {formatDate(vacancy.publishedAt)}
             </span>
           </p>
 
           {isUserVacancy && (
-            <p className="text-muted text-xs mb-1">
-              <FaCalendarAlt className="me-2" /> <strong>Creada:</strong>{" "}
-              <span>{formatDate(vacancy.createdAt)}</span>
+            <p className="text-gray-600 text-xs mb-1 flex items-center">
+              <FaCalendarAlt className="mr-2" /> <strong>Creada:</strong>{" "}
+              <span className="ml-1">{formatDate(vacancy.createdAt)}</span>
             </p>
           )}
 
-          <p className="text-muted text-xs mb-1">
-            <FaClock className="me-2" /> <strong>Cierre:</strong>{" "}
-            <span className="text-danger">{formatDate(vacancy.expiresAt)}</span>
+          <p className="text-gray-600 text-xs mb-1 flex items-center">
+            <FaClock className="mr-2" /> <strong>Cierre:</strong>{" "}
+            <span className="text-red-600 ml-1">
+              {formatDate(vacancy.expiresAt)}
+            </span>
           </p>
 
-          <p
-            className="text-muted text-xs mb-1"
-            style={{ gridColumn: "span 1" }}
-          >
-            <FaBullseye className="me-2" /> <strong>Modalidad:</strong>{" "}
-            <span>{VacancyModeLabels[vacancy.mode as VacancyMode]}</span>
+          <p className="text-gray-600 text-xs mb-1 flex items-center">
+            <FaBullseye className="mr-2" /> <strong>Modalidad:</strong>{" "}
+            <span className="ml-1">
+              {VacancyModeLabels[vacancy.mode as VacancyMode]}
+            </span>
           </p>
 
-          <p
-            className="text-muted text-xs mb-1"
-            style={{ gridColumn: "span 1" }}
-          >
-            <FaDollarSign className="me-2" /> <strong>Salario:</strong>{" "}
-            <span className="text-success">
+          <p className="text-gray-600 text-xs mb-1 flex items-center">
+            <FaDollarSign className="mr-2" /> <strong>Salario:</strong>{" "}
+            <span className="text-green-600 ml-1">
               ${vacancy.salary ?? "No especificado"}
             </span>
           </p>
 
-          <p className="text-muted text-xs mb-1">
-            <FaMapMarkerAlt className="me-2" />
+          <p className="text-gray-600 text-xs mb-1 flex items-center">
+            <FaMapMarkerAlt className="mr-2" />
             <strong>Ubicación:</strong>{" "}
-            <span>{formatLocation(vacancy.provinceName)}</span>
+            <span className="ml-1">{formatLocation(vacancy.provinceName)}</span>
           </p>
         </div>
       </div>
       <br />
-      <div className="text-xs text-muted mb-0 position-relative text-justify">
-        <FaRegFileAlt className="me-2" /> <strong>Descripción:</strong>
+      <div className="text-xs text-gray-600 mb-0 relative text-justify">
+        <div className="flex items-center">
+          <FaRegFileAlt className="mr-2" />
+          <strong>Descripción:</strong>
+        </div>
         <div
-          className="w-100 my-3"
+          className="w-full my-3"
           style={{ wordWrap: "break-word", whiteSpace: "normal" }}
         >
           {renderHTML(vacancy.vacancyDescription)}

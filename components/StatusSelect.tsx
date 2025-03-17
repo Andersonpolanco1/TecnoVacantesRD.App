@@ -28,28 +28,30 @@ const VacancyStatusSelect: React.FC<StatusSelectProps> = ({
   };
 
   return (
-    <div className="flex flex-col space-y-2">
-      <label
-        className="text-sm font-semibold text-gray-700"
-        htmlFor="vacancy-status"
-      >
-        Estado de la vacante:
-      </label>
-      <select
-        id="vacancy-status"
-        value={selectedStatus}
-        onChange={handleChange}
-        className="border border-gray-300 rounded-lg p-2 focus:ring-2 focus:ring-blue-500 shadow-sm"
-      >
-        <option value={""}>Seleccionar</option>
-        {Object.values(EnumVacancyStatus)
-          .filter((status) => typeof status === "number")
-          .map((status) => (
-            <option key={status} value={status}>
-              {getVacancyStatus(status as EnumVacancyStatus)}
-            </option>
-          ))}
-      </select>
+    <div>
+      <div className="flex flex-col space-y-1">
+        <label
+          className="text-sm font-semibold text-gray-700"
+          htmlFor="vacancy-status"
+        >
+          Estado de la vacante:
+        </label>
+        <select
+          id="vacancy-status"
+          value={selectedStatus}
+          onChange={handleChange}
+          className="border border-gray-300 rounded-lg p-2 focus:ring-2 focus:ring-blue-500 shadow-sm"
+        >
+          <option value={""}>Seleccionar</option>
+          {Object.values(EnumVacancyStatus)
+            .filter((status) => typeof status === "number")
+            .map((status) => (
+              <option key={status} value={status}>
+                {getVacancyStatus(status as EnumVacancyStatus)}
+              </option>
+            ))}
+        </select>
+      </div>
     </div>
   );
 };

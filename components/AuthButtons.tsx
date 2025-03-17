@@ -7,19 +7,25 @@ const authProviders = [
     name: "google",
     label: "Iniciar con Google",
     logo: "/google-logo.png",
-    css: "btn-outline-danger",
+    bgColor: "bg-red-700",
+    hoverColor: "hover:bg-red-600",
+    focusColor: "focus:ring-red-500",
   },
   {
     name: "linkedin",
     label: "Iniciar con LinkedIn",
     logo: "/linkedin-logo.png",
-    css: "btn-outline-primary",
+    bgColor: "bg-sky-700",
+    hoverColor: "hover:bg-sky-600",
+    focusColor: "focus:ring-sky-600",
   },
   {
     name: "github",
     label: "Iniciar con GitHub",
     logo: "/github-logo.png",
-    css: "btn-outline-dark",
+    bgColor: "bg-gray-700",
+    hoverColor: "hover:bg-gray-600",
+    focusColor: "focus:ring-gray-600",
   },
 ];
 
@@ -41,7 +47,7 @@ const AuthButtons = () => {
         <button
           key={provider.name}
           onClick={() => handleAuth(provider.name)}
-          className={`btn ${provider.css} w-100 mb-2 d-flex align-items-center justify-content-center`}
+          className={`w-full mb-2 py-2 rounded-lg flex items-center justify-center space-x-3 ${provider.bgColor} ${provider.hoverColor} text-white focus:outline-none focus:ring-2 focus:ring-offset-2 ${provider.focusColor} focus:ring-transparent`}
         >
           <Image
             src={provider.logo}
@@ -49,7 +55,7 @@ const AuthButtons = () => {
             width={20}
             height={20}
           />
-          <span className="ms-2">{provider.label}</span>
+          <span>{provider.label}</span>
         </button>
       ))}
     </>

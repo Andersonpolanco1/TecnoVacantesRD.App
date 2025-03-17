@@ -32,6 +32,16 @@ const VacancyListItem = ({ vacancy }: VacancyListItemProps) => {
   const [showModal, setShowModal] = useState(false);
   const isUserVacancy = "status" in vacancy && "createdAt" in vacancy;
 
+  const openModal = () => {
+    setShowModal(true);
+    document.body.style.overflow = "hidden";
+  };
+
+  const closeModal = () => {
+    setShowModal(false);
+    document.body.style.overflow = "auto";
+  };
+
   return (
     <div className="p-4 mb-4 border border-gray-200 rounded-lg shadow-lg bg-white">
       <h5 className="font-semibold text-blue-600 mb-2 flex justify-between items-center">
@@ -77,7 +87,8 @@ const VacancyListItem = ({ vacancy }: VacancyListItemProps) => {
           </p>
 
           <p className="text-gray-500 text-sm mb-1 flex items-center">
-            <FaCalendarAlt className="mr-2" /> <strong>Creada:</strong>{" "}
+            <FaCalendarAlt className="mr-2" />
+            <strong className="mr-1">Creada: </strong>
             <span>{formatDate(vacancy.createdAt)}</span>
           </p>
         </>
@@ -85,31 +96,35 @@ const VacancyListItem = ({ vacancy }: VacancyListItemProps) => {
 
       <div className="flex flex-col">
         <p className="text-gray-500 text-sm mb-1 flex items-center">
-          <FaCalendarAlt className="mr-2" /> <strong>Publicada:</strong>{" "}
+          <FaCalendarAlt className="mr-2" />
+          <strong className="mr-1">Publicada: </strong>
           <span className="text-blue-600">
             {formatDate(vacancy.publishedAt)}
           </span>
         </p>
 
         <p className="text-gray-500 text-sm mb-1 flex items-center">
-          <FaClock className="mr-2" /> <strong>Cierre:</strong>{" "}
+          <FaClock className="mr-2" /> <strong className="mr-1">Cierre:</strong>
           <span className="text-red-600">{formatDate(vacancy.expiresAt)}</span>
         </p>
 
         <p className="text-gray-500 text-sm mb-1 flex items-center">
-          <FaBullseye className="mr-2" /> <strong>Modalidad:</strong>{" "}
+          <FaBullseye className="mr-2" />{" "}
+          <strong className="mr-1">Modalidad:</strong>
           <span>{VacancyModeLabels[vacancy.mode as VacancyMode]}</span>
         </p>
 
         <p className="text-gray-500 text-sm mb-1 flex items-center">
-          <FaDollarSign className="mr-2" /> <strong>Salario:</strong>{" "}
+          <FaDollarSign className="mr-2" />{" "}
+          <strong className="mr-1">Salario:</strong>
           <span className="text-green-600">
             ${vacancy.salary ?? "No especificado"}
           </span>
         </p>
 
         <p className="text-gray-500 text-sm mb-1 flex items-center">
-          <FaMapMarkerAlt className="mr-2" /> <strong>Ubicación:</strong>{" "}
+          <FaMapMarkerAlt className="mr-2" />{" "}
+          <strong className="mr-1">Ubicación:</strong>{" "}
           <span>{formatLocation(vacancy.provinceName)}</span>
         </p>
 
@@ -120,17 +135,21 @@ const VacancyListItem = ({ vacancy }: VacancyListItemProps) => {
               display: "-webkit-box",
               WebkitLineClamp: 3,
               WebkitBoxOrient: "vertical",
+              lineHeight: "1.5rem", // Establece la altura de la línea (ajústalo según tu diseño)
+              maxHeight: "4.5rem", // 3 líneas de 1.5rem cada una
+              overflowWrap: "break-word", // Permite que las palabras largas se dividan y pasen a la siguiente línea
             }}
           >
             {removeHtmlTags(vacancy.vacancyDescription)}
           </div>
           <div className="flex justify-end">
-            <button
-              className="text-blue-600 hover:text-blue-800 p-0"
-              onClick={() => setShowModal(true)}
+            <a
+              href="#"
+              className="text-blue-600 hover:text-blue-800 p-0 flex items-center"
+              onClick={openModal}
             >
-              <FaInfoCircle className="ml-2" /> Ver más
-            </button>
+              <FaInfoCircle className="mr-2" /> Ver más
+            </a>
           </div>
         </div>
       </div>
@@ -139,7 +158,7 @@ const VacancyListItem = ({ vacancy }: VacancyListItemProps) => {
         title={vacancy.title}
         description={vacancy.vacancyDescription}
         show={showModal}
-        onClose={() => setShowModal(false)}
+        onClose={closeModal}
       />
     </div>
   );

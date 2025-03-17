@@ -23,13 +23,13 @@ export default async function RootLayout({
       <head>
         <title>TecnoVacantesRD</title>
       </head>
-      <body>
+      <body className="flex flex-col min-h-screen">
         {/* Barra de navegación */}
         <AppSessionProvider session={session}>
           <LoadingProvider>
             <Navbar />
             <NotificationProvider>
-              <main className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
+              <main className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8 flex-grow">
                 {children}
               </main>
               <ScrollToUpButton />
@@ -37,7 +37,7 @@ export default async function RootLayout({
           </LoadingProvider>
         </AppSessionProvider>
 
-        <footer className="bg-gray-800 text-white text-center py-3">
+        <footer className="bg-gray-800 text-white text-center py-3 mt-auto">
           <p>&copy; 2025 TecnoVacantesRD. Todos los derechos reservados.</p>
         </footer>
 

@@ -40,7 +40,7 @@ const VacanciesUserFilter = () => {
   return (
     <div className="bg-white p-6 rounded-lg shadow-lg">
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-        <div className="mb-4">
+        <div>
           <label
             htmlFor="search"
             className="block text-sm font-medium text-gray-700"
@@ -57,7 +57,7 @@ const VacanciesUserFilter = () => {
           />
         </div>
 
-        <div className="mb-4">
+        <div>
           <label
             htmlFor="salaryFrom"
             className="block text-sm font-medium text-gray-700"
@@ -75,7 +75,7 @@ const VacanciesUserFilter = () => {
           />
         </div>
 
-        <div className="mb-4">
+        <div>
           <label
             htmlFor="salaryTo"
             className="block text-sm font-medium text-gray-700"
@@ -93,43 +93,56 @@ const VacanciesUserFilter = () => {
           />
         </div>
 
-        <ProvinceSelect
-          flagRequired={false}
-          onChange={(value) => handleFilterChange("provinceId", value)}
-          value={filters.provinceId}
-        />
+        <div>
+          <ProvinceSelect
+            flagRequired={false}
+            onChange={(value) => handleFilterChange("provinceId", value)}
+            value={filters.provinceId}
+          />
+        </div>
 
-        <VacancyModeSelect
-          flagRequired={false}
-          onChange={(value) => handleFilterChange("mode", value)}
-          value={filters.mode}
-        />
+        <div>
+          <VacancyModeSelect
+            flagRequired={false}
+            onChange={(value) => handleFilterChange("mode", value)}
+            value={filters.mode}
+          />
+        </div>
 
-        <CategorySelect
-          flagRequired={false}
-          value={filters.categoryId}
-          onChange={(value) => handleFilterChange("categoryId", value)}
-        />
+        <div>
+          <CategorySelect
+            flagRequired={false}
+            value={filters.categoryId}
+            onChange={(value) => handleFilterChange("categoryId", value)}
+          />
+        </div>
 
-        <VacancyStatusSelect
-          onChange={(value) => handleFilterChange("status", value)}
-          value={filters.status}
-        />
-
-        {/* Botones con ancho completo */}
-        <div className="col-span-1 sm:col-span-2 lg:col-span-3 flex gap-4">
+        <div>
+          <VacancyStatusSelect
+            onChange={(value) => handleFilterChange("status", value)}
+            value={filters.status}
+          />
+        </div>
+        {/* Botón Filtrar */}
+        <div className="md:mb-4">
+          <label className="opacity-0">Filtro</label>{" "}
+          {/* Texto invisible para mantener alineación */}
           <button
             type="button"
-            className="w-full px-4 py-2 bg-blue-500 text-white rounded-lg shadow hover:bg-blue-600 flex items-center justify-center gap-2"
+            className="w-full h-10 px-4 py-2 bg-blue-500 text-white rounded-lg shadow hover:bg-blue-600 flex items-center justify-center gap-2 col-span-1"
             onClick={handleFilterSubmit}
           >
             <RiFilterFill className="text-lg" />
             Filtrar
           </button>
+        </div>
 
+        <div className="md:mb-4">
+          <label className="opacity-0">Reset</label>{" "}
+          {/* Texto invisible para mantener alineación */}
           <button
             type="button"
-            className="w-full px-4 py-2 bg-gray-500 text-white rounded-lg shadow hover:bg-gray-600 flex items-center justify-center gap-2"
+            className="w-full h-10 px-4 py-2 bg-gray-500 text-white rounded-lg shadow hover:bg-gray-600 flex items-center justify-center gap-2 col-span-1"
             onClick={() => {
               setFilters({
                 search: null,
@@ -138,6 +151,7 @@ const VacanciesUserFilter = () => {
                 provinceId: null,
                 mode: null,
                 categoryId: null,
+                status: null,
                 currentPage: 1,
               });
               router.push("/vacancies/mine");

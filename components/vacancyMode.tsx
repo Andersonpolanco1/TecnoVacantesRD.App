@@ -13,7 +13,7 @@ const VacancyModeSelect: React.FC<VacancyModeSelectProps> = ({
   flagRequired,
 }) => {
   return (
-    <div className="mb-4">
+    <div>
       <label
         htmlFor="vacancyMode"
         className="block text-sm font-medium text-gray-700"

@@ -3,6 +3,8 @@
 import { useState } from "react";
 import AuthButtons from "@/components/AuthButtons";
 import { signIn } from "next-auth/react";
+import Link from "next/link";
+import { RiMailFill } from "react-icons/ri";
 
 export default function SignIn() {
   const [email, setEmail] = useState("");
@@ -18,18 +20,22 @@ export default function SignIn() {
   };
 
   return (
-    <div className="d-flex justify-content-center align-items-center">
-      <div className="card p-4 shadow" style={{ width: "22rem" }}>
-        <p className="fs-3 text-center fw-bold">TecnoVacantesRD</p>
-        <h4 className="text-center mb-4">Iniciar Sesión</h4>
+    <div className="flex flex-col justify-center items-center h-screen bg-gray-100">
+      <div className="p-6 rounded-2xl shadow-lg w-100 bg-white">
+        <p className="text-3xl font-bold text-center text-gray-800">
+          TecnoVacantesRD
+        </p>
+        <h4 className="text-center mb-4 text-xl font-semibold text-gray-600">
+          Iniciar Sesión
+        </h4>
 
         {/* Formulario */}
         <form onSubmit={handleLogin}>
-          <div className="mb-3">
-            <label className="form-label">Correo Electrónico</label>
+          <div className="mb-4">
+            <label className="block text-gray-700">Correo Electrónico</label>
             <input
               type="email"
-              className="form-control"
+              className="w-full p-2 mt-1 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
               placeholder="correo@example.com"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
@@ -37,11 +43,11 @@ export default function SignIn() {
             />
           </div>
 
-          <div className="mb-3">
-            <label className="form-label">Contraseña</label>
+          <div className="mb-4">
+            <label className="block text-gray-700">Contraseña</label>
             <input
               type="password"
-              className="form-control"
+              className="w-full p-2 mt-1 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
               placeholder="********"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
@@ -49,13 +55,26 @@ export default function SignIn() {
             />
           </div>
 
-          <button type="submit" className="btn btn-primary w-100">
+          <button
+            type="submit"
+            className="w-full py-2 mt-4 bg-blue-500 text-white font-semibold rounded-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 flex items-center justify-center gap-2"
+          >
+            <RiMailFill className="w-5 h-5 text-white" />
             Iniciar Sesión
           </button>
         </form>
 
+        <div className="my-2 text-center">
+          <Link
+            href="#"
+            className="text-blue-600 hover:text-blue-800 underline"
+          >
+            Regístrate
+          </Link>
+        </div>
+
         {/* Separador */}
-        <div className="text-center my-3">o</div>
+        <div className="text-center my-4 text-gray-600">o</div>
 
         {/* Botones de OAuth */}
         <AuthButtons />
