@@ -1,6 +1,6 @@
 "use client";
 
-import { EnumVacancyStatus, getVacancyStatus } from "@/lib/utils";
+import { EnumVacancyStatus, getVacancyStatus } from "@/lib/apputils";
 import React, { useState, useEffect } from "react";
 
 interface StatusSelectProps {

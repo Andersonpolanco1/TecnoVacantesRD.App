@@ -1,4 +1,4 @@
-import { EnumVacancyStatus } from "@/lib/utils";
+import { EnumVacancyStatus } from "@/lib/apputils";
 
 export interface VacancyChangeStatusResponse {
   publicId: string;

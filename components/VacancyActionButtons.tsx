@@ -12,7 +12,7 @@ import {
   EnumVacancyStatus,
   EnumVacancyTrigger,
   getVacancyTrigger,
-} from "@/lib/utils";
+} from "@/lib/apputils";
 import ConfirmModal from "./ModalConfirm";
 import { VacancyUserDto } from "@/types/vacancy";
 import ActionButton from "./ActionButton";

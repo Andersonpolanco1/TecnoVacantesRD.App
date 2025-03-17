@@ -17,8 +17,8 @@ import {
   formatLocation,
   getVacancyStatus,
   stripTags,
-} from "@/lib/utils";
-import { getStatusIcon } from "@/lib/utilsX";
+} from "@/lib/apputils";
+import { getStatusIcon } from "@/lib/apputilsX";
 import VacancyDescriptionModal from "./VacancyDescriptionModal";
 
 interface VacancyListItemProps {

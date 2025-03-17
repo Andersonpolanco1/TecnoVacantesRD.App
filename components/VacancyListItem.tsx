@@ -17,8 +17,8 @@ import {
   formatLocation,
   getVacancyStatus,
   removeHtmlTags,
-} from "@/lib/utils";
-import { getStatusIcon } from "@/lib/utilsX";
+} from "@/lib/apputils";
+import { getStatusIcon } from "@/lib/apputilsX";
 import { VacancyMode, VacancyModeLabels } from "@/types/VacancyMode";
 import { VacancyPublicDto, VacancyUserDto } from "@/types/vacancy";
 import VacancyDescriptionModal from "@/components/VacancyDescriptionModal";

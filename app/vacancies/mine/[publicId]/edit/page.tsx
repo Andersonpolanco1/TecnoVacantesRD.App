@@ -11,7 +11,7 @@ import VacancyPost from "@/components/VacancyPost";
 import { ApiResponse } from "@/types/dtos/ApiResponse";
 import { VacancyUserDto } from "@/types/vacancy";
 import { useNotification } from "@/providers/notificationProvider";
-import { EnumVacancyStatus } from "@/lib/utils";
+import { EnumVacancyStatus } from "@/lib/apputils";
 
 interface VacancyDetailPageProps {
   params: Promise<{ publicId: string }>;

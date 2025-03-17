@@ -7,10 +7,9 @@ import {
   convertFiltersToQueryParams,
   EnumVacancyStatus,
   EnumVacancyTrigger,
-} from "../utils";
+} from "../apputils";
 import { VacancyChangeStatusResponse } from "@/types/dtos/vacancyChangeStatusresponse";
 import { ApiResponse } from "@/types/dtos/ApiResponse";
-import { stat } from "fs";
 
 const API_URL = `${process.env.NEXT_PUBLIC_VACANCIES_API_BASE_URL}/api/vacancies`;
 

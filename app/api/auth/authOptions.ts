@@ -1,4 +1,4 @@
-import { apiRequestClient } from "@/lib/utils";
+import { apiRequestClient } from "@/lib/apputils";
 import { AuthOptions, getServerSession } from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
 import CredentialsProvider from "next-auth/providers/credentials";

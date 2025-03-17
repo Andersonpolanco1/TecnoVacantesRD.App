@@ -4,7 +4,7 @@
 import { useState } from "react";
 import VacancyActionButtons from "@/components/VacancyActionButtons";
 import { ChangeState } from "@/lib/services/vacanciesService";
-import { EnumVacancyStatus, EnumVacancyTrigger } from "@/lib/utils";
+import { EnumVacancyStatus, EnumVacancyTrigger } from "@/lib/apputils";
 import { VacancyUserDto } from "@/types/vacancy";
 import VacancyDetails from "./VacancyDetails";
 

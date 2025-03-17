@@ -17,8 +17,8 @@ import {
   formatDate,
   formatLocation,
   getVacancyStatus,
-} from "@/lib/utils";
-import { getStatusIcon, renderHTML } from "@/lib/utilsX";
+} from "@/lib/apputils";
+import { getStatusIcon, renderHTML } from "@/lib/apputilsX";
 import { CanEdit } from "@/lib/services/vacanciesService";
 
 interface VacancyListItemProps {

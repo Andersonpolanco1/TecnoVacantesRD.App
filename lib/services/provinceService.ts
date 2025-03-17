@@ -1,4 +1,4 @@
-import { apiRequestClient } from "../utils";
+import { apiRequestClient } from "../apputils";
 
 const API_URL = `${process.env.NEXT_PUBLIC_VACANCIES_API_BASE_URL}/api/provinces`;
 
