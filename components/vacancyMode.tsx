@@ -18,8 +18,8 @@ const VacancyModeSelect: React.FC<VacancyModeSelectProps> = ({
         htmlFor="vacancyMode"
         className="block text-sm font-medium text-gray-700"
       >
-        {flagRequired && <span className="text-red-500">*</span>}Modalidad de
-        Trabajo
+        Modalidad de Trabajo
+        {flagRequired && <span className="text-red-500">*</span>}
       </label>
       <select
         id="vacancyMode"

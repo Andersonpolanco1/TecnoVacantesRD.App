@@ -34,7 +34,7 @@ export default function CategorySelect({
         htmlFor="category"
         className="block text-sm font-medium text-gray-700"
       >
-        {flagRequired && <span className="text-red-500">*</span>} Categoría
+        Categoría{flagRequired && <span className="text-red-500">*</span>}
       </label>
       <select
         id="category"
