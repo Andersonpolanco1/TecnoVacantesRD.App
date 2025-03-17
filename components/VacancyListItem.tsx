@@ -33,7 +33,7 @@ const VacancyListItem = ({ vacancy }: VacancyListItemProps) => {
   const isUserVacancy = "status" in vacancy && "createdAt" in vacancy;
 
   return (
-    <div className="p-4 mb-4 border rounded-lg shadow-lg bg-white">
+    <div className="p-4 mb-4 border border-gray-200 rounded-lg shadow-lg bg-white">
       <h5 className="font-semibold text-blue-600 mb-2 flex justify-between items-center">
         <Link
           href={

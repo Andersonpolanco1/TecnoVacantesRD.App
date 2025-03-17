@@ -9,7 +9,7 @@ import CategorySelect from "./CategorySelect";
 import { RiFilterFill, RiFilterOffFill } from "react-icons/ri";
 import VacancyStatusSelect from "./StatusSelect";
 
-const VacanciesPublicFilter = () => {
+const VacanciesUserFilter = () => {
   const router = useRouter();
 
   const [filters, setFilters] = useState<VacancyUserFilter>({
@@ -24,8 +24,7 @@ const VacanciesPublicFilter = () => {
   });
 
   const handleFilterChange = (field: string, value: any) => {
-    const updatedFilters = { ...filters, [field]: value };
-    setFilters(updatedFilters);
+    setFilters((prev) => ({ ...prev, [field]: value }));
   };
 
   function handleFilterSubmit() {
@@ -35,35 +34,40 @@ const VacanciesPublicFilter = () => {
         queryParams.set(key, String(value));
       }
     });
-
     router.push(`/vacancies/mine?${queryParams.toString()}`);
   }
 
   return (
-    <div className="bg-light my-3 p-2">
-      <div className="row">
-        <div className="col-md-4 mb-3">
-          <label htmlFor="description" className="form-label">
-            Descripción
+    <div className="bg-white p-6 rounded-lg shadow-lg">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+        <div className="mb-4">
+          <label
+            htmlFor="search"
+            className="block text-sm font-medium text-gray-700"
+          >
+            Buscar
           </label>
           <input
             type="text"
-            id="description"
-            className="form-control"
+            id="search"
+            className="mt-1 p-2 w-full border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
             value={filters.search ?? ""}
-            onChange={(e) => handleFilterChange("description", e.target.value)}
-            placeholder="Descripción de la vacante"
+            onChange={(e) => handleFilterChange("search", e.target.value)}
+            placeholder="Buscar en título y descripción"
           />
         </div>
 
-        <div className="col-md-4 mb-3">
-          <label htmlFor="salaryFrom" className="form-label">
+        <div className="mb-4">
+          <label
+            htmlFor="salaryFrom"
+            className="block text-sm font-medium text-gray-700"
+          >
             Salario desde
           </label>
           <input
             type="number"
             id="salaryFrom"
-            className="form-control"
+            className="mt-1 p-2 w-full border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
             value={filters.salaryFrom ?? ""}
             onChange={(e) => handleFilterChange("salaryFrom", e.target.value)}
             placeholder="Salario mínimo"
@@ -71,70 +75,61 @@ const VacanciesPublicFilter = () => {
           />
         </div>
 
-        <div className="col-md-4 mb-3">
-          <label htmlFor="salaryTo" className="form-label">
+        <div className="mb-4">
+          <label
+            htmlFor="salaryTo"
+            className="block text-sm font-medium text-gray-700"
+          >
             Salario hasta
           </label>
           <input
             type="number"
             id="salaryTo"
-            className="form-control"
+            className="mt-1 p-2 w-full border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
             value={filters.salaryTo ?? ""}
             onChange={(e) => handleFilterChange("salaryTo", e.target.value)}
             placeholder="Salario máximo"
             min="0"
           />
         </div>
-      </div>
 
-      <div className="row">
-        <div className="col-md-4 mb-3">
-          <ProvinceSelect
-            flagRequired={false}
-            onChange={(value) => handleFilterChange("provinceId", value)}
-            value={filters.provinceId}
-          />
-        </div>
+        <ProvinceSelect
+          flagRequired={false}
+          onChange={(value) => handleFilterChange("provinceId", value)}
+          value={filters.provinceId}
+        />
 
-        <div className="col-md-4 mb-3">
-          <VacancyModeSelect
-            flagRequired={false}
-            onChange={(value) => handleFilterChange("mode", value)}
-            value={filters.mode}
-          />
-        </div>
+        <VacancyModeSelect
+          flagRequired={false}
+          onChange={(value) => handleFilterChange("mode", value)}
+          value={filters.mode}
+        />
 
-        <div className="col-md-4 mb-3">
-          <CategorySelect
-            flagRequired={false}
-            value={filters.categoryId}
-            onChange={(value) => handleFilterChange("categoryId", value)}
-          />
-        </div>
-      </div>
+        <CategorySelect
+          flagRequired={false}
+          value={filters.categoryId}
+          onChange={(value) => handleFilterChange("categoryId", value)}
+        />
 
-      <div className="row">
-        <div className="col-md-4 mb-3">
-          <VacancyStatusSelect
-            onChange={(value) => handleFilterChange("status", value)}
-            value={filters.status}
-          />
-        </div>
-        <div className="col-12 col-md-4 text-center justify-content-center mt-4">
+        <VacancyStatusSelect
+          onChange={(value) => handleFilterChange("status", value)}
+          value={filters.status}
+        />
+
+        {/* Botones con ancho completo */}
+        <div className="col-span-1 sm:col-span-2 lg:col-span-3 flex gap-4">
           <button
             type="button"
-            className="btn btn-primary btn-sm w-100"
+            className="w-full px-4 py-2 bg-blue-500 text-white rounded-lg shadow hover:bg-blue-600 flex items-center justify-center gap-2"
             onClick={handleFilterSubmit}
           >
-            <RiFilterFill className="me-2" />
+            <RiFilterFill className="text-lg" />
             Filtrar
           </button>
-        </div>
 
-        <div className="col-12 col-md-4 text-center justify-content-center mt-4">
           <button
             type="button"
-            className="btn btn-secondary btn-sm w-100"
+            className="w-full px-4 py-2 bg-gray-500 text-white rounded-lg shadow hover:bg-gray-600 flex items-center justify-center gap-2"
             onClick={() => {
               setFilters({
                 search: null,
@@ -148,7 +143,7 @@ const VacanciesPublicFilter = () => {
               router.push("/vacancies/mine");
             }}
           >
-            <RiFilterOffFill className="me-2" />
+            <RiFilterOffFill className="text-lg" />
             Resetear Filtros
           </button>
         </div>
@@ -157,4 +152,4 @@ const VacanciesPublicFilter = () => {
   );
 };
 
-export default VacanciesPublicFilter;
+export default VacanciesUserFilter;

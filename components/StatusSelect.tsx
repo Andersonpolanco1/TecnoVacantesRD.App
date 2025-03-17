@@ -28,15 +28,18 @@ const VacancyStatusSelect: React.FC<StatusSelectProps> = ({
   };
 
   return (
-    <div>
-      <label className="form-label" htmlFor="vacancy-status">
+    <div className="flex flex-col space-y-2">
+      <label
+        className="text-sm font-semibold text-gray-700"
+        htmlFor="vacancy-status"
+      >
         Estado de la vacante:
       </label>
       <select
         id="vacancy-status"
         value={selectedStatus}
         onChange={handleChange}
-        className="form-select"
+        className="border border-gray-300 rounded-lg p-2 focus:ring-2 focus:ring-blue-500 shadow-sm"
       >
         <option value={""}>Seleccionar</option>
         {Object.values(EnumVacancyStatus)
