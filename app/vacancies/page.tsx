@@ -41,28 +41,26 @@ export default async function Page({ searchParams }: PageProps) {
   return (
     <div className="my-4">
       {/* Botón para mostrar/ocultar los filtros */}
-      <div className="mb-3">
+      <div className="mb-5 flex items-center gap-4">
         <button
-          className="btn btn-sm btn-primary"
+          className="btn btn-sm btn-primary px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 flex items-center"
           type="button"
-          data-bs-toggle="collapse"
-          data-bs-target="#filtersCollapse"
-          aria-expanded="false"
-          aria-controls="filtersCollapse"
         >
-          <RiFilterFill className="me-2" />
+          <RiFilterFill className="mr-2" />
           Filtrar
         </button>
-        <span className="fw-bold small ms-2">
+
+        <span>
           Registros: {totalItems} {hasFilters ? "(filtrados)" : ""}
         </span>
       </div>
-      {/* Contenedor colapsable para los filtros */}
-      <div className="collapse" id="filtersCollapse">
+
+      <div className="my-5">
         <VacanciesPublicFilter />
       </div>
+
       {/* Lista de vacantes */}
-      <div className="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {vacancies.length ? (
           vacancies.map((vacancy) => (
             <div key={vacancy.publicId}>
@@ -70,12 +68,12 @@ export default async function Page({ searchParams }: PageProps) {
             </div>
           ))
         ) : (
-          <div className="col-12">
+          <div className="col-span-full text-center">
             <div>Sin resultados.</div>
           </div>
         )}
       </div>
-      {/* paginacion */}
+      {/* paginación */}
       {totalPages > 1 && (
         <div className="my-3">
           <ServerPagination

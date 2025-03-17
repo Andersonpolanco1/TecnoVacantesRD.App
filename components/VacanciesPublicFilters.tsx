@@ -38,30 +38,37 @@ const VacanciesPublicFilter = () => {
   }
 
   return (
-    <div className="bg-light my-3 p-2">
-      <div className="row">
-        <div className="col-md-4 mb-3">
-          <label htmlFor="search" className="form-label">
+    <div className="bg-white p-6 rounded-lg shadow-md">
+      {/* Filtros de búsqueda */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+        <div className="mb-4">
+          <label
+            htmlFor="search"
+            className="block text-sm font-medium text-gray-700"
+          >
             Buscar
           </label>
           <input
             type="text"
             id="search"
-            className="form-control"
+            className="mt-1 p-2 w-full border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
             value={filters.search ?? ""}
             onChange={(e) => handleFilterChange("search", e.target.value)}
             placeholder="Buscar en título y descripción"
           />
         </div>
 
-        <div className="col-md-4 mb-3">
-          <label htmlFor="salaryFrom" className="form-label">
+        <div className="mb-4">
+          <label
+            htmlFor="salaryFrom"
+            className="block text-sm font-medium text-gray-700"
+          >
             Salario desde
           </label>
           <input
             type="number"
             id="salaryFrom"
-            className="form-control"
+            className="mt-1 p-2 w-full border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
             value={filters.salaryFrom ?? ""}
             onChange={(e) => handleFilterChange("salaryFrom", e.target.value)}
             placeholder="Salario mínimo"
@@ -69,24 +76,25 @@ const VacanciesPublicFilter = () => {
           />
         </div>
 
-        <div className="col-md-4 mb-3">
-          <label htmlFor="salaryTo" className="form-label">
+        <div className="mb-4">
+          <label
+            htmlFor="salaryTo"
+            className="block text-sm font-medium text-gray-700"
+          >
             Salario hasta
           </label>
           <input
             type="number"
             id="salaryTo"
-            className="form-control"
+            className="mt-1 p-2 w-full border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
             value={filters.salaryTo ?? ""}
             onChange={(e) => handleFilterChange("salaryTo", e.target.value)}
             placeholder="Salario máximo"
             min="0"
           />
         </div>
-      </div>
 
-      <div className="row">
-        <div className="col-md-4 mb-3">
+        <div className="mb-4">
           <ProvinceSelect
             flagRequired={false}
             onChange={(value) => handleFilterChange("provinceId", value)}
@@ -94,7 +102,7 @@ const VacanciesPublicFilter = () => {
           />
         </div>
 
-        <div className="col-md-4 mb-3">
+        <div className="mb-4">
           <VacancyModeSelect
             flagRequired={false}
             onChange={(value) => handleFilterChange("mode", value)}
@@ -102,7 +110,7 @@ const VacanciesPublicFilter = () => {
           />
         </div>
 
-        <div className="col-md-4 mb-3">
+        <div className="mb-4">
           <CategorySelect
             flagRequired={false}
             value={filters.categoryId}
@@ -111,22 +119,23 @@ const VacanciesPublicFilter = () => {
         </div>
       </div>
 
-      <div className="row">
-        <div className="col-12 col-md-6 d-grid text-center mt-4">
+      {/* Botones de acción */}
+      <div className="flex flex-col sm:flex-row gap-4 mt-6">
+        <div className="w-full sm:w-1/2">
           <button
             type="button"
-            className="btn btn-primary btn-sm"
+            className="w-full px-4 py-2 bg-blue-500 text-white rounded-lg shadow hover:bg-blue-600 flex items-center justify-center gap-2"
             onClick={handleFilterSubmit}
           >
-            <RiFilterFill className="me-2" />
+            <RiFilterFill className="text-lg" />
             Filtrar
           </button>
         </div>
 
-        <div className="col-12 col-md-6 d-grid text-center mt-4">
+        <div className="w-full sm:w-1/2">
           <button
             type="button"
-            className="btn btn-secondary btn-sm"
+            className="w-full px-4 py-2 bg-gray-500 text-white rounded-lg shadow hover:bg-gray-600 flex items-center justify-center gap-2"
             onClick={() => {
               setFilters({
                 search: null,
@@ -140,7 +149,7 @@ const VacanciesPublicFilter = () => {
               router.push("/vacancies");
             }}
           >
-            <RiFilterOffFill className="me-2" />
+            <RiFilterOffFill className="text-lg" />
             Resetear Filtros
           </button>
         </div>

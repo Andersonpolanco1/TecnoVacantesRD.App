@@ -1,96 +1,171 @@
 "use client";
-
 import { signOut, useSession } from "next-auth/react";
-import Link from "next/link";
-import { FaRegFileAlt, FaSignOutAlt, FaUser } from "react-icons/fa";
-import Navigation from "./Navigation ";
+import { useState } from "react";
+import {
+  Disclosure,
+  DisclosureButton,
+  DisclosurePanel,
+  Menu,
+  MenuButton,
+  MenuItem,
+  MenuItems,
+} from "@headlessui/react";
+import { Bars3Icon, BellIcon, XMarkIcon } from "@heroicons/react/24/outline";
+
+const navigation = [
+  { name: "Vacantes", href: "/vacancies", current: false },
+  { name: "Publicar vacante", href: "/vacancies/mine/publish", current: false },
+];
+
+function classNames(...classes: string[]) {
+  return classes.filter(Boolean).join(" ");
+}
 
 const Navbar = () => {
   const { data: session, status } = useSession();
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+  const toggleMenu = () => {
+    setIsMenuOpen(!isMenuOpen);
+  };
 
   if (status === "loading") {
     return <nav className="p-4 text-center">Cargando...</nav>;
   }
 
   return (
-    <nav className="navbar navbar-expand-lg navbar-dark bg-primary fixed-top">
-      <div className="container">
-        <Link className="navbar-brand" href="/vacancies">
-          TecnoVacantesRD
-        </Link>
-        <button
-          className="navbar-toggler"
-          type="button"
-          data-bs-toggle="collapse"
-          data-bs-target="#navbarNav"
-          aria-controls="navbarNav"
-          aria-expanded="false"
-          aria-label="Toggle navigation"
-        >
-          <span className="navbar-toggler-icon"></span>
-        </button>
+    <Disclosure as="nav" className="bg-blue-600">
+      <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
+        <div className="relative flex h-16 items-center justify-between">
+          <div className="absolute inset-y-0 left-0 flex items-center sm:hidden">
+            {/* Mobile menu button*/}
+            <DisclosureButton className="group relative inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-700 hover:text-white focus:ring-2 focus:ring-white focus:outline-hidden focus:ring-inset">
+              <span className="absolute -inset-0.5" />
+              <span className="sr-only">Open main menu</span>
+              <Bars3Icon
+                aria-hidden="true"
+                className="block size-6 group-data-open:hidden"
+              />
+              <XMarkIcon
+                aria-hidden="true"
+                className="hidden size-6 group-data-open:block"
+              />
+            </DisclosureButton>
+          </div>
+          <div className="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
+            <div className="flex shrink-0 items-center">
+              <a href="/" className="text-white text-xl font-semibold">
+                TecnoVacantesRD
+              </a>
+            </div>
+            <div className="hidden sm:ml-6 sm:block">
+              <div className="flex space-x-4">
+                {navigation.map((item) => (
+                  <a
+                    key={item.name}
+                    href={item.href}
+                    aria-current={item.current ? "page" : undefined}
+                    className={classNames(
+                      item.current
+                        ? "bg-gray-900 text-white"
+                        : "text-gray-300 hover:bg-gray-700 hover:text-white",
+                      "rounded-md px-3 py-2 text-sm font-medium"
+                    )}
+                  >
+                    {item.name}
+                  </a>
+                ))}
+              </div>
+            </div>
+          </div>
+          <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
+            <button
+              type="button"
+              className="relative rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800 focus:outline-hidden"
+            >
+              <span className="absolute -inset-1.5" />
+              <span className="sr-only">View notifications</span>
+              <BellIcon aria-hidden="true" className="size-6" />
+            </button>
 
-        <div className="collapse navbar-collapse" id="navbarNav">
-          <ul className="navbar-nav ms-auto d-flex align-items-center gap-3">
-            <Navigation />
-
+            {/* Profile dropdown or login link */}
             {session ? (
-              <li className="nav-item dropdown">
-                <a
-                  className="nav-link dropdown-toggle d-flex align-items-center"
-                  href="#"
-                  id="userDropdown"
-                  role="button"
-                  data-bs-toggle="dropdown"
-                  aria-expanded="false"
+              <Menu as="div" className="relative ml-3">
+                <div>
+                  <MenuButton className="relative flex rounded-full bg-gray-800 text-sm focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800 focus:outline-hidden">
+                    <span className="absolute -inset-1.5" />
+                    <span className="sr-only">Open user menu</span>
+                    <img
+                      alt="User profile"
+                      src={session.user.image ?? ""}
+                      className="size-8 rounded-full"
+                    />
+                  </MenuButton>
+                </div>
+                <MenuItems
+                  transition
+                  className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 ring-1 shadow-lg ring-black/5 transition focus:outline-hidden data-closed:scale-95 data-closed:transform data-closed:opacity-0 data-enter:duration-100 data-enter:ease-out data-leave:duration-75 data-leave:ease-in"
                 >
-                  <img
-                    src={session.user?.image || "/default-avatar.png"}
-                    alt="User Avatar"
-                    className="rounded-circle me-2"
-                    width="32"
-                    height="32"
-                  />
-                  <span>{session.user?.name}</span>
-                </a>
-                <ul
-                  className="dropdown-menu dropdown-menu-end"
-                  aria-labelledby="userDropdown"
-                >
-                  <li>
-                    <Link className="dropdown-item" href="/profile">
-                      <FaUser className="me-2" /> Perfil
-                    </Link>
-                  </li>
-                  <li>
-                    <Link className="dropdown-item" href="/vacancies/mine">
-                      <FaRegFileAlt className="me-2" /> Mis vacantes
-                    </Link>
-                  </li>
-                  <li>
-                    <button
-                      onClick={() => signOut()}
-                      className="dropdown-item text-danger"
+                  <MenuItem>
+                    <a
+                      href="#"
+                      className="block px-4 py-2 text-sm text-gray-700 data-focus:bg-gray-100 data-focus:outline-hidden"
                     >
-                      <FaSignOutAlt className="me-2" /> Cerrar sesión
-                    </button>
-                  </li>
-                </ul>
-              </li>
+                      Perfil
+                    </a>
+                  </MenuItem>
+                  <MenuItem>
+                    <a
+                      href="/vacancies/mine"
+                      className="block px-4 py-2 text-sm text-gray-700 data-focus:bg-gray-100 data-focus:outline-hidden"
+                    >
+                      Mis vacantes
+                    </a>
+                  </MenuItem>
+                  <MenuItem>
+                    <a
+                      href="#"
+                      className="block px-4 py-2 text-sm text-gray-700 data-focus:bg-gray-100 data-focus:outline-hidden"
+                      onClick={() => signOut()}
+                    >
+                      Cerrar sesión
+                    </a>
+                  </MenuItem>
+                </MenuItems>
+              </Menu>
             ) : (
-              <li className="nav-item">
-                <Link
-                  className="nav-link btn btn-outline-light px-3"
-                  href="/signIn"
-                >
-                  Iniciar sesión
-                </Link>
-              </li>
+              <a
+                href="/signIn"
+                className="text-white text-sm px-3 py-2 rounded-md hover:bg-gray-700"
+              >
+                Iniciar sesión
+              </a>
             )}
-          </ul>
+          </div>
         </div>
       </div>
-    </nav>
+
+      <DisclosurePanel className="sm:hidden">
+        <div className="space-y-1 px-2 pt-2 pb-3">
+          {navigation.map((item) => (
+            <DisclosureButton
+              key={item.name}
+              as="a"
+              href={item.href}
+              aria-current={item.current ? "page" : undefined}
+              className={classNames(
+                item.current
+                  ? "bg-gray-900 text-white"
+                  : "text-gray-300 hover:bg-gray-700 hover:text-white",
+                "block rounded-md px-3 py-2 text-base font-medium"
+              )}
+            >
+              {item.name}
+            </DisclosureButton>
+          ))}
+        </div>
+      </DisclosurePanel>
+    </Disclosure>
   );
 };
 

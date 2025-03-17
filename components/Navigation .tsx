@@ -1,31 +1,25 @@
-"use client";
-
-import { useState } from "react";
-import NavItem from "./NavItem";
-
-const navLinks = [
-  { href: "/vacancies", label: "Vacantes" },
-  { href: "/vacancies/mine/publish", label: "Publicar Vacante" },
-];
+import Link from "next/link";
 
 const Navigation = () => {
-  const [activeLink, setActiveLink] = useState<string>(navLinks[0].href);
-
-  const handleClick = (href: string) => {
-    setActiveLink(href);
-  };
-
   return (
-    <>
-      {navLinks.map((link) => (
-        <NavItem
-          key={link.href}
-          {...link}
-          isActive={link.href === activeLink}
-          onClick={() => handleClick(link.href)}
-        />
-      ))}
-    </>
+    <ul className="flex flex-col md:flex-row md:space-x-8 space-y-4 md:space-y-0">
+      <li>
+        <Link
+          href="/vacancies"
+          className="text-gray-900 dark:text-white hover:text-blue-600"
+        >
+          Vacantes
+        </Link>
+      </li>
+      <li>
+        <Link
+          href="/vacancies/mine/publish"
+          className="text-gray-900 dark:text-white hover:text-blue-600"
+        >
+          Publicar Vacante
+        </Link>
+      </li>
+    </ul>
   );
 };
 

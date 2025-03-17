@@ -33,26 +33,25 @@ const VacancyListItem = ({ vacancy }: VacancyListItemProps) => {
   const isUserVacancy = "status" in vacancy && "createdAt" in vacancy;
 
   return (
-    <div className="p-3 mb-3 border rounded-lg shadow-sm bg-white">
-      <h5 className="font-weight-bold text-primary mb-1 d-flex justify-content-between align-items-center">
+    <div className="p-4 mb-4 border rounded-lg shadow-lg bg-white">
+      <h5 className="font-semibold text-blue-600 mb-2 flex justify-between items-center">
         <Link
           href={
             isUserVacancy
               ? `/vacancies/mine/${vacancy.publicId}`
               : `/vacancies/${vacancy.publicId}`
           }
-          className="text-primary text-decoration-none d-inline-block text-truncate"
-          style={{ maxWidth: "calc(100% - 1.5rem)" }}
+          className="text-blue-600 hover:text-blue-800 truncate w-full"
         >
           {vacancy.title}
         </Link>
         {isUserVacancy && (
           <Link
             href={`/vacancies/mine/${vacancy.publicId}/edit`}
-            className={`ms-2 ${
+            className={`ml-2 ${
               CanEdit(vacancy.status as EnumVacancyStatus)
-                ? "text-primary"
-                : "disabled text-secondary"
+                ? "text-blue-600 hover:text-blue-800"
+                : "text-gray-400 cursor-not-allowed"
             }`}
             style={
               CanEdit(vacancy.status as EnumVacancyStatus)
@@ -66,73 +65,71 @@ const VacancyListItem = ({ vacancy }: VacancyListItemProps) => {
         )}
       </h5>
 
-      <p className="text-muted mb-2">
+      <p className="text-gray-500 mb-2">
         <small>{vacancy.categoryName}</small>
       </p>
 
       {isUserVacancy && (
         <>
-          <p className="text-muted text-xs mb-1 d-flex align-items-center">
+          <p className="text-gray-500 text-sm mb-1 flex items-center">
             {getStatusIcon(vacancy.status)}
-            <strong className="ms-2">{getVacancyStatus(vacancy.status)}</strong>
+            <strong className="ml-2">{getVacancyStatus(vacancy.status)}</strong>
           </p>
 
-          <p className="text-muted text-xs mb-1">
-            <FaCalendarAlt className="me-2" /> <strong>Creada:</strong>{" "}
+          <p className="text-gray-500 text-sm mb-1 flex items-center">
+            <FaCalendarAlt className="mr-2" /> <strong>Creada:</strong>{" "}
             <span>{formatDate(vacancy.createdAt)}</span>
           </p>
         </>
       )}
 
-      <div className="d-flex flex-column">
-        <p className="text-muted text-xs mb-1">
-          <FaCalendarAlt className="me-2" /> <strong>Publicada:</strong>{" "}
-          <span className="text-primary">
+      <div className="flex flex-col">
+        <p className="text-gray-500 text-sm mb-1 flex items-center">
+          <FaCalendarAlt className="mr-2" /> <strong>Publicada:</strong>{" "}
+          <span className="text-blue-600">
             {formatDate(vacancy.publishedAt)}
           </span>
         </p>
 
-        <p className="text-muted text-xs mb-1">
-          <FaClock className="me-2" /> <strong>Cierre:</strong>{" "}
-          <span className="text-danger">{formatDate(vacancy.expiresAt)}</span>
+        <p className="text-gray-500 text-sm mb-1 flex items-center">
+          <FaClock className="mr-2" /> <strong>Cierre:</strong>{" "}
+          <span className="text-red-600">{formatDate(vacancy.expiresAt)}</span>
         </p>
 
-        <p className="text-muted text-xs mb-1">
-          <FaBullseye className="me-2" /> <strong>Modalidad:</strong>{" "}
+        <p className="text-gray-500 text-sm mb-1 flex items-center">
+          <FaBullseye className="mr-2" /> <strong>Modalidad:</strong>{" "}
           <span>{VacancyModeLabels[vacancy.mode as VacancyMode]}</span>
         </p>
 
-        <p className="text-muted text-xs mb-1">
-          <FaDollarSign className="me-2" /> <strong>Salario:</strong>{" "}
-          <span className="text-success">
+        <p className="text-gray-500 text-sm mb-1 flex items-center">
+          <FaDollarSign className="mr-2" /> <strong>Salario:</strong>{" "}
+          <span className="text-green-600">
             ${vacancy.salary ?? "No especificado"}
           </span>
         </p>
 
-        <p className="text-muted text-xs mb-1">
-          <FaMapMarkerAlt className="me-2" /> <strong>Ubicación:</strong>{" "}
+        <p className="text-gray-500 text-sm mb-1 flex items-center">
+          <FaMapMarkerAlt className="mr-2" /> <strong>Ubicación:</strong>{" "}
           <span>{formatLocation(vacancy.provinceName)}</span>
         </p>
 
-        <div className="text-xs text-muted mb-0 position-relative">
+        <div className="text-sm text-gray-500 mb-0 relative">
           <div
-            className="description-line-clamp mt-2"
+            className="mt-2 overflow-hidden"
             style={{
               display: "-webkit-box",
               WebkitLineClamp: 3,
               WebkitBoxOrient: "vertical",
-              overflow: "hidden",
-              height: "4.5rem",
             }}
           >
             {removeHtmlTags(vacancy.vacancyDescription)}
           </div>
-          <div className="d-flex justify-content-end">
+          <div className="flex justify-end">
             <button
-              className="btn btn-link p-0 text-decoration-none"
+              className="text-blue-600 hover:text-blue-800 p-0"
               onClick={() => setShowModal(true)}
             >
-              <FaInfoCircle className="ms-2" /> Ver más
+              <FaInfoCircle className="ml-2" /> Ver más
             </button>
           </div>
         </div>
