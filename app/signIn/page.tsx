@@ -12,7 +12,6 @@ export default function SignIn() {
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log("Iniciando sesión con:", email, password);
     const res = await signIn("credentials", {
       email,
       password,
@@ -66,7 +65,7 @@ export default function SignIn() {
 
         <div className="my-2 text-center">
           <Link
-            href="#"
+            href="/register"
             className="text-blue-600 hover:text-blue-800 underline"
           >
             Regístrate
