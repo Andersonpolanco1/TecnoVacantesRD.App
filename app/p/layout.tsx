@@ -5,7 +5,7 @@ import AppSessionProvider from "../../providers/appSessionProvider";
 import { NotificationProvider } from "@/providers/notificationProvider";
 import ScrollToUpButton from "@/components/ScrollToUpButton";
 import { LoadingProvider } from "@/providers/loadingProvider";
-import "../globals.css";
+import "../../globals.css";
 
 export const metadata: Metadata = {
   title: "Create Next App",

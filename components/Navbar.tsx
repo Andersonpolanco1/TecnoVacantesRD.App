@@ -15,8 +15,12 @@ import { RiUserFill } from "react-icons/ri";
 import Image from "next/image";
 
 const navigation = [
-  { name: "Vacantes", href: "/vacancies", current: false },
-  { name: "Publicar vacante", href: "/vacancies/mine/publish", current: false },
+  { name: "Vacantes", href: "/p/vacancies", current: false },
+  {
+    name: "Publicar vacante",
+    href: "/dashboard/vacancies/mine/publish",
+    current: false,
+  },
 ];
 
 function classNames(...classes: string[]) {
@@ -90,9 +94,9 @@ const Navbar = () => {
                     <span className="sr-only">Open user menu</span>
                     <Image
                       alt="User profile"
-                      src={session.user?.image ?? "/default-avatar.png"} // Ruta a la imagen
-                      width={40} // Ajuste de ancho
-                      height={40} // Ajuste de alto
+                      src={session.user?.image ?? "/default-avatar.png"}
+                      width={40}
+                      height={40}
                       className="rounded-full"
                     />
                   </MenuButton>
@@ -103,7 +107,7 @@ const Navbar = () => {
                 >
                   <MenuItem>
                     <a
-                      href="#"
+                      href="/dashboard/profile"
                       className="block px-4 py-2 text-sm text-gray-700 data-focus:bg-gray-100 data-focus:outline-hidden"
                     >
                       Perfil
@@ -111,10 +115,10 @@ const Navbar = () => {
                   </MenuItem>
                   <MenuItem>
                     <a
-                      href="/vacancies/mine"
+                      href="/dashboard"
                       className="block px-4 py-2 text-sm text-gray-700 data-focus:bg-gray-100 data-focus:outline-hidden"
                     >
-                      Mis vacantes
+                      Dashboard
                     </a>
                   </MenuItem>
                   <MenuItem>
@@ -130,7 +134,7 @@ const Navbar = () => {
               </Menu>
             ) : (
               <a
-                href="/signIn"
+                href="/p/signIn"
                 className="text-white text-sm px-3 py-2 rounded-full hover:bg-gray-300 hover:text-gray-800 flex items-center justify-center"
               >
                 <RiUserFill className="w-5 h-5" />

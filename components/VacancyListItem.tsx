@@ -48,8 +48,8 @@ const VacancyListItem = ({ vacancy }: VacancyListItemProps) => {
         <Link
           href={
             isUserVacancy
-              ? `/vacancies/mine/${vacancy.publicId}`
-              : `/vacancies/${vacancy.publicId}`
+              ? `/dashboard/vacancies/mine/${vacancy.publicId}`
+              : `/p/vacancies/${vacancy.publicId}`
           }
           className="text-blue-600 hover:text-blue-800 truncate w-full"
         >
@@ -57,7 +57,7 @@ const VacancyListItem = ({ vacancy }: VacancyListItemProps) => {
         </Link>
         {isUserVacancy && (
           <Link
-            href={`/vacancies/mine/${vacancy.publicId}/edit`}
+            href={`/dashboard/vacancies/mine/${vacancy.publicId}/edit`}
             className={`ml-2 ${
               CanEdit(vacancy.status as EnumVacancyStatus)
                 ? "text-blue-600 hover:text-blue-800"

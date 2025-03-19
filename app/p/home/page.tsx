@@ -20,7 +20,7 @@ export default function WelcomePage() {
 
       <div className="mt-5">
         <Link
-          href="/vacancies"
+          href="/p/vacancies"
           className="inline-block bg-blue-600 text-white text-lg px-6 py-3 rounded-lg hover:bg-blue-700"
         >
           Explorar Vacantes
