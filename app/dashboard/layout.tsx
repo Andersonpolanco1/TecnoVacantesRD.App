@@ -1,11 +1,12 @@
 import type { Metadata } from "next";
 import { getSession } from "@/app/api/auth/authOptions";
-import Navbar from "@/components/Navbar";
-import AppSessionProvider from "../providers/appSessionProvider";
+import AppSessionProvider from "../../providers/appSessionProvider";
 import { NotificationProvider } from "@/providers/notificationProvider";
 import ScrollToUpButton from "@/components/ScrollToUpButton";
 import { LoadingProvider } from "@/providers/loadingProvider";
-import "../globals.css";
+import "../../globals.css";
+import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
+import { DashboardSidebar } from "@/components/DashboardSidebar";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -27,22 +28,18 @@ export default async function RootLayout({
         {/* Barra de navegación */}
         <AppSessionProvider session={session}>
           <LoadingProvider>
-            <Navbar />
             <NotificationProvider>
-              <main className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8 flex-grow pt-16">
-                {children}
-              </main>
+              <SidebarProvider>
+                <DashboardSidebar />
+                <main>
+                  <SidebarTrigger />
+                  {children}
+                </main>
+              </SidebarProvider>
               <ScrollToUpButton />
             </NotificationProvider>
           </LoadingProvider>
         </AppSessionProvider>
-
-        <footer className="bg-gray-800 text-white text-center py-3 mt-auto">
-          <p>&copy; 2025 TecnoVacantesRD. Todos los derechos reservados.</p>
-        </footer>
-
-        {/* Scripts de Bootstrap */}
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
       </body>
     </html>
   );
