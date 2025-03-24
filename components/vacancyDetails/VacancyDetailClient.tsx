@@ -38,7 +38,7 @@ export default function VacancyDetailClient({
 
   return (
     <div>
-      <div className="my-3">
+      <div>
         <VacancyActionButtons
           vacancy={currentVacancy}
           onAction={handleChangeState}

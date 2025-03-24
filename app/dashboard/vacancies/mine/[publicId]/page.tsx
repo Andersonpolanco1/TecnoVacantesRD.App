@@ -28,5 +28,19 @@ export default async function Page({ params }: VacancyDetailPageProps) {
 
   const vacancy: VacancyUserDto = response.data as VacancyUserDto;
 
-  return <VacancyDetailClient vacancy={vacancy} />;
+  return (
+    <>
+      <div className="my-5">
+        <h1
+          className="text-lg font-semibold"
+          style={{ color: "var(--sidebar)" }}
+        >
+          Detalles de Vacante
+        </h1>
+        <hr></hr>
+      </div>
+      <br />
+      <VacancyDetailClient vacancy={vacancy} />
+    </>
+  );
 }

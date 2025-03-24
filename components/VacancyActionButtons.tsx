@@ -50,13 +50,13 @@ const VacancyActionButtons = ({
         label: "Aprobar",
         icon: <FaCheck />,
         action: EnumVacancyTrigger.Approve,
-        className: "bg-green-500 hover:bg-green-600 text-white",
+        className: "bg-green-600 hover:bg-green-600 text-white",
       },
       {
         label: "Rechazar",
         icon: <FaTimes />,
         action: EnumVacancyTrigger.Reject,
-        className: "bg-red-500 hover:bg-red-600 text-white",
+        className: "bg-red-600 hover:bg-red-600 text-white",
       },
     ],
     [EnumVacancyStatus.Approved]: [
@@ -64,13 +64,13 @@ const VacancyActionButtons = ({
         label: "Publicar",
         icon: <FaCloudUploadAlt />,
         action: EnumVacancyTrigger.Publish,
-        className: "bg-blue-500 hover:bg-blue-600 text-white",
+        className: "bg-blue-600 hover:bg-blue-600 text-white",
       },
       {
         label: "Cerrar",
         icon: <FaLock />,
         action: EnumVacancyTrigger.Close,
-        className: "bg-gray-500 hover:bg-gray-600 text-white",
+        className: "bg-gray-600 hover:bg-gray-600 text-white",
       },
     ],
     [EnumVacancyStatus.Rejected]: [
@@ -78,7 +78,7 @@ const VacancyActionButtons = ({
         label: "Revisar nuevamente",
         icon: <FaUndo />,
         action: EnumVacancyTrigger.ReviewAgain,
-        className: "bg-teal-500 hover:bg-teal-600 text-white",
+        className: "bg-teal-600 hover:bg-teal-600 text-white",
       },
     ],
     [EnumVacancyStatus.Published]: [
@@ -86,7 +86,7 @@ const VacancyActionButtons = ({
         label: "Cerrar",
         icon: <FaLock />,
         action: EnumVacancyTrigger.Close,
-        className: "bg-gray-500 hover:bg-gray-600 text-white",
+        className: "bg-gray-600 hover:bg-gray-600 text-white",
       },
     ],
     [EnumVacancyStatus.Expired]: [],
@@ -101,14 +101,20 @@ const VacancyActionButtons = ({
         icon={icon}
         label={label}
         action={() => handleShowModal(action)}
-        className={`${className} mr-2`}
+        className={`${className} mr-2 mb-2 sm:mb-0 w-full sm:w-auto`} // Ajuste aquí para que los botones ocupen todo el ancho en pantallas pequeñas
       />
     ));
   };
 
   return (
     <>
-      <div className="flex justify-end">{getButtonActions()}</div>
+      <div className="w-full overflow-x-auto">
+        {" "}
+        {/* Ajuste para permitir el scroll si es necesario */}
+        <div className="flex flex-wrap justify-start gap-2 sm:gap-4">
+          {getButtonActions()}
+        </div>
+      </div>
       <ConfirmModal
         isOpen={isModalOpen}
         onClose={handleCloseModal}

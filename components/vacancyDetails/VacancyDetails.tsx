@@ -29,7 +29,7 @@ const VacancyListItem = ({ vacancy }: VacancyListItemProps) => {
   const isUserVacancy = "status" in vacancy && "createdAt" in vacancy;
 
   return (
-    <div className="p-4 my-4 border border-gray-300 rounded-lg shadow-sm bg-white">
+    <div className="p-4 my-4 bg-white shadow-lg rounded-lg">
       <h5 className="font-bold text-primary mb-1 flex justify-between items-center">
         <div
           className="text-primary text-decoration-none inline-block truncate"
@@ -39,7 +39,7 @@ const VacancyListItem = ({ vacancy }: VacancyListItemProps) => {
         </div>
         {isUserVacancy && (
           <Link
-            href={`/vacancies/mine/${vacancy.publicId}/edit`}
+            href={`/dashboard/vacancies/mine/${vacancy.publicId}/edit`}
             className={`ml-2 ${
               CanEdit(vacancy.status as EnumVacancyStatus)
                 ? "text-primary"
@@ -56,16 +56,12 @@ const VacancyListItem = ({ vacancy }: VacancyListItemProps) => {
           </Link>
         )}
       </h5>
-      <p className="text-muted mb-2">
+      <p className="text-gray-600 mb-2">
         <small>{vacancy.categoryName}</small>
       </p>
+
       <div className="bg-gray-50 p-3 rounded-lg">
-        <div
-          className="grid gap-3"
-          style={{
-            gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))",
-          }}
-        >
+        <div className="grid gap-3 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
           {isUserVacancy && (
             <p className="text-gray-600 text-xs mb-1 flex items-center">
               {getStatusIcon(vacancy.status)}
@@ -125,7 +121,12 @@ const VacancyListItem = ({ vacancy }: VacancyListItemProps) => {
         </div>
         <div
           className="w-full my-3"
-          style={{ wordWrap: "break-word", whiteSpace: "normal" }}
+          style={{
+            wordWrap: "break-word",
+            whiteSpace: "normal",
+            overflowWrap: "break-word",
+            wordBreak: "break-all",
+          }}
         >
           {renderHTML(vacancy.vacancyDescription)}
         </div>

@@ -47,8 +47,17 @@ export default async function Page({ searchParams }: PageProps) {
   );
 
   return (
-    <div className="my-4">
+    <div>
       <div className="my-5">
+        <h1
+          className="text-lg font-semibold"
+          style={{ color: "var(--sidebar)" }}
+        >
+          Mis Vacantes
+        </h1>
+        <hr></hr>
+      </div>
+      <div className="my-3">
         <VacancyUsersFilter />
       </div>
       <div className="my-5">

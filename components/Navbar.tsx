@@ -60,7 +60,7 @@ const Navbar = () => {
           </div>
           <div className="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
             <div className="flex shrink-0 items-center">
-              <a href="/" className="text-white text-xl font-semibold">
+              <a href="/" className="text-white text-lg font-semibold">
                 TecnoVacantesRD
               </a>
             </div>
@@ -72,10 +72,8 @@ const Navbar = () => {
                     href={item.href}
                     aria-current={item.current ? "page" : undefined}
                     className={classNames(
-                      item.current
-                        ? "bg-gray-900 text-white"
-                        : "text-gray-300 hover:bg-gray-700 hover:text-white",
-                      "rounded-md px-3 py-2 text-sm font-medium"
+                      "rounded-md px-3 py-2 text-sm font-medium",
+                      "text-[var(--sidebar-accent-foreground)]"
                     )}
                   >
                     {item.name}

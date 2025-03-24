@@ -16,7 +16,7 @@ import VacancyStatusSelect from "./StatusSelect";
 
 const VacanciesUserFilter = () => {
   const router = useRouter();
-  const [isFiltersVisible, setIsFiltersVisible] = useState(true);
+  const [isFiltersVisible, setIsFiltersVisible] = useState(false);
 
   const [filters, setFilters] = useState<VacancyUserFilter>({
     search: null,
@@ -40,11 +40,11 @@ const VacanciesUserFilter = () => {
         queryParams.set(key, String(value));
       }
     });
-    router.push(`/vacancies/mine?${queryParams.toString()}`);
+    router.push(`/dashboard/vacancies/mine?${queryParams.toString()}`);
   }
 
   return (
-    <div className="bg-white p-6 rounded-lg shadow-lg">
+    <div className="bg-white p-3 rounded-2xl border border-gray-100 shadow-sm">
       {/* Botón para contraer/expandir los filtros */}
       <button
         type="button"
@@ -57,11 +57,15 @@ const VacanciesUserFilter = () => {
 
       {/* Filtros de búsqueda */}
       <div
-        className={
-          isFiltersVisible
-            ? "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4"
-            : "hidden"
-        }
+        className={`
+    transition-all duration-500 ease-in-out overflow-hidden
+    ${
+      isFiltersVisible
+        ? "max-h-[1000px] opacity-100 pointer-events-auto"
+        : "max-h-0 opacity-0 pointer-events-none"
+    }
+    grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4
+  `}
       >
         <div>
           <label
@@ -170,7 +174,7 @@ const VacanciesUserFilter = () => {
                 status: null,
                 currentPage: 1,
               });
-              router.push("/vacancies/mine");
+              router.push("/dashboard/vacancies/mine");
             }}
           >
             <RiFilterOffFill className="text-lg" />

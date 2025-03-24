@@ -31,7 +31,7 @@ export default async function RootLayout({
             <NotificationProvider>
               <SidebarProvider>
                 <DashboardSidebar />
-                <main>
+                <main className="flex flex-1 flex-col p-6 md:p-8 lg:p-10">
                   <SidebarTrigger />
                   {children}
                 </main>

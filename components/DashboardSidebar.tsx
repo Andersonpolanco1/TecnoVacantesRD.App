@@ -1,4 +1,4 @@
-import { Calendar, Home, Inbox, Search, Settings } from "lucide-react";
+import { Home, Inbox, Search, User, Globe } from "lucide-react";
 
 import {
   Sidebar,
@@ -24,19 +24,19 @@ const items = [
     icon: Inbox,
   },
   {
-    title: "Calendar",
-    url: "#",
-    icon: Calendar,
-  },
-  {
-    title: "Search",
-    url: "#",
+    title: "Mis Postulaciones",
+    url: "/dashboard/vacancies/postulations",
     icon: Search,
   },
   {
-    title: "Settings",
-    url: "#",
-    icon: Settings,
+    title: "Perfil",
+    url: "/profile",
+    icon: User,
+  },
+  {
+    title: "Página principal",
+    url: "/",
+    icon: Globe,
   },
 ];
 
@@ -45,15 +45,16 @@ export function DashboardSidebar() {
     <Sidebar>
       <SidebarContent>
         <SidebarGroup>
-          <SidebarGroupLabel>Application</SidebarGroupLabel>
+          <SidebarGroupLabel className="text-white text-lg font-semibold mb-5">
+            TecnoVacantesRD
+          </SidebarGroupLabel>
           <SidebarGroupContent>
             <SidebarMenu>
               {items.map((item) => (
                 <SidebarMenuItem key={item.title}>
-                  <SidebarMenuButton asChild>
-                    <a href={item.url}>
-                      <item.icon />
-                      <span>{item.title}</span>
+                  <SidebarMenuButton asChild isActive>
+                    <a href={item.url} className="flex items-center gap-3 p-2">
+                      <item.icon size={20} /> <span>{item.title}</span>
                     </a>
                   </SidebarMenuButton>
                 </SidebarMenuItem>
